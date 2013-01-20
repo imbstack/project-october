@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Abstract}{3}{section.1}
+\contentsline {section}{\numberline {2}October: Hybrid Recommender System}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Background}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Data Normalization}{4}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Subtractive Normalization}{4}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Multiplicative Normalization}{4}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Feature Combination}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Matrix Factorization}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Rating Prediction}{4}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Evaluation}{4}{subsection.2.6}
+\contentsline {subsubsection}{\numberline {2.6.1}Neighborhood Size}{4}{subsubsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.2}Data Dimension}{4}{subsubsection.2.6.2}
+\contentsline {subsubsection}{\numberline {2.6.3}Feature Weights}{4}{subsubsection.2.6.3}
+\contentsline {subsection}{\numberline {2.7}Algorithm}{4}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}Appendix A}{6}{subsection.2.8}

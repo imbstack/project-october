@@ -16,3 +16,6 @@
 
 # Ignore all logfiles and tempfiles.
 /tmp
+*.aux
+*.log
+.DS_Store
