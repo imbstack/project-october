@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{times}
+
+\author{Rajesh Cherukuri, Tom Dooner, Mika Little, Brian Stack}
+\title{EECS395 Concept: Project October}
+
+\begin{document}
+\maketitle
+
+\section{Business Need}
+In modern news aggregation services, such as Reddit, Slashdot, Digg, and Hacker News, longtime members report noticing a marked decrease in quality of discourse as the services gain mainstream attention.
+This gradual but irreversible decline caused by the influx of new users has been dubbed Eternal September\footnote{\url{http://en.wikipedia.org/wiki/Eternal\_September}}.
+The loss of the longtime members perpetuates the problem, and causes large numbers of excellent contributors to be disenchanted and out-of-place in their own community.
+We aim to engineer a service that uses technological principles to avoid this, thus improving the user experience and allowing a large community to benefit from thoughtful discourse and interesting articles.
+
+\section{Product Scope}
+This product's scope is split between the frontend and backend that are separated from each other by an API.
+This will allow us to develop both parts in parallel and keep conceptual clarity between them.
+
+The Project October frontend is very similar to existing social news aggregation services.
+It will feature the common objects and actions found on a site such as Reddit\footnote{\url{http://reddit.com}}.
+Users can submit news articles or other noteworthy content (images, games, etc).
+
+Project October's backend will feature a recommendation engine to match content to users.
+Typical recommender systems employ collaborative filtering (drawing inferences based on similarity between users) or content-based filtering (drawing inferences based on properties of the content).
+To achieve the goal of tailoring articles returned, we will employ a hybrid approach of collaborative and content-based filtering.
+Evidence of the efficacy of such hybrid systems can be seen in systems such as Netflix, which make recommendations based on implicit collection of viewed movies, explicit collection of ratings, and initial seed information.
+
+\section{Methodology}
+To achieve this goal, the project will be conducted using a variation of the agile development methodology.
+The project plan will entail multi-phase development, wherein each phase will include 1-week  iterations and end with a release(s).
+Documentation will accompany each task and at the end of each iteration will be aggregated as part of the respective release’s notes.
+In this manner, the deviation from typical agile development is the addition of the documentation step into the iteration, daily, and continuous tasks as opposed to the final release phase.
+
+\end{document}
