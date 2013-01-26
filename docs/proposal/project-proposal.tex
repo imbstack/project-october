@@ -53,10 +53,14 @@ Date: & \today
 \pagestyle{fancy}
 \fancyhf{}
 
-\fancyhead[L]{\small \rm \textit{\rightmark}} 
+%\fancyhead[L]{\rightmark}
+\fancyhead[L]{\small \rm \textit{\rightmark}}
 \fancyhead[R]{\small \rm \textbf{\thepage}}
 
 
+%\fancyfoot[L]{\small \rm \textit{Pie de página - Izquierda}}
+%\fancyfoot[R]{\small \rm \textit{Pie de página - Derecha}}
+%\fancyfoot[C]{\thepage} %Centro
 
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
 \renewcommand{\headrulewidth}{0.5pt}
@@ -194,7 +198,8 @@ In general, the performance and runtime of recommender systems are in competitio
 % ============= References ==============
 \newpage
 \newpage
-\begin{thebibliography}{13}	
+<<<<<<< HEAD
+\begin{thebibliography}{13}
   \bibitem{1} Gediminas Adomavicius , Alexander Tuzhilin, \textit{Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions}, IEEE Transactions on Knowledge and Data Engineering, v.17 n.6, p.734-749, June 2005  [doi>10.1109/TKDE.2005.99]
 
   \bibitem{2} Robert M. Bell , Yehuda Koren, \textit{Scalable Collaborative Filtering with Jointly Derived Neighborhood Interpolation Weights, Proceedings of the 2007 Seventh IEEE International Conference on Data Mining}, p.43-52, October 28-31, 2007  [doi>10.1109/ICDM.2007.90]
@@ -220,7 +225,7 @@ In general, the performance and runtime of recommender systems are in competitio
   \bibitem{12} A. Toescher, M. Jahrer, and R. Legenstein. \textit{Improved neighborhood-based algorithms for large-scale recommender systems}. In KDD '08: Proceeding of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, Graz, Austria, 2008. ACM.
 
   \bibitem{13} Jun Wang , Arjen P. de Vries , Marcel J. T. Reinders, \textit{Unifying user-based and item-based collaborative filtering approaches by similarity fusion}, Proceedings of the 29th annual international ACM SIGIR conference on Research and development in information retrieval, August 06-11, 2006, Seattle, Washington, USA  [doi>10.1145/1148170.1148257]
-  
+
 \end{thebibliography}
 
 % ============= Database Schematic ==============
@@ -233,4 +238,3 @@ In general, the performance and runtime of recommender systems are in competitio
 
 % ============= FIN ==============
 \end{document}
-
