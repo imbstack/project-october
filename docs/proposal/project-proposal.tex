@@ -20,6 +20,7 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \usepackage{subfig}
+\usepackage{pdfpages}
 
 \usepackage{listings} %Code
 \lstset{language=C, tabsize=4,framexleftmargin=5mm,breaklines=true}
@@ -82,9 +83,9 @@ This section will discuss the combination of a collaborative and content-based f
 
 \subsection{Background}
 
-Due to the enormous amount of information available online, the need for highly developed personalization and filtering systems is growing permanently. Recommender systems constitute a specific type of information filtering that attempt to present items according the interests expressed by a user \cite{1}. Most web recommenders are employed for e-commerce applications or customer adapted websites, which assist users in decision making by providing personalized information \cite{5}. 
+Due to the enormous amount of information available online, the need for highly developed personalization and filtering systems is growing permanently. Recommender systems constitute a specific type of information filtering that attempt to present items according the interests expressed by a user \cite{1}. Most web recommenders are employed for e-commerce applications or customer adapted websites, which assist users in decision making by providing personalized information \cite{5}.
 
-In general, there exist two basic types of recommendation techniques, namely content-based filtering and collaborative filtering. Whereas content-based filtering methods examine items previously favored by the actual user \cite{7}, collaborative filtering techniques compute recommendations based on the information about similar items or users \cite{10}. In our work we combine both strategies into one hybrid approach \cite{3}, which utilizes supplementary content features in order to improve the prediction accuracy of traditional collaborative filtering \cite{6, 11}. 
+In general, there exist two basic types of recommendation techniques, namely content-based filtering and collaborative filtering. Whereas content-based filtering methods examine items previously favored by the actual user \cite{7}, collaborative filtering techniques compute recommendations based on the information about similar items or users \cite{10}. In our work we combine both strategies into one hybrid approach \cite{3}, which utilizes supplementary content features in order to improve the prediction accuracy of traditional collaborative filtering \cite{6, 11}.
 
 For the development and evaluation of our proposed hybrid recommender system (also referred to as October), we make use of various news outlets and user recommendations, importing them into a graph database. Both corpora are joined in a unified mathematical model, which describes the complex network of interdependencies. Our model is easy to extend and enables us to extract latent user/item relations by means of matrix factorization.
 
@@ -156,9 +157,9 @@ Finally, we are going to compare the overall performance of October with other i
 
 In general there exist two basic implementation variants of the KNN-algorithm, namely user- and item-oriented collaborative filtering. Whereas user-oriented techniques just consider like-minded users to predict unknown ratings, item-oriented methods utilize similar items \cite{10,13}. However both collaborative filtering variants employ the same underlying mathematical approach, in which the current examined user/item rating is estimated based on the $k$-nearest neighbors.
 
-Obviously our item-oriented approach performs much better than the user-oriented implementation, which agrees with the general observations about collaborative filtering systems that can be found in most literature \cite{8, 2}, and might be explained by the fact that individuals are more familiar with the items previously preferred than with potential like-minded users. 
+Obviously our item-oriented approach performs much better than the user-oriented implementation, which agrees with the general observations about collaborative filtering systems that can be found in most literature \cite{8, 2}, and might be explained by the fact that individuals are more familiar with the items previously preferred than with potential like-minded users.
 
-The comparison furthermore reveals that a relatively small neighborhood produces imprecise rating estimates, which is due to the fact that the considered users or rather items do not contain sufficient information to make reliable predictions. However, in case of a comparatively large neighborhood it might happen that too many users or items with very low similarities are taken into account \cite{4, 6}. 
+The comparison furthermore reveals that a relatively small neighborhood produces imprecise rating estimates, which is due to the fact that the considered users or rather items do not contain sufficient information to make reliable predictions. However, in case of a comparatively large neighborhood it might happen that too many users or items with very low similarities are taken into account \cite{4, 6}.
 
 For our further analysis we will make use of the optimum neighborhood size determined for user-oriented and item-oriented collaborative filtering respectively ($n = 25/70$).
 
@@ -222,6 +223,13 @@ In general, the performance and runtime of recommender systems are in competitio
   
 \end{thebibliography}
 
+% ============= Database Schematic ==============
+\begin{figure}
+\centering
+\includegraphics{db_diagram.pdf}
+\caption{Frontend Database Relational Diagram}
+\label{fig:database}
+\end{figure}
 
 % ============= FIN ==============
 \end{document}
