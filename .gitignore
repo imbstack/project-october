@@ -16,7 +16,3 @@
 
 # Ignore all logfiles and tempfiles.
 /tmp
-*.aux
-*.log
-*.out
-.DS_Store
