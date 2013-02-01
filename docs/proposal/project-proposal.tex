@@ -73,8 +73,10 @@ Date: & \today
 \section{Abstract}
 
 In modern news aggregation services, such as Reddit, Slashdot, Digg, and Hacker News, longtime members report noticing a marked decrease in quality of discourse as the services gain mainstream attention.
-This gradual but irreversible decline caused by the influx of new users has been dubbed Eternal September.
-The loss of the longtime members perpetuates the problem, and causes large numbers of excellent contributors to be disenchanted and out-of-place in their own community.
+This gradual but irreversible decline caused by the influx of new users dates back to the newsgroup era, when new college students would log in for the first times in September.
+After AOL opened newsgroups to the masses, the community standards continued to devolve, according to newsgroup veterans\cite{september}.
+
+The inevitable loss of the longtime members further perpetuates the problem, and causes large numbers of excellent contributors to feel out-of-place in their own community.
 We aim to engineer a service that uses technological principles to avoid this, thus improving the user experience and allowing a large community to benefit from thoughtful discourse and interesting articles. \\
 
 \newpage
@@ -83,14 +85,14 @@ We aim to engineer a service that uses technological principles to avoid this, t
 
 \section{Project October: Hybrid Recommender System}
 
-Due to the enormous amount of information available online, the need for highly developed personalization and filtering systems is growing permanently.
+Due to the enormous amount of information available online, the need for a highly developed personalization and filtering system is growing permanently.
 Recommender systems constitute a specific type of information filtering that attempt to present items according the interests expressed by a user\cite{1}.
-Most web recommenders are employed for e-commerce applications or customer adapted websites, which assist users in decision making by providing personalized information \cite{5}.
-We believe Project October is the first attempt to apply these techniques to social news aggregation.
+Most web recommenders are employed for e-commerce applications or customer adapted websites, which assist users in decision making by providing personalized information \cite{5}, but the same techniques that suggest related items on e-commerce websites can recommend news articles to users who will enjoy reading them.
+We believe Project October is the first attempt to apply recommendation techniques to social news aggregation.
 
 \subsection{Background}
 It is our hypothesis that recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
-Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users thus preventing the Eternal September phenomenon. %Cite me!
+Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users thus preventing the Eternal September phenomenon.
 Users that prefer intellectual discourse will automatically be recommended articles and comments that fit such a criteria, and users that prefer simpler entertainment will be recommended such stories.
 
 This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
@@ -102,13 +104,59 @@ For the development and evaluation of our proposed hybrid recommender system, we
 Both corpora are joined in a unified mathematical model, which describes the complex network of interdependencies.
 
 \subsection{Intended Audience}
-
+% The audience is power web users that want the most accurate news source possible
 \subsection{Requirements}
 \subsubsection{Frontend}
+The frontend will be a standard social news aggregator, similar to Reddit or Hacker News.
+Upon going to the homepage, logged-out users will be presented with a splash page that describes the allure of Project October and offers a registration link.
+Users can register for the application by selecting a username and password.
+
+When logged in, users will be presented with their personalized content.
+We are modeling the design after the front page of a newspaper -- articles that we judge to be more interesting to a user will be placed in the most prominent positioning, and articles that are less important will fill the side columns and occupy less space.
+Users will be able to click on the headline (or associated image, if existent) to be taken to the original news source.
+
+Each news article will feature a link to view the associated comments and it will feature a corner icon of how much credibility (``cred'') a given article possesses.
+This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula.
+
 \subsubsection{Backend}
+% The backend will use a graph database, yadda yadda
+
+\subsubsection{Frontend/Backend API}
+October will employ an API to promote separation between the frontend and the backend recommender system.
+This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
+
+To implement the API, we will use Apache Thrift, an Interface Description Language originally developed by Facebook\cite{thrift}.
+The essence of the API is simple, featuring primarily two types of calls:
+\begin{description}
+\item[Give recommendations for user $n$]
+This is the main output from the backend, returning recommended news stories or comments for a given user.
+Ancillary parameters will be added to this to facilitate the frontend placement of articles, e.g. the recommendation confidence and individual article weightings.
+\item[User took action $n$]
+This is the main input to the backend, allowing it to adjust recommendations according to user action.
+The parameters to this API call can be of many types. For example, "User commented on article \#$n$", "User gave cred to comment \#$n$", and "User visited link \#$n$" are all valid parameters for this API call.
+\end{description}
 
 \subsection{Project Management}
+We will manage the project using agile development strategies.
+
 \subsubsection{Agile Development}
+In order to schedule work, we have employed Pivotal Tracker, an online task management solution.
+From the queue, we will assign tasks as we finish previous tasks.
+The work naturally fits into two main categories -- frontend and backend.
+Work relating to each category will be assigned to the same people until we make enough progress to cross between teams at will.
+At least until that point, Brian and Rajesh will work on the backend while Tom and Mika create the frontend.
+
+\subsubsection{Scrum}
+We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeting to discuss the current progress.
+
+\subsubsection{Iterations}
+% We will have iterations of one week in duration
+% Perhaps discuss the actual plans for the next few iterations?
+
+
+
+
+
 
 %As mentioned earlier, the prediction accuracy of our developed hybrid recommender depends on several different parameters, like neighborhood size, data dimension, utilized features and so on. This section will investigate the behavior of our system under certain conditions. We will be using the well known Root Mean Squared Error (metric used in the Netflix Prize Competition): $RMSE(O,P) = \sqrt{\frac{\sum_{i=1}^{n} (O_{i} - P_{i})^{2}}{n}}$ (where $O$ and $P$ are vectors of observed and predicted values respectively). RMSE will compute how close the estimates are to the values actually observed.\\
 
@@ -155,33 +203,35 @@ Both corpora are joined in a unified mathematical model, which describes the com
 % ============= References ==============
 \newpage
 \newpage
-<<<<<<< HEAD
 \begin{thebibliography}{13}
   \bibitem{1} Gediminas Adomavicius , Alexander Tuzhilin, \textit{Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions}, IEEE Transactions on Knowledge and Data Engineering, v.17 n.6, p.734-749, June 2005  [doi>10.1109/TKDE.2005.99]
 
-  \bibitem{2} Robert M. Bell , Yehuda Koren, \textit{Scalable Collaborative Filtering with Jointly Derived Neighborhood Interpolation Weights, Proceedings of the 2007 Seventh IEEE International Conference on Data Mining}, p.43-52, October 28-31, 2007  [doi>10.1109/ICDM.2007.90]
+  %\bibitem{2} Robert M. Bell , Yehuda Koren, \textit{Scalable Collaborative Filtering with Jointly Derived Neighborhood Interpolation Weights, Proceedings of the 2007 Seventh IEEE International Conference on Data Mining}, p.43-52, October 28-31, 2007  [doi>10.1109/ICDM.2007.90]
 
-  \bibitem{3} R. D. Burke. Hybrid web recommender systems. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, \textit{The Adaptive Web, Methods and Strategies of Web Personalization}, volume 4321 of Lecture Notes in Computer Science, pages 377--408. Springer, 2007.
+  %\bibitem{3} R. D. Burke. Hybrid web recommender systems. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, \textit{The Adaptive Web, Methods and Strategies of Web Personalization}, volume 4321 of Lecture Notes in Computer Science, pages 377--408. Springer, 2007.
 
-  \bibitem{4} Yehuda Koren, \textit{Factorization meets the neighborhood: a multifaceted collaborative filtering model}, Proceeding of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, August 24-27, 2008, Las Vegas, Nevada, USA  [doi>10.1145/1401890.1401944]
+  %\bibitem{4} Yehuda Koren, \textit{Factorization meets the neighborhood: a multifaceted collaborative filtering model}, Proceeding of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, August 24-27, 2008, Las Vegas, Nevada, USA  [doi>10.1145/1401890.1401944]
 
   \bibitem{5} Greg Linden , Brent Smith , Jeremy York, \textit{Amazon.com Recommendations: Item-to-Item Collaborative Filtering}, IEEE Internet Computing, v.7 n.1, p.76-80, January 2003  [doi>10.1109/MIC.2003.1167344]
 
-  \bibitem{6} Prem Melville , Raymod J. Mooney , Ramadass Nagarajan, \textit{Content-boosted collaborative filtering for improved recommendations, Eighteenth national conference on Artificial intelligence}, p.187-192, July 28-August 01, 2002, Edmonton, Alberta, Canada
+  %\bibitem{6} Prem Melville , Raymod J. Mooney , Ramadass Nagarajan, \textit{Content-boosted collaborative filtering for improved recommendations, Eighteenth national conference on Artificial intelligence}, p.187-192, July 28-August 01, 2002, Edmonton, Alberta, Canada
 
-  \bibitem{7} M. J. Pazzani and D. Billsus. \textit{Content-based recommendation systems}. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, The Adaptive Web, volume 4321 of Lecture Notes in Computer Science, chapter 10, pages 325--341. Springer-Verlag, Berlin, Germany, May 2007.
+  %\bibitem{7} M. J. Pazzani and D. Billsus. \textit{Content-based recommendation systems}. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, The Adaptive Web, volume 4321 of Lecture Notes in Computer Science, chapter 10, pages 325--341. Springer-Verlag, Berlin, Germany, May 2007.
 
-  \bibitem{8} Badrul Sarwar , George Karypis , Joseph Konstan , John Reidl, \textit{Item-based collaborative filtering recommendation algorithms}, Proceedings of the 10th international conference on World Wide Web, p.285-295, May 01-05, 2001, Hong Kong, Hong Kong  [doi>10.1145/371920.372071]
+  %\bibitem{8} Badrul Sarwar , George Karypis , Joseph Konstan , John Reidl, \textit{Item-based collaborative filtering recommendation algorithms}, Proceedings of the 10th international conference on World Wide Web, p.285-295, May 01-05, 2001, Hong Kong, Hong Kong  [doi>10.1145/371920.372071]
 
-  \bibitem{9} B. M. Sarwar, G. Karypis, J. A. Konstan, and J. T. Riedl. \textit{Application of dimensionality reduction in recommender system - a case study}. In In ACM WebKDD Workshop, 2000.
+  %\bibitem{9} B. M. Sarwar, G. Karypis, J. A. Konstan, and J. T. Riedl. \textit{Application of dimensionality reduction in recommender system - a case study}. In In ACM WebKDD Workshop, 2000.
 
-  \bibitem{10} J. B. Schafer, D. Frankowski, J. Herlocker, and S. Sen. \textit{Collaborative filtering recommender systems}. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, The Adaptive Web, volume 4321 of Lecture Notes in Computer Science, chapter 9, pages 291--324. Springer-Verlag, Berlin, Germany, may 2007.
+  %\bibitem{10} J. B. Schafer, D. Frankowski, J. Herlocker, and S. Sen. \textit{Collaborative filtering recommender systems}. In P. Brusilovsky, A. Kobsa, and W. Nejdl, editors, The Adaptive Web, volume 4321 of Lecture Notes in Computer Science, chapter 9, pages 291--324. Springer-Verlag, Berlin, Germany, may 2007.
 
-  \bibitem{11} David H. Stern , Ralf Herbrich , Thore Graepel, \textit{Matchbox: large scale online bayesian recommendations}, Proceedings of the 18th international conference on World wide web, April 20-24, 2009, Madrid, Spain  [doi>10.1145/1526709.1526725]
+  %\bibitem{11} David H. Stern , Ralf Herbrich , Thore Graepel, \textit{Matchbox: large scale online bayesian recommendations}, Proceedings of the 18th international conference on World wide web, April 20-24, 2009, Madrid, Spain  [doi>10.1145/1526709.1526725]
 
-  \bibitem{12} A. Toescher, M. Jahrer, and R. Legenstein. \textit{Improved neighborhood-based algorithms for large-scale recommender systems}. In KDD '08: Proceeding of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, Graz, Austria, 2008. ACM.
+  %\bibitem{12} A. Toescher, M. Jahrer, and R. Legenstein. \textit{Improved neighborhood-based algorithms for large-scale recommender systems}. In KDD '08: Proceeding of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, Graz, Austria, 2008. ACM.
 
-  \bibitem{13} Jun Wang , Arjen P. de Vries , Marcel J. T. Reinders, \textit{Unifying user-based and item-based collaborative filtering approaches by similarity fusion}, Proceedings of the 29th annual international ACM SIGIR conference on Research and development in information retrieval, August 06-11, 2006, Seattle, Washington, USA  [doi>10.1145/1148170.1148257]
+  %\bibitem{13} Jun Wang , Arjen P. de Vries , Marcel J. T. Reinders, \textit{Unifying user-based and item-based collaborative filtering approaches by similarity fusion}, Proceedings of the 29th annual international ACM SIGIR conference on Research and development in information retrieval, August 06-11, 2006, Seattle, Washington, USA  [doi>10.1145/1148170.1148257]
+
+  \bibitem{september} \url{http://en.wikipedia.org/wiki/Eternal\_September}
+  \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
@@ -191,8 +241,6 @@ Both corpora are joined in a unified mathematical model, which describes the com
 \caption{Frontend Database Relational Diagram}
 \label{fig:database}
 \end{figure}
-
-\end{thebibliography}
 
 % ============= FIN ==============
 
