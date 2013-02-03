@@ -92,7 +92,7 @@ We believe Project October is the first attempt to apply recommendation techniqu
 
 \subsection{Background}
 It is our hypothesis that recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
-Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users thus preventing the Eternal September phenomenon.
+Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users and thus prevent the Eternal September phenomenon.
 Users that prefer intellectual discourse will automatically be recommended articles and comments that fit such a criteria, and users that prefer simpler entertainment will be recommended such stories.
 
 This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
@@ -104,7 +104,9 @@ For the development and evaluation of our proposed hybrid recommender system, we
 Both corpora are joined in a unified mathematical model, which describes the complex network of interdependencies.
 
 \subsection{Intended Audience}
-% The audience is power web users that want the most accurate news source possible
+We intend Project October to be open to the public.
+Ideally, the user base will be a combination of the best users from the early days of Reddit, Hacker News, Slashdot, etc., that have been longing for a news aggregation site that shows them precisely what they want to read.
+As such, we expect the user base to be somewhat technical in nature at first, some of the Internet's power users.
 \subsection{Requirements}
 \subsubsection{Frontend}
 The frontend will be a standard social news aggregator, similar to Reddit or Hacker News.
@@ -121,17 +123,18 @@ This is analogous to upvoting in Reddit, except that giving an article cred on O
 \subsubsection{Backend}
 % Tom: The backend will use a graph database, yadda yadda
 % Raja: Hey! The backend does more than that!!
+% Tom: zzzzzzzzzzzzzzzz
 
 The backend will contain a recommender system, which will consist of a text classifier for incoming \& existing articles to be indexed into a graph database, a learning algorithm to combine what the recommender has learned about the user with the index information, and finally an API to receive queries and return results. The text classifier will be a combination of Latent Semantic Analysis with Singular Value Decomposition and Latent Dirchlet Allocation \ref{lda}, allowing for the clustering of learned topics to create categories of topics while maintaining coherence to produce an index similar to that formed by human judgement. As for the learning algorithm, we will be using a custom bayesian framework \ref{bayesian} that will allow for weighting based on a particular user's current interest instead of a stored calculated interest or utilizing the general population's interests.
 Finally, the method of receiving queries and returning results will utilize an API, which is discussed in the following section.
 
-Essentially the approach works as follows: 
+Essentially the approach works as follows:
     \begin{enumerate}
         \item October predicts the user’s authentic news interests regardless of the news trend, using the user’s clicks in each past time period
         \item Predictions made with data in a series of past time periods are combined to gain an accurate prediction of the user’s authentic news interests
         \item October predicts the user’s current interests by combining their authentic news interests and the current news trend in the cluster the user belongs to within the property graph.
     \end{enumerate}
-    
+
 \subsubsection{Frontend/Backend API}
 October will employ an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
@@ -148,7 +151,7 @@ The parameters to this API call can be of many types. For example, "User comment
 \end{description}
 
 \subsection{Project Management}
-We will manage the project using agile development strategies.
+We will manage the project using agile development methodologies.
 
 \subsubsection{Agile Development}
 In order to schedule work, we have employed Pivotal Tracker, an online task management solution.
@@ -158,19 +161,12 @@ Work relating to each category will be assigned to the same people until we make
 At least until that point, Brian and Rajesh will work on the backend while Tom and Mika create the frontend.
 
 \subsubsection{Scrum}
-We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeting to discuss the current progress.
+We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeting to discuss the current progress, any stumbling blocks, and what work is coming up in the immediate future.
 
 \subsubsection{Iterations}
-% We will have iterations of one week in duration
-% Perhaps discuss the actual plans for the next few iterations?
-
-
-
-
-
-
-
-
+We plan to have bi-weekly iterations.
+Although 1-week iterations work well for industry, we will use bi-weekly iterations because of the slower pace of the project relative to full-time work.
+At the end of each iteration, team members will re-sync and make sure that we have a clear outline for the next iteration.
 
 % ============= References ==============
 \newpage
@@ -179,7 +175,7 @@ We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeti
   \bibitem{1} Gediminas Adomavicius , Alexander Tuzhilin, \textit{Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions}, IEEE Transactions on Knowledge and Data Engineering, v.17 n.6, p.734-749, June 2005  [doi>10.1109/TKDE.2005.99]
   \bibitem{5} Greg Linden , Brent Smith , Jeremy York, \textit{Amazon.com Recommendations: Item-to-Item Collaborative Filtering}, IEEE Internet Computing, v.7 n.1, p.76-80, January 2003  [doi>10.1109/MIC.2003.1167344]
   \bibitem{bayesian} Jensen, V. \textit{Bayesian Networks and Decision Graphs}. Springer, 2001
-  \bibitem{lda} Arthur Asuncion, Padhraic Smyth, Max Welling. \textit{Asynchronous Distributed Learning of Topic Models}. NIPS 2008. 
+  \bibitem{lda} Arthur Asuncion, Padhraic Smyth, Max Welling. \textit{Asynchronous Distributed Learning of Topic Models}. NIPS 2008.
   \bibitem{september} \url{http://en.wikipedia.org/wiki/Eternal\_September}
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
 \end{thebibliography}

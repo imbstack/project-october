@@ -8,5 +8,5 @@
 \contentsline {subsubsection}{\numberline {2.3.3}Frontend/Backend API}{5}{subsubsection.2.3.3}
 \contentsline {subsection}{\numberline {2.4}Project Management}{5}{subsection.2.4}
 \contentsline {subsubsection}{\numberline {2.4.1}Agile Development}{5}{subsubsection.2.4.1}
-\contentsline {subsubsection}{\numberline {2.4.2}Scrum}{5}{subsubsection.2.4.2}
-\contentsline {subsubsection}{\numberline {2.4.3}Iterations}{5}{subsubsection.2.4.3}
+\contentsline {subsubsection}{\numberline {2.4.2}Scrum}{6}{subsubsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.3}Iterations}{6}{subsubsection.2.4.3}
