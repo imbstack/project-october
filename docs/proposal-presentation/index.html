@@ -6,23 +6,12 @@
     <link href='resource/show.css' media='screen, projection, print' rel='stylesheet' type='text/css' />
     <link href='resource/local.css' media='screen, projection, print' rel='stylesheet' type='text/css' />
     <script charset='utf-8' src='resource/slidy.js' type='text/javascript'></script>
-    <style type='text/css'>
-      body, html {
-        background-color: #f7f7f7;
-      }
-      h1, h2 {
-        padding-bottom: 8px;
-        border-bottom: 4px solid #d67d2f;
-      }
-    </style>
   </head>
   <body>
-    <div class='slide'>
+    <div class='slide cover'>
       <h1>Project October</h1>
-      <h3>Tom Dooner</h3>
-      <h3>Rajesh Cherukuri</h3>
-      <h3>Brian Stack</h3>
-      <h3>Mika Little</h3>
+      <img src="resource/october_logo.png" height=80pt/>
+      <h3>{Tom Dooner, Brian Stack, Mika Little, Rajesh Cherukuri}</h3>
       <h4>Case Western Reserve University</h4>
     </div>
 
@@ -32,9 +21,9 @@
         <li>As communities grow larger, it is impossible to maintain the initial feel.</li>
         <li>"Initial Feel" = Thoughtful, Long-form, High Quality postings</li>
         <li>Can we engineer a solution to this?
-          <ul>
-            <li>What is the source of the decline?</li>
-          </ul>
+        <ul>
+          <li>What is the source of the decline?</li>
+        </ul>
         </li>
       </ul>
     </div>
@@ -43,13 +32,13 @@
       <h2>Causes of Separation From Initial Feel</h2>
       <ol>
         <li>Users are all presented with the same content by default
-          <ul>
-            <li>People will tailor their submissions to their audience</li>
-          </ul>
+        <ul>
+          <li>People will tailor their submissions to their audience</li>
+        </ul>
         </li>
         <li>Customization is manual<ul>
           <li>Hard to find desirable sub-communities to join</li>
-          </ul>
+        </ul>
         </li>
         <!-- other reasons...? -->
       </ol>
@@ -64,8 +53,66 @@
       </ul>
     </div>
 
-    <div class='slide' style='text-align: center'>
-      <img src='resource/frontend_mockup.jpg' height='90%' />
+    <div class='slide'>
+      <h2>Front Page Mockup</h2>
+      <p style="text-align: center">
+      <img src='resource/frontend_mockup.jpg' height='75%' />
+      </p>
     </div>
+
+    <div class="slide">
+      <h2>Mining & Recommender</h2>
+      <p>
+      Essentially the approach works as follows:
+      <ol>
+        <li> 
+        <p>October predicts the user's authentic news interests regardless of the news trend, using the user's clicks in each past time period </p>
+        </li>
+
+        <li> 
+        <p> Predictions made with data in a series of past time periods are combined to gain an accurate prediction of the user's authentic news interests </p>
+        </li>
+
+        <li> 
+        <p>October predicts the user's current interests by combining their authentic news interests and the current news trend in the cluster the user belongs to within the property graph.</p>
+        </li>
+      </ol>
+      </p>
+    </div>
+
+    <div class="slide">
+      <h2>Mining & Recommender</h2>
+      <p>
+      Methods:
+      <ul>
+        <li> 
+        The text classifier will be a combination of Latent Semantic Analysis with Singular Value Decomposition and Latent Dirchlet Allocation
+        </li>
+
+        <li> 
+        As for the learning algorithm, we will be using a custom bayesian framework.
+        </li>
+      </ul>
+      </p>
+    </div>
+
+    <div class="slide">
+      <h2>Recommender Diagram</h2>
+      <p style="text-align: center">
+      <img src='resource/rec_diagram.png' height='75%' />
+      </p>
+    </div>
+
+    <div class="slide">
+      <h2>Architecture</h2>
+      <ul>
+        <li>Service Oriented Architecture (SOA) </li>
+        <li>Communication using Thrift Interface Definition Language</li>
+        <li>Frontend and Recommender both have access to Frontend database (Recommender is read-only)</li>
+        <li>Only Recommender interacts with graph</li>
+      </ul>
+      <p>Other consideration:  All requests are cached heavily using memcached</p>
+    </div>
+
   </body>
 </html>
