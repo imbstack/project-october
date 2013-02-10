@@ -1,0 +1,39 @@
+body, html {
+    background-color: #f7f7f7;
+    font-family: "League Gothic";
+    overflow: hidden;
+}
+h1, h2 {
+    background-image: url('october_logo.png');
+    background-size: 91pt;
+    background-repeat: no-repeat;
+    background-position: right;
+    padding-bottom: 8px;
+    border-bottom: 4px solid #d67d2f;
+    letter-spacing: 2pt;
+}
+
+h3, h4 {
+    color: #776;
+}
+
+div.slide.cover {
+    padding-top:6%;
+    text-align:center;
+}
+div.slide h1 {
+    padding-top:10pt;
+}
+div.slide.cover h1 {
+    margin-right:0px;
+    padding-right:0px;
+    font-size:3.5em;
+}
+
+@font-face {
+    font-family: "League Gothic";
+    src: url("League_Gothic-webfont.eot")  format("eot"),
+         url("League_Gothic-webfont.woff") format("woff"),
+         url("League_Gothic-webfont.ttf")  format("truetype"),
+         url("League_Gothic-webfont.svg")  format("svg");
+}
