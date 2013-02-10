@@ -14,7 +14,12 @@ Update all of the submodules with `git submodule update --init`. Then `bundle in
 
 Running
 -------
-First get the [backend](https://github.com/rxc178/project-october-backend) running. Then simply execute `rails server` from the top level directory.
+You have two options to get the recommender service running:
+
+* First is to simply start in the development environment and use the remote dev server we're hosting.  (NOTE: This resource is shared between all development, don't muck it up)
+* Second is to get the [backend](https://github.com/rxc178/project-october-backend) running yourself.
+
+Then simply execute `rails server` from the top level directory.
 
 Authors
 -------
