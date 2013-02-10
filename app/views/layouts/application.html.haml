@@ -3,7 +3,22 @@
   %head
     %title Project October
     = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
+    - content_for :javascripts do
+      = javascript_include_tag "application"
+    / Intentionally block page load to get the fonts
+    = javascript_include_tag '//use.typekit.net/vxb6zze.js'
+    :javascript
+      try{Typekit.load();}catch(e){}
     = csrf_meta_tags
   %body
-    = yield
+    .container#logobar
+      .row
+        .span4
+          = image_tag 'logo.png', :width => '200'
+        .span4
+          =text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
+        .span4
+          =link_to 'Login', '#', :class => 'btn'
+    .container
+      = yield
+    = yield :javascripts
