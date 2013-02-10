@@ -18,8 +18,43 @@ body, html {
   background-color: #eee;
 }
 
+h1, h2, h3 {
+  font-family: 'adelle', serif;
+}
+
 #logobar {
   margin: 30px auto;
+}
+
+/*
+ * ============================================================================
+ * Display of news articles:
+ * ============================================================================
+ */
+#articles {
+  position: relative;
+}
+.article.featured {
+  background-size: cover;
+  height: 400px;
+}
+.article.featured .title {
+  width: 100%;
+}
+.article.featured h2 {
+  position: absolute;
+  bottom: 0px;
+  margin: 0;
+  padding: 20px;
+  color: #eee;
+}
+.article.square {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+.article.square h3 {
+  font-family: 'ff-nuvo-sc-web-pro';
+  font-weight: normal;
 }
 
 /*
