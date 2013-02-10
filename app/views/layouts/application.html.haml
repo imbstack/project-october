@@ -3,8 +3,6 @@
   %head
     %title Project October
     = stylesheet_link_tag    "application", :media => "all"
-    - content_for :javascripts do
-      = javascript_include_tag "application"
     / Intentionally block page load to get the fonts
     = javascript_include_tag '//use.typekit.net/vxb6zze.js'
     :javascript
@@ -19,4 +17,5 @@
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
     .container#articles
       = yield
+    = javascript_include_tag "application"
     = yield :javascripts
