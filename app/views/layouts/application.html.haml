@@ -13,9 +13,8 @@
   %body
     .container#logobar
       .row
-        .span8
-          = image_tag 'logo.png', :width => '200', :alt => 'October'
-        .span4
+        .span12
+          = image_tag 'logo_small.png', :width => '200', :alt => 'October'
           = link_to 'Login', '#', :class => 'btn', :style => 'float: right'
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
     .container#articles

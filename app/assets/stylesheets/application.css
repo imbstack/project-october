@@ -15,8 +15,12 @@
 
 body, html {
   font-family: "ff-nuvo-sc-web-pro";
+  font-size: 10px;
   background-color: #eee;
 }
+h1 { font-size: 3.85em; }
+h2 { font-size: 3.15em; line-height: 1.3em; }
+h3 { font-size: 2.45em; }
 
 h1, h2, h3 {
   font-family: 'adelle', serif;
@@ -24,6 +28,11 @@ h1, h2, h3 {
 
 #logobar {
   margin: 30px auto;
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  body, html {
+    font-size: 8px;
+  }
 }
 
 /*
@@ -37,6 +46,7 @@ h1, h2, h3 {
 .article.featured {
   background-size: cover;
   height: 400px;
+  position: relative;
 }
 .article.featured .title {
   width: 100%;
@@ -49,12 +59,15 @@ h1, h2, h3 {
   color: #eee;
 }
 .article.square {
-  padding: 10px 0;
+  padding: 0 0 10px;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
 }
-.article.square h3 {
+.article.square .subtitle {
   font-family: 'ff-nuvo-sc-web-pro';
   font-weight: normal;
+  line-height: 1em;
+  color: #555;
 }
 
 /*
