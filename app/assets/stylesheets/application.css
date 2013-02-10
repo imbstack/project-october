@@ -43,8 +43,13 @@ h1, h2, h3 {
 #articles {
   position: relative;
 }
+.article {
+  float: left;
+  margin-bottom: 20px;
+}
 .article.featured {
   background-size: cover;
+  width: 64%;
   height: 400px;
   position: relative;
 }
@@ -61,7 +66,7 @@ h1, h2, h3 {
 .article.square {
   padding: 0 0 10px;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
+  width: 32%;
 }
 .article.square .subtitle {
   font-family: 'ff-nuvo-sc-web-pro';
