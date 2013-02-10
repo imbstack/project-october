@@ -13,12 +13,11 @@
   %body
     .container#logobar
       .row
+        .span8
+          = image_tag 'logo.png', :width => '200', :alt => 'October'
         .span4
-          = image_tag 'logo.png', :width => '200'
-        .span4
-          =text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
-        .span4
-          =link_to 'Login', '#', :class => 'btn'
-    .container
+          = link_to 'Login', '#', :class => 'btn', :style => 'float: right'
+          = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
+    .container#articles
       = yield
     = yield :javascripts
