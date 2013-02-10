@@ -8,6 +8,34 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap.min.css
+ *= require bootstrap-responsive.min.css
  *= require_self
- *= require_tree .
  */
+
+body, html {
+  font-family: "ff-nuvo-sc-web-pro";
+  background-color: #eee;
+}
+
+#logobar {
+  margin: 30px auto;
+}
+
+/*
+ * ============================================================================
+ * Bootstrap Overrides:
+ * ============================================================================
+ */
+.btn {
+  background-image: none;
+}
+/* .typekit-badge { display: none !important; } */
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  border-radius: 0px;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  box-shadow: 0 0 3px #CB6924;
+  border-color: #CB6924;
+}
