@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: bstack
 
 two:
-  name: MyString
+  name: tdooner
+
+three: 
+  name: raj
+
+four:
+  name: mika
