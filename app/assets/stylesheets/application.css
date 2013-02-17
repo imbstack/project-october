@@ -43,6 +43,10 @@ h1, h2, h3 {
 #articles {
   position: relative;
 }
+#articles .row {
+  width: 100%;
+  margin: auto;
+}
 .article {
   float: left;
   margin-bottom: 20px;
