@@ -9,6 +9,9 @@ gem 'sass' # rake was throwing errors without this
 
 gem 'sqlite3'
 
+# So that console works
+gem 'rb-readline'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
