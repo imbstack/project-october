@@ -4,8 +4,4 @@ rvm:
 before_script: bundle exec rake db:migrate
 notifications:
   email: false
-  irc:
-    on_success: always
-    on_failure: always
-    channels:
-      - "irc.case.edu#project-october"
+  irc: "irc.case.edu#project-october"
