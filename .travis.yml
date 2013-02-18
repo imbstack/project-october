@@ -1,7 +1,11 @@
 language: ruby
 rvm:
   - "1.9.3"
-scripts:
-  - RAILS_ENV=test bundle exec rake db:migrate test --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake test
+before_script: bundle exec rake db:migrate
+notifications:
+  email: false
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+      - "irc.case.edu#project-october"
