@@ -78,6 +78,30 @@ h1, h2, h3 {
   line-height: 1em;
   color: #555;
 }
+.article-links {
+  list-style: none;
+  margin-left: 0px;
+}
+.article-links li {
+  float: left;
+  padding: 0;
+  margin-left: 10px;
+}
+.article-links a {
+  color: #555;
+}
+.article-links li:first-child {
+  margin-left: 0px;
+}
+.article.featured .article-links {
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 4px;
+  padding-left: 20px;
+}
+.article.featured .article-links a {
+  color: #fff;
+}
 
 /*
  * ============================================================================
