@@ -2,11 +2,15 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'haml'
+gem 'sass' # rake was throwing errors without this
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+
+# So that console works
+gem 'rb-readline'
 
 
 # Gems used only for assets and not required
@@ -40,3 +44,8 @@ gem 'jquery-rails'
 
 # To use thrift
 gem 'thrift'
+
+group :test do
+  gem 'minitest'
+  gem 'turn', :require => false
+end
