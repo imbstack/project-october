@@ -2,12 +2,16 @@
 
 one:
   name: bstack
+  email: bstack@octob.org
 
 two:
   name: tdooner
+  email: tdooner@octob.org
 
 three: 
   name: raj
+  email: raj@octob.org
 
 four:
   name: mika
+  email: mika@octob.org
