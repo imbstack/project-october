@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -13,10 +15,24 @@ class User < ActiveRecord::Base
     :too_long => "Usernames cannot have less than %{count} characters"}
   validates :name, :uniqueness => {:message => "This username already exists"}
   validate :name_cannot_have_whitespace
+  validate :name_cannot_have_special_chars
+  validate :name_cannot_have_twitter_chars
 
   def name_cannot_have_whitespace
     if name.match /\s/
       errors[:name] << "Usernames cannot have spaces in them"
+    end
+  end
+
+  def name_cannot_have_special_chars
+    if name.match /[^\p{L}]/
+      errors[:name] << "Usernames cannot have special characters in them"
+    end
+  end
+
+  def name_cannot_have_twitter_chars
+    if name.match /[@#]/
+      errors[:name] << "Usernames cannot have @ or # characters in them"
     end
   end
 end
