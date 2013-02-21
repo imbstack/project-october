@@ -9,7 +9,7 @@ begin
   # thrift
   transport = Thrift::FramedTransport.new(Thrift::Socket.new('127.0.0.1', 9090))
   protocol = Thrift::BinaryProtocol.new(transport)
-  client = Recommender::Client.new(protocol)
+  THRIFTCLIENT = Backend::Recommender::Client.new(protocol)
 
   transport.open()
 rescue Thrift::TransportException => e
