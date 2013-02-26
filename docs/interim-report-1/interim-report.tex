@@ -120,8 +120,9 @@ Both corpora are joined in a unified mathematical model, which describes the com
 \subsection{Intended Audience}
 We intend Project October to be open to the public.
 As such, we expect the user base to be somewhat technical in nature at first, some of the Internet's power users.
-\subsection{Application}
-\subsubsection{Frontend}
+
+\section{Application}
+\subsection{Frontend}
 The frontend will be a standard social news aggregator.
 Upon going to the homepage, logged-out users will be presented with a splash page that describes the allure of Project October and offers a registration link.
 Users can register for the application by selecting a username and password.
@@ -133,7 +134,7 @@ Users will be able to click on the headline (or associated image, if existent) t
 Each news article will feature a link to view the associated comments and it will feature a corner icon of how much credibility (``cred'') a given article possesses.
 This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula.
 
-\subsubsection{Backend}
+\subsection{Backend}
 % Tom: The backend will use a graph database, yadda yadda
 % Raja: Hey! The backend does more than that!!
 % Tom: zzzzzzzzzzzzzzzz
@@ -157,7 +158,7 @@ Essentially the approach works as follows:
         \item October predicts the user’s current interests by combining their authentic news interests and the current news trend in the cluster the user belongs to within the property graph.
     \end{enumerate}
 
-\subsubsection{Frontend/Backend API}
+\subsection{Frontend/Backend API}
 October will employ an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
 
@@ -175,6 +176,12 @@ The parameters to this API call can be of many types. For example, "User comment
 These two calls manifest themselves in Thrift with a few simple object
 definitions and an interface.  The abbreviated version \texttt{0.1.0} is
 attached as Appendix~\ref{app:thrift}.
+
+\section{Methodology}
+% TODO: Write some more here...
+% "This section should discuss any data structure design/maintenance problems,
+% or algorithmic problems / challenges, and how they will be/are solved; time
+% and space complexity analys is (if needed) of your algorithms, etc."
 
 \subsection{Project Management}
 We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
@@ -198,13 +205,34 @@ Release dates will involve pushing the current state of the project to a continu
 We plan to have weekly iterations.
 At the end of each iteration, team members will re-sync and make sure that we have a clear outline for the next iteration.
 
-\subsection{User Interface}
+\section{Software Design}
+% This section will describe the progress towards the usual software design information, with likely components on
+% - Application Software Requirements
+% - Application Software Specifications
+% - Software Architecture (i.e., client - server architecture; three - tiered design, etc.)
+% - Design Document
 
-\subsection{Testing \& Evaluation}
+\section{Project Management--Administrative Details}
+% Design/update your Gantt chart to show any changes in milestones, timetable,
+% or responsibility (especially if there are multiple team members). Be sure to
+% properly indicate who is actually performing each task and the degree of
+% completion of each task.  Describe how well the project management plan is
+% working. Were there unforeseen problems with any of the tasks that you ha ve
+% had to work around? Are there delays in obtaining parts or software?  Were
+% major changes to the management plan or back - up plans requ ired and
+% implemented? What work - arounds were necessary to keep the project on
+% schedule?  It is very important that you des cribe any changes in the project
+% plan since the proposal and the reasons for them.  Finally, use your
+% management plan to carefully think about what can be realistically done by
+% your 3 team between now and the end of the semester.
 
-\subsection{Project Progress}
+\section{User Interface}
 
-\subsubsection{Discussions \& Conclusions}
+\section{Testing \& Evaluation}
+
+\section{Project Progress}
+
+\subsection{Discussions \& Conclusions}
 
 \section{Appendix}
 
@@ -227,13 +255,6 @@ At the end of each iteration, team members will re-sync and make sure that we ha
 \end{thebibliography}
 
 % ============= Database Schematic ==============
-\begin{figure}
-\centering
-\includegraphics{db_diagram.pdf}
-\caption{Frontend Database Relational Diagram}
-\label{fig:database}
-\end{figure}
-
 \newpage
 \appendix
 \section{Thrift API Definition}
@@ -322,6 +343,13 @@ service Recommender {
 
 \section{Database Design}
 \subsection{Frontend Database}
+\begin{figure}
+\centering
+\includegraphics{db_diagram.pdf}
+\caption{Frontend Database Relational Diagram}
+\label{fig:database}
+\end{figure}
+Please see Figure \ref{fig:database}.
 \subsection{Backend Database}
 
 \section{User Manual}
