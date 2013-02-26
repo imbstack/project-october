@@ -24,5 +24,7 @@
       });
     });
 .row
-  -['feature_article', 'square_article_with_picture', 'square_article'].cycle(10).to_a.sample(8).each do |a|
-    = render a
+  -@posts.each do |p|
+    = render 'square_article', :article => p
+  -#['feature_article', 'square_article_with_picture', 'square_article'].cycle(10).to_a.sample(8).each do |a|
+    =# render a
