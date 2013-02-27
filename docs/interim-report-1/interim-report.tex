@@ -109,7 +109,7 @@ We believe Project October is the first attempt to apply recommendation techniqu
 \subsection{Background}
 It is our hypothesis that the recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
 Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users and thus prevent the Eternal September phenomenon.
-Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.  
+Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.
 
 This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
 In particular, we will be linking various news sources and user submitted sources.
@@ -177,6 +177,23 @@ The parameters to this API call can be of many types. For example, "User comment
 These two calls manifest themselves in Thrift with a few simple object
 definitions and an interface.  The abbreviated version \texttt{0.1.0} is
 attached as Appendix~\ref{app:thrift}.
+
+\section{Methodology}
+\subsection{Frontend}
+The frontend of the application is written using the \textit{Ruby on Rails} (``Rails'') framework.
+Rails employs a Model-View-Controller architecture that allows for easy creation of sites which employ RESTful architecture.
+October's Frontend will maintain collections of objects (such as Posts, Comments, Users, etc., see the database diagram in Figure \ref{fig:database}), and allow operations on those objects, so it is a natural fit for a framework such as Rails.
+Through the use of the bundled Object Relational Mapper \textit{ActiveRecord}, common database queries will be abstracted away from the frontend.
+
+We use HAML as an HTML templating engine, as its indent-based structure allows for an expressive and concise representation of HTML.
+Other frontend technologies we employ include SASS as a templating language for CSS, and CoffeeScript, which compiles to JavaScript.
+The management of all static assets is handled automatically by the Rails Asset Pipeline, which automatically compiles and minimizes all static assets on every deploy to ensure bandwidth efficiency and, consequently, minimize page load times.
+
+\subsection{Backend}
+% TODO: Write some more here...
+% "This section should discuss any data structure design/maintenance problems,
+% or algorithmic problems / challenges, and how they will be/are solved; time
+% and space complexity analys is (if needed) of your algorithms, etc."
 
 \subsection{Project Management}
 We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
