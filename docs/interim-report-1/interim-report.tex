@@ -40,7 +40,7 @@
 \fancyhead[L]{ \includegraphics[scale=0.3]{img/cwru-formal-logo-blue-no-tag.png} }
 \vspace*{6cm}
 \begin{center}
-\Huge  {Project October}\\
+\Huge  {Project October Tekin}\\
 \vspace{1cm}
 \huge {Read news that you want to read}\\
 \vspace{1cm}
@@ -82,10 +82,11 @@ Date: & \today
 \section{Abstract}
 
 In modern news aggregation services, such as Reddit, Slashdot, Digg, and Hacker News, longtime members report noticing a marked decrease in quality of discourse as the services gain mainstream attention.
-This gradual but irreversible decline caused by the influx of new users dates back to the newsgroup era, when new college students would log in for the first times in September.
-After AOL opened newsgroups to the masses, the community standards continued to
-devolve, according to newsgroup veterans\cite{september}. This effect came to be
-known as ``Eternal September''.
+This gradual but irreversible decline heralds back to the newsgroup era, when new college students would log in for the first time come September, causing an influx of new users and subsequently diluting discussion upon the sites which they joined.
+As an example, after AOL opened newsgroups to the masses, the community standards continued to
+devolve, according to newsgroup veterans\cite{september}. This gradual decline of content quality due to
+large numbers of new users came to be known as ``Eternal September'', being ``Eternal'' as nowadays,
+the influx of new users is no longer restricted to September, but now persists through all months of the year.
 
 The inevitable loss of the longtime members further perpetuates the problem, and causes large numbers of excellent contributors to feel out-of-place in their own community.
 We aim to engineer a service that uses technological principles to avoid this, thus improving the user experience and allowing a large community to benefit from thoughtful discourse and interesting articles. \\
@@ -96,18 +97,19 @@ We aim to engineer a service that uses technological principles to avoid this, t
 
 \section{Project October: Hybrid Recommender System}
 
-Due to the enormous amount of information available online, the need for a highly developed personalization and filtering system is growing permanently.
+Due to the ever-growing amount of information available online, the need for a highly developed personalization and filtering system is growing significantly.
 Recommender systems constitute a specific type of information filtering that
 attempt to present items according the interests expressed by a user\cite{adom}.
 Most web recommenders are employed for e-commerce applications or customer
 adapted websites, which assist users in decision making by providing
-personalized information \cite{linden}, but the same techniques that suggest related items on e-commerce websites can recommend news articles to users who will enjoy reading them.
+personalized information \cite{linden}, but the same techniques that
+suggest related items on e-commerce websites can recommend news articles to users as well.
 We believe Project October is the first attempt to apply recommendation techniques to social news aggregation.
 
 \subsection{Background}
-It is our hypothesis that recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
+It is our hypothesis that the recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
 Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users and thus prevent the Eternal September phenomenon.
-Users that prefer intellectual discourse will automatically be recommended articles and comments that fit such a criteria, and users that prefer simpler entertainment will be recommended such stories.
+Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.  
 
 This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
 In particular, we will be linking various news sources and user submitted sources.
@@ -124,15 +126,15 @@ As such, we expect the user base to be somewhat technical in nature at first, so
 \section{Application}
 \subsection{Frontend}
 The frontend will be a standard social news aggregator.
-Upon going to the homepage, logged-out users will be presented with a splash page that describes the allure of Project October and offers a registration link.
+Upon going to the homepage, new and logged-out users will be presented with a splash page that describes the nature of Project October and offers a registration link.
 Users can register for the application by selecting a username and password.
 
 When logged in, users will be presented with their personalized content.
-We are modeling the design after the front page of a newspaper -- articles that we judge to be more interesting to a user will be placed in the most prominent positioning, and articles that are less important will fill the side columns and occupy less space.
+The design is modelled after the front page of a newspaper -- articles that are evaluated to be more interesting to a user will be placed in more prominent positions while articles that are deemed less relevant to the user's interest will fill the side columns, be located further down the page, and occupy less space.
 Users will be able to click on the headline (or associated image, if existent) to be taken to the original news source.
 
-Each news article will feature a link to view the associated comments and it will feature a corner icon of how much credibility (``cred'') a given article possesses.
-This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula.
+Each news article will feature a link to view the associated comments as well as an icon (located in the corner of the article text/image) displaying the credibility (``cred'') a given article possesses.
+This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula. Therefore, cred serves two purposes: 1. To inform other users of the quality of the article. 2. To inform the recommender system of the user's interests. 
 
 \subsection{Backend}
 % Tom: The backend will use a graph database, yadda yadda
