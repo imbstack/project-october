@@ -187,10 +187,29 @@ Other frontend technologies we employ include SASS as a templating language for 
 The management of all static assets is handled automatically by the Rails Asset Pipeline, which automatically compiles and minimizes all static assets on every deploy to ensure bandwidth efficiency and, consequently, minimize page load times.
 
 \subsection{Backend}
+The backend of the application is written primarily in Scala and utilizes its uniques features for express purposes, such that this language choice is not trivial. The use of Scala was mainly to create potentially high volume services that form distributed systems. As such Scala emphasizes scalability, is a functional language as well as object oriented, statically typed, and best of all works within the Java Virtual Machine. These features allow us to build efficient applications and use the features of the JVM to scale our finished product. Beyond this, while frameworks like Play! were available for use, we chose to develop our project using pure Scala.
+
+As such, the backend is split into 4 components, a classifier, a clusterer, a graph database and a recommender. Titan DB was selected as the graph database service. Titan can allow for supporting thousands of concurrent users reading and writing to a single massive-scale graph. The way we approached using this technology appropriately was to create a property graph structure of our data that was epimorphic to the schema for the frontend database (\ref{fig:backend-graph}). For example, when a user reads an article, a 'read' edge connects the user to the article they have accessed. Moreover, all of the friends of that user now have a connection to that article and may even read it themselves. Essentially, for this property, time can be declared as a primary key. Titan supports vertex-centric indices which ensure $O(log(n))$ lookups of adjacent vertices based on the incident edge labels and properties, where $n$ is the number of edges emanating from the vertex. This ensures that despite the size of the graph, the lookups will not be expensive.
+
+While we can create vertices for users, posts, and comments, etc., for recommendations to be made we require the creation of edges. These edges are implemented to support either user provided information or content-based analysis. As such, we needed to approach how to connect vertices that do not have an explicit relationship. It was determined that in the case of posts, clustering based on topic and sentiment was ideal. We determined that using a naive bayesian classifier to determine the topics of posts and using opinion mining to determine the sentiment was the ideal route. Naive Bayesian classifiers provide the advantage that only a small amount of training data is required to start classification, which is ideal to create relations between posts quickly. Opinion mining was implemented using a knowledge-base, specifically SentiWordNet to extract the semantic and affective information.
+
+Using the information from the related post, comments are connected to posts via a parent edge. This also allows comments to inherit a topic. Unlike Posts, Comments do not undergo opinion mining. In this case, material is too short and at times the semantic meaning of the statement is not always understood. To avoid this pollution, users may tag comments. Initially, users can create these tags on their own, which will undergo a much lighter version of opinion mining. The aggregate of opinions will be kept as a property on the comment's vertex. The reasoning for this lies with the recommendation service.
+
+The recommendation service is the heart of the backend. Though there is some implied complexity with this tool, it is in fact a highly optimized graph traversal tool. The reason for why we can do this is that the requisite edges have been determined so that we simply implement an informed search pattern. As mentioned before, we have grouped posts and comments by topic and sentiment. During this time, we have also grouped these objects under a key and now we intend to apply some function to those groupings. The obvious choice was to utilize the MapReduce pattern. Essentially:
+\begin{enumerate}
+    \item key: for the incoming object generate a key to group it by
+	\item value: before storing the object under the key, process it to yield the value to be stored
+	\item reduce: when the stream is empty, apply this function to all the values stored at each key.
+\end{enumerate} 
+Since we specified Titan provides the groupings in $O(log(n))$ time, the concern is the amount of space required to execute our intended traversals which comes to $O(log(n))$ traversals, where $n$ is the size of the largest cluster.
+
+Overall, we expected the recommender and its associated services to have a high time and space complexity. This was not the case; In fact, initial performance tests can be seen in \ref{fig:test-performance}. The yellow represents a user with only the initial training connections, green represents a user with expanded number of connections but no connections to other users still, and the blue represents a user with expanded connections and connections to other users. The y-axis is the response time and the x-axis is the number of nodes in the graph. To show any noticeable change, it required showing the scale at .2-.7 milliseconds. 
+
+
 % TODO: Write some more here...
 % "This section should discuss any data structure design/maintenance problems,
 % or algorithmic problems / challenges, and how they will be/are solved; time
-% and space complexity analys is (if needed) of your algorithms, etc."
+% and space complexity analysis (if needed) of your algorithms, etc."
 
 \subsection{Project Management}
 We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
@@ -232,6 +251,15 @@ At launch, we expect the user base to be somewhat technical in nature, being som
 \subsection{Article Page Requirements}
 \subsection{Frontend $\leftrightarrow$ Backend API Requirements}
 \subsection{Web Scraping Requirements} % i.e. scavenger
+Scavenger's goal is to take a webpage, perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page. Our aim was to make a scalable extractor that can be used by both the frontend and backend, such that user's can submit unstructured web pages and have no issues. The design was intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
+\begin{enumerate}
+	\item Document Cleaning
+	\item Content Extraction
+	\item Document Cleanup
+\end{enumerate}
+Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick. Essentially scavenger is a smart extractor, and as such is not always perfect.
+
+
 \subsection{Backend Requirements} % Expand into multiple sections?
 
 \section{Project Management--Administrative Details}
@@ -296,6 +324,13 @@ At launch, we expect the user base to be somewhat technical in nature, being som
 \includegraphics{img/db_diagram.pdf}
 \caption{Frontend Database Relational Diagram}
 \label{fig:database}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{img/recsys_model.svg}
+\caption{Backend Database Model}
+\label{fig:backend-graph}
 \end{figure}
 
 \newpage
@@ -383,6 +418,15 @@ service Recommender {
     void user_v_comment(1: required i64 user_id, 2: required Action verb, 3: required i64 comment_id) throws (1: NotFoundException nfe),
 }
 \end{verbatim}
+\section{Figures}
+\begin{figure}
+\centering
+\includegraphics{img/recsys_performance.png}
+\caption{Backend Performance Graph}
+\label{fig:test-performance}
+\end{figure}
+
+
 
 \section{Database Design}
 \subsection{Frontend Database}
