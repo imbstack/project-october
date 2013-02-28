@@ -143,9 +143,18 @@ database, a learning algorithm to combine what the recommender has learned about
 the user with the index information, and finally an API to receive queries and
 return results. The text classifier will be a combination of Latent Semantic
 Analysis with Singular Value Decomposition and Latent Dirchlet Allocation
-\cite{lda}, allowing for the clustering of learned topics to create categories
+\cite{lda}(See figure \ref{fig:lda}), allowing for the clustering of learned topics to create categories
 of topics while maintaining coherence to produce an index similar to that formed
-by human judgement. As for the learning algorithm, we will be using a custom
+by human judgement. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.65]{img/lda.png}
+\caption{Latent Dirichlet Allocation}
+\label{fig:lda}
+\end{figure}
+
+As for the learning algorithm, we will be using a custom
 bayesian framework \cite{bayesian} that will allow for weighting based on a particular user's current interest instead of a stored calculated interest or utilizing the general population's interests.
 Finally, the method of receiving queries and returning results will utilize an API, which is discussed in the following section.
 
@@ -192,7 +201,7 @@ The frontend will collect data from the backend via a Ruby implementation of the
 \subsection{Backend}
 The backend of the application is written primarily in Scala and utilizes its uniques features for express purposes, such that this language choice is not trivial. The use of Scala was mainly to create potentially high volume services that form distributed systems. As such Scala emphasizes scalability, is a functional language as well as object oriented, statically typed, and best of all works within the Java Virtual Machine. These features allow us to build efficient applications and use the features of the JVM to scale our finished product. Beyond this, while frameworks like Play! were available for use, we chose to develop our project using pure Scala.
 
-As such, the backend is split into 4 components, a classifier, a clusterer, a graph database and a recommender. Titan DB was selected as the graph database service. Titan can allow for supporting thousands of concurrent users reading and writing to a single massive-scale graph. The way we approached using this technology appropriately was to create a property graph structure of our data that was epimorphic to the schema for the frontend database (\ref{fig:backend-graph}). For example, when a user reads an article, a 'read' edge connects the user to the article they have accessed. Moreover, all of the friends of that user now have a connection to that article and may even read it themselves. Essentially, for this property, time can be declared as a primary key. Titan supports vertex-centric indices which ensure $O(log(n))$ lookups of adjacent vertices based on the incident edge labels and properties, where $n$ is the number of edges emanating from the vertex. This ensures that despite the size of the graph, the lookups will not be expensive.
+As such, the backend is split into 4 components, a classifier, a clusterer, a graph database and a recommender. Titan DB was selected as the graph database service. Titan can allow for supporting thousands of concurrent users reading and writing to a single massive-scale graph. The way we approached using this technology appropriately was to create a property graph structure of our data that was epimorphic to the schema for the frontend database (See Figure \ref{fig:backend-graph}). For example, when a user reads an article, a 'read' edge connects the user to the article they have accessed. Moreover, all of the friends of that user now have a connection to that article and may even read it themselves. Essentially, for this property, time can be declared as a primary key. Titan supports vertex-centric indices which ensure $O(log(n))$ lookups of adjacent vertices based on the incident edge labels and properties, where $n$ is the number of edges emanating from the vertex. This ensures that despite the size of the graph, the lookups will not be expensive.
 
 While we can create vertices for users, posts, and comments, etc., for recommendations to be made we require the creation of edges. These edges are implemented to support either user provided information or content-based analysis. As such, we needed to approach how to connect vertices that do not have an explicit relationship. It was determined that in the case of posts, clustering based on topic and sentiment was ideal. We determined that using a naive bayesian classifier to determine the topics of posts and using opinion mining to determine the sentiment was the ideal route. Naive Bayesian classifiers provide the advantage that only a small amount of training data is required to start classification, which is ideal to create relations between posts quickly. Opinion mining was implemented using a knowledge-base, specifically SentiWordNet to extract the semantic and affective information.
 
@@ -206,7 +215,7 @@ The recommendation service is the heart of the backend. Though there is some imp
 \end{enumerate} 
 Since we specified Titan provides the groupings in $O(log(n))$ time, the concern is the amount of space required to execute our intended traversals which comes to $O(log(n))$ traversals, where $n$ is the size of the largest cluster.
 
-Overall, we expected the recommender and its associated services to have a high time and space complexity. This was not the case; In fact, initial performance tests can be seen in \ref{fig:test-performance}. The yellow represents a user with only the initial training connections, green represents a user with expanded number of connections but no connections to other users still, and the blue represents a user with expanded connections and connections to other users. The y-axis is the response time and the x-axis is the number of nodes in the graph. To show any noticeable change, it required showing the scale at .2-.7 milliseconds. 
+Overall, we expected the recommender and its associated services to have a high time and space complexity. This was not the case; In fact, initial performance tests can be seen in (See Figure \ref{fig:test-performance}). The yellow represents a user with only the initial training connections, green represents a user with expanded number of connections but no connections to other users still, and the blue represents a user with expanded connections and connections to other users. The y-axis is the response time and the x-axis is the number of nodes in the graph. To show any noticeable change, it required showing the scale at .2-.7 milliseconds. 
 
 
 % TODO: Write some more here...
@@ -301,6 +310,16 @@ Ultimately, this entails cleaning out junk and comments, grab the cluster of rel
 % management plan to carefully think about what can be realistically done by
 % your 3 team between now and the end of the semester.
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.35]{img/octoborg-gantt.png}
+\caption{Project October Gantt Chart}
+\label{fig:gantt}
+\end{figure}
+
+We have split the team into two parts, frontend and backend. With respect to the frontend, Tom and Mika have worked on the development and design respectively. The difficulty here is to determine how to represent the news in such a way that the user will be inclined to continue using the service. As for the backend, Brian and Raja have broken up the service architecture and the recommender tasks apart respectively. The difficulty here was to determine the best method of classification and clustering, while the graph traversal could be done via a classical method. To accommodate for the design changes in the frontend and the refinement of the recommender on the backend, the intended first release has been delayed by a 1.5 weeks. Despite this, the rest of the tasks have been on schedule and the completion of these tasks place the projected alpha release within the next weeks. Ideally a beta release with the majority of bugs and a fairly accurate recommender service will be available in early to mid April.
+
+
 \section{User Interface}
 % This section contains the user interface of the application. It should have
 % numbered figures with titles and screenshots of the GUI components, as well
@@ -353,7 +372,7 @@ Ultimately, this entails cleaning out junk and comments, grab the cluster of rel
 
 \begin{figure}
 \centering
-\includegraphics{img/recsys_model.svg}
+\includegraphics{img/recsys_model.png}
 \caption{Backend Database Model}
 \label{fig:backend-graph}
 \end{figure}
@@ -446,7 +465,7 @@ service Recommender {
 \section{Figures}
 \begin{figure}
 \centering
-\includegraphics{img/recsys_performance.png}
+\includegraphics[scale=0.65]{img/recsys-performance-with-legend.png}
 \caption{Backend Performance Graph}
 \label{fig:test-performance}
 \end{figure}
