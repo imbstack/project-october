@@ -1,0 +1,28 @@
+-content_for :javascripts do
+  :javascript
+    $(function() {
+      var startWidth = $(window).width();
+      $articles = $("#articles .row");
+
+      $(window).resize(function() {
+        var nowWidth = $articles.width();
+        if (nowWidth == startWidth) { return; }
+
+        if (nowWidth < 767) { return; }
+
+        $("#articles .row").masonry({
+          itemSelector: '.article',
+          columnWidth: nowWidth / 3,
+        });
+      });
+
+      $articles.imagesLoaded(function() {
+        $articles.masonry({
+          itemSelector: '.article',
+          columnWidth: $articles.width() / 3,
+        });
+      });
+    });
+.row
+  -['feature_article', 'square_article_with_picture', 'square_article'].cycle(10).to_a.sample(8).each do |a|
+    = render a

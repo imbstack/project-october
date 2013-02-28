@@ -1,0 +1,21 @@
+!!! 5
+%html
+  %head
+    %title Project October
+    = stylesheet_link_tag    "application", :media => "all"
+    / Intentionally block page load to get the fonts
+    = javascript_include_tag '//use.typekit.net/vxb6zze.js'
+    :javascript
+      try{Typekit.load();}catch(e){}
+    = csrf_meta_tags
+  %body
+    .container#logobar
+      .row
+        .span12
+          = image_tag 'logo_small.png', :width => '200', :alt => 'October'
+          = link_to 'Login', '#', :class => 'btn', :style => 'float: right'
+          = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
+    .container#articles
+      = yield
+    = javascript_include_tag "application"
+    = yield :javascripts

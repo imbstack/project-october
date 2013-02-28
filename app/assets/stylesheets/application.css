@@ -8,6 +8,87 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap.min.css
+ *= require bootstrap-responsive.min.css
  *= require_self
- *= require_tree .
  */
+
+body, html {
+  font-family: "ff-nuvo-sc-web-pro";
+  font-size: 10px;
+  background-color: #eee;
+}
+h1 { font-size: 3.85em; }
+h2 { font-size: 3.15em; line-height: 1.3em; }
+h3 { font-size: 2.45em; }
+
+h1, h2, h3 {
+  font-family: 'adelle', serif;
+}
+
+#logobar {
+  margin: 30px auto;
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  body, html {
+    font-size: 8px;
+  }
+}
+
+/*
+ * ============================================================================
+ * Display of news articles:
+ * ============================================================================
+ */
+#articles {
+  position: relative;
+}
+.article {
+  float: left;
+  margin-bottom: 20px;
+}
+.article.featured {
+  background-size: cover;
+  width: 64%;
+  height: 400px;
+  position: relative;
+}
+.article.featured .title {
+  width: 100%;
+}
+.article.featured h2 {
+  position: absolute;
+  bottom: 0px;
+  margin: 0;
+  padding: 20px;
+  color: #eee;
+}
+.article.square {
+  padding: 0 0 10px;
+  border-bottom: 1px solid #ccc;
+  width: 32%;
+}
+.article.square .subtitle {
+  font-family: 'ff-nuvo-sc-web-pro';
+  font-weight: normal;
+  line-height: 1em;
+  color: #555;
+}
+
+/*
+ * ============================================================================
+ * Bootstrap Overrides:
+ * ============================================================================
+ */
+.btn {
+  background-image: none;
+}
+/* .typekit-badge { display: none !important; } */
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  border-radius: 0px;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  box-shadow: 0 0 3px #CB6924;
+  border-color: #CB6924;
+}
