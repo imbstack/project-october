@@ -157,6 +157,7 @@ Essentially the approach works as follows:
     \end{enumerate}
 
 \subsubsection{Frontend/Backend API}
+\label{sec:api}
 October will employ an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
 
@@ -185,6 +186,8 @@ Through the use of the bundled Object Relational Mapper \textit{ActiveRecord}, c
 We use HAML as an HTML templating engine, as its indent-based structure allows for an expressive and concise representation of HTML.
 Other frontend technologies we employ include SASS as a templating language for CSS, and CoffeeScript, which compiles to JavaScript.
 The management of all static assets is handled automatically by the Rails Asset Pipeline, which automatically compiles and minimizes all static assets on every deploy to ensure bandwidth efficiency and, consequently, minimize page load times.
+
+The frontend will collect data from the backend via a Ruby implementation of the Thrift Interface Description Language (see Section \ref{sec:api}) and be responsible for all aspects of displaying that information to the user.
 
 \subsection{Backend}
 The backend of the application is written primarily in Scala and utilizes its uniques features for express purposes, such that this language choice is not trivial. The use of Scala was mainly to create potentially high volume services that form distributed systems. As such Scala emphasizes scalability, is a functional language as well as object oriented, statically typed, and best of all works within the Java Virtual Machine. These features allow us to build efficient applications and use the features of the JVM to scale our finished product. Beyond this, while frameworks like Play! were available for use, we chose to develop our project using pure Scala.
@@ -245,20 +248,42 @@ We intend Project October to be open to the public.
 At launch, we expect the user base to be somewhat technical in nature, being some of the Internet's power users, however, October should support the registration of any internet user.
 
 \subsection{Homepage Requirements}
-\subsection{User Requirements}
+The are two cases for the homepage: logged in users and logged out users.
+
+Logged out users should arrive at the homepage and be presented with a splash page of sample content and a description of October's features.
+There should be a registration link so that interested users can register for their own account.
+
+Logged in users should, upon landing on the homepage, be presented with a display of news articles.
+The display will be pictures (when available) along with the headlines for each article.
+Each article should be accompanied with links to positively influence the article's recommendation rank, to negatively influence the article, and to comment on the article.
+
+\subsection{User Creation/Login/Display Requirements}
+Internet travelers should be able to create accounts on October easily by providing minimal information -- simply their desired username, their email, and a password.
+After creating a user, an email should be sent to the user welcoming them to October and containing a confirmation link to confirm their email address.
+
+When a user first uses October, we don't know anything about that user's interests. Users should be shown various sample topics until the recommender is confident enough in their browsing habits to hazard a recommendation.
+
+Every mention of a user's name (i.e. the credit for who posted an article or comment) should be a link to a user profile page. This profile page will have a list of the user's comments and post submitting history.
+
 \subsection{Article Posting Requirements}
+Logged in users should be able to click a prominent link on the homepage to submit a story.
+The submit story page will ask for the link to the desired story, and show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
+If all looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
+
 \subsection{User Profile Page Requirements}
 \subsection{Article Page Requirements}
 \subsection{Frontend $\leftrightarrow$ Backend API Requirements}
-\subsection{Web Scraping Requirements} % i.e. scavenger
-Scavenger's goal is to take a webpage, perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page. Our aim was to make a scalable extractor that can be used by both the frontend and backend, such that user's can submit unstructured web pages and have no issues. The design was intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
+\subsection{Web Scraping Requirements}
+\label{sec:scraping}
+When a user submits a link to a news article, October needs to know more about that article than its URL: the title of the article, any associated images, as well as the article's full text (for analysis purposes).
+We will employ a library which, given the URL to a webpage, will perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page.
+The requirements of the web scraper are intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
 \begin{enumerate}
-	\item Document Cleaning
-	\item Content Extraction
-	\item Document Cleanup
+  \item Document Cleaning
+  \item Content Extraction
+  \item Document Cleanup
 \end{enumerate}
-Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick. Essentially scavenger is a smart extractor, and as such is not always perfect.
-
+Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick.
 
 \subsection{Backend Requirements} % Expand into multiple sections?
 
