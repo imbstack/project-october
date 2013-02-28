@@ -157,6 +157,7 @@ Essentially the approach works as follows:
     \end{enumerate}
 
 \subsubsection{Frontend/Backend API}
+\label{sec:api}
 October will employ an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
 
@@ -185,6 +186,8 @@ Through the use of the bundled Object Relational Mapper \textit{ActiveRecord}, c
 We use HAML as an HTML templating engine, as its indent-based structure allows for an expressive and concise representation of HTML.
 Other frontend technologies we employ include SASS as a templating language for CSS, and CoffeeScript, which compiles to JavaScript.
 The management of all static assets is handled automatically by the Rails Asset Pipeline, which automatically compiles and minimizes all static assets on every deploy to ensure bandwidth efficiency and, consequently, minimize page load times.
+
+The frontend will collect data from the backend via a Ruby implementation of the Thrift Interface Description Language (see Section \ref{sec:api}) and be responsible for all aspects of displaying that information to the user.
 
 \subsection{Backend}
 The backend of the application is written primarily in Scala and utilizes its uniques features for express purposes, such that this language choice is not trivial. The use of Scala was mainly to create potentially high volume services that form distributed systems. As such Scala emphasizes scalability, is a functional language as well as object oriented, statically typed, and best of all works within the Java Virtual Machine. These features allow us to build efficient applications and use the features of the JVM to scale our finished product. Beyond this, while frameworks like Play! were available for use, we chose to develop our project using pure Scala.
