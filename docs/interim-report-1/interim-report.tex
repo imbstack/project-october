@@ -199,6 +199,7 @@ The management of all static assets is handled automatically by the Rails Asset 
 The frontend will collect data from the backend via a Ruby implementation of the Thrift Interface Description Language (see Section \ref{sec:api}) and be responsible for all aspects of displaying that information to the user.
 
 \subsection{Backend}
+\label{sec:backend-implementation}
 The backend of the application is written primarily in Scala and utilizes its uniques features for express purposes, such that this language choice is not trivial. The use of Scala was mainly to create potentially high volume services that form distributed systems. As such Scala emphasizes scalability, is a functional language as well as object oriented, statically typed, and best of all works within the Java Virtual Machine. These features allow us to build efficient applications and use the features of the JVM to scale our finished product. Beyond this, while frameworks like Play! were available for use, we chose to develop our project using pure Scala.
 
 As such, the backend is split into 4 components, a classifier, a clusterer, a graph database and a recommender. Titan DB was selected as the graph database service. Titan can allow for supporting thousands of concurrent users reading and writing to a single massive-scale graph. The way we approached using this technology appropriately was to create a property graph structure of our data that was epimorphic to the schema for the frontend database (See Figure \ref{fig:backend-graph}). For example, when a user reads an article, a 'read' edge connects the user to the article they have accessed. Moreover, all of the friends of that user now have a connection to that article and may even read it themselves. Essentially, for this property, time can be declared as a primary key. Titan supports vertex-centric indices which ensure $O(log(n))$ lookups of adjacent vertices based on the incident edge labels and properties, where $n$ is the number of edges emanating from the vertex. This ensures that despite the size of the graph, the lookups will not be expensive.
@@ -216,12 +217,6 @@ The recommendation service is the heart of the backend. Though there is some imp
 Since we specified Titan provides the groupings in $O(log(n))$ time, the concern is the amount of space required to execute our intended traversals which comes to $O(log(n))$ traversals, where $n$ is the size of the largest cluster.
 
 Overall, we expected the recommender and its associated services to have a high time and space complexity. This was not the case; In fact, initial performance tests can be seen in (See Figure \ref{fig:test-performance}). The yellow represents a user with only the initial training connections, green represents a user with expanded number of connections but no connections to other users still, and the blue represents a user with expanded connections and connections to other users. The y-axis is the response time and the x-axis is the number of nodes in the graph. To show any noticeable change, it required showing the scale at .2-.7 milliseconds. 
-
-
-% TODO: Write some more here...
-% "This section should discuss any data structure design/maintenance problems,
-% or algorithmic problems / challenges, and how they will be/are solved; time
-% and space complexity analysis (if needed) of your algorithms, etc."
 
 \subsection{Project Management}
 We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
@@ -272,16 +267,44 @@ After creating a user, an email should be sent to the user welcoming them to Oct
 
 When a user first uses October, we don't know anything about that user's interests. Users should be shown various sample topics until the recommender is confident enough in their browsing habits to hazard a recommendation.
 
-Every mention of a user's name (i.e. the credit for who posted an article or comment) should be a link to a user profile page. This profile page will have a list of the user's comments and post submitting history.
+Every mention of a user's name (i.e. the credit for who posted an article or comment) should be a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
+
+\subsection{User Profile Page Requirements}
+\label{sec:profilepage}
+Each user has a profile page containing information related to that user.
+The profile page contains a list of comments that the user has made on posts and a list of articles the user has posted.
+All information on this page is public, as it is merely a summary of content available elsewhere on the public website.
+
+\subsection{User Profile Edit Page Requirements}
+In contrast to the profile page, which is a summary of a user's public activity, the profile edit page allows a logged in user to edit their own information.
+Settings such as their email address and password can be changed here.
+
+The other significant part of the user profile edit page is a section which shows the user their own recommendation settings.
+For example, if the backend has decided the user is in a certain clique, the frontend's user profile edit page should convey that information.
+Sometimes, the recommendation algorithm might be less accessible than a easily-named clique, so those inferences cannot be displayed.
+
+Furthermore, there should be a field where a user can submit additional categories they wish to voluntarily join. If there is such a category, they will be joined to it when they submit the form.
 
 \subsection{Article Posting Requirements}
 Logged in users should be able to click a prominent link on the homepage to submit a story.
 The submit story page will ask for the link to the desired story, and show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
-If all looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
+If the post looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
 
-\subsection{User Profile Page Requirements}
 \subsection{Article Page Requirements}
+The article display page is a page dedicated to a posted news article. Every news article will have an associated article page.
+The intent of the article page is to facilitate sharing of opinions around the posted news story through comments.
+
+A user arriving on an article's page arrives at a page which contains the title of the news article along with a threaded comment list.
+Users can interact with comments in the same way as they interact with news articles -- voting up, voting down, or commenting on them (in which case a child comment is created).
+The votes on comments are submitted to the backend for additional semantic processing.
+
 \subsection{Frontend $\leftrightarrow$ Backend API Requirements}
+Since the frontend and backend are divided with a Service Oriented Architecture (with Apache Thrift bridging the gap\footnote{See Section \ref{sec:api} for more about Thrift}), there must be an API between them.
+
+The API should be as simple as possible to maintain the functionality of October. This is not a public API, so it needs to be robust to volume but we do not need to implement API endpoints for things that users might like.
+
+The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\ref{ref:project-october-api}.
+
 \subsection{Web Scraping Requirements}
 \label{sec:scraping}
 When a user submits a link to a news article, October needs to know more about that article than its URL: the title of the article, any associated images, as well as the article's full text (for analysis purposes).
@@ -295,6 +318,9 @@ The requirements of the web scraper are intended to allow the backend's NLP func
 Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick.
 
 \subsection{Backend Requirements} % Expand into multiple sections?
+The backend is a recommender black-box which provides suggestions via an API to the frontend.
+The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
+For more about the implementation of the backend, consult Section \ref{sec:backend-implementation}.
 
 \section{Project Management--Administrative Details}
 % Design/update your Gantt chart to show any changes in milestones, timetable,
@@ -357,6 +383,8 @@ We have split the team into two parts, frontend and backend. With respect to the
   \bibitem{lda} Arthur Asuncion, Padhraic Smyth, Max Welling. \textit{Asynchronous Distributed Learning of Topic Models}. NIPS 2008.
 
   \bibitem{september} \url{http://en.wikipedia.org/wiki/Eternal\_September}
+
+  \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api/blob/master/october.thrift}
 
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
 
