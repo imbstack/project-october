@@ -253,15 +253,16 @@ At launch, we expect the user base to be somewhat technical in nature, being som
 \subsection{User Profile Page Requirements}
 \subsection{Article Page Requirements}
 \subsection{Frontend $\leftrightarrow$ Backend API Requirements}
-\subsection{Web Scraping Requirements} % i.e. scavenger
-Scavenger's goal is to take a webpage, perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page. Our aim was to make a scalable extractor that can be used by both the frontend and backend, such that user's can submit unstructured web pages and have no issues. The design was intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
+\subsection{Web Scraping Requirements}
+When a user submits a link to a news article, October needs to know more about that article than its URL: the title of the article, any associated images, as well as the article's full text (for analysis purposes).
+We will employ a library which, given the URL to a webpage, will perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page.
+The requirements of the web scraper are intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
 \begin{enumerate}
-	\item Document Cleaning
-	\item Content Extraction
-	\item Document Cleanup
+  \item Document Cleaning
+  \item Content Extraction
+  \item Document Cleanup
 \end{enumerate}
-Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick. Essentially scavenger is a smart extractor, and as such is not always perfect.
-
+Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick.
 
 \subsection{Backend Requirements} % Expand into multiple sections?
 
