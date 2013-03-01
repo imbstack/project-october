@@ -1,27 +1,47 @@
 -content_for :javascripts do
   :javascript
-    $(function() {
-      var startWidth = $(window).width();
-      $articles = $("#articles .row");
+    // TODO: Figure out a way that this doesn't depend on jQuery loading first
+    // Also use prototypical inheritance so it ends up being something like
+    //  "new October.Homepage()"
+    var OctoberHomepage = (function($) {
+      var $articles = $("#articles .row"),
+        prevWidth = 0,
+        masonryEnabled = false;
 
-      $(window).resize(function() {
+      var init = function() {
+        $(window).resize(updateHomepageHandler);
+        $articles.imagesLoaded(updateHomepageHandler);
+      }
+
+      var updateHomepageHandler = function() {
         var nowWidth = $articles.width();
-        if (nowWidth == startWidth) { return; }
 
-        if (nowWidth < 767) { return; }
+        if (masonryEnabled && nowWidth == prevWidth) { return; }
+        if (nowWidth < 724) {
+          if (masonryEnabled) {
+            $articles.masonry('destroy');
+            masonryEnabled = false;
+          }
 
-        $("#articles .row").masonry({
+          return;
+        }
+
+        prevWidth = nowWidth;
+        masonryEnabled = true;
+
+        $articles.masonry({
           itemSelector: '.article',
           columnWidth: nowWidth / 3,
         });
-      });
+      }
 
-      $articles.imagesLoaded(function() {
-        $articles.masonry({
-          itemSelector: '.article',
-          columnWidth: $articles.width() / 3,
-        });
-      });
+      return {
+        init : init,
+      };
+    }($));
+
+    $(function() {
+      OctoberHomepage.init();
     });
 .row
   = render 'feature_article', :article => @posts.first
