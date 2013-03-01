@@ -70,7 +70,7 @@ h1, h2, h3 {
 .article.square {
   padding: 0 0 10px;
   border-bottom: 1px solid #ccc;
-  width: 32%;
+  width: 31%;
 }
 .article.square .subtitle {
   font-family: 'ff-nuvo-sc-web-pro';
