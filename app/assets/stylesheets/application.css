@@ -102,6 +102,11 @@ h1, h2, h3 {
 .article.featured .article-links a {
   color: #fff;
 }
+@media (max-width: 767px) {
+  .article.featured, .article.square {
+    width: 100%;
+  }
+}
 
 /*
  * ============================================================================
