@@ -43,8 +43,9 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-# To use thrift
+# To do things with the backend
 gem 'thrift'
+gem 'pismo'
 
 group :test do
   gem 'minitest'
