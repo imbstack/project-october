@@ -12,7 +12,8 @@
     .container#logobar
       .row
         .span12
-          = image_tag 'logo_small.png', :width => '200', :alt => 'October'
+          = link_to root_url do
+            = image_tag 'logo_small.png', :width => '200', :alt => 'October'
           - if signed_in?
             = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
           - else
