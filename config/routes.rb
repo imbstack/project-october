@@ -4,7 +4,13 @@ ProjectOctober::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  resources :post
+  resources :posts do
+    member do
+      get 'upvote'
+      get 'downvote'
+    end
+  end
+
   get "/:name" => "user#view"
 
   # Sample of regular route:

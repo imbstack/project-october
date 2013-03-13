@@ -1,4 +1,4 @@
 %ul.article-links
-  %li= link_to 'upvote', '#'
-  %li= link_to 'downvote', '#'
-  %li= link_to 'comments', '#'
+  %li= link_to 'upvote', upvote_post_url(article)
+  %li= link_to 'downvote', downvote_post_url(article)
+  %li= link_to 'comments', post_url(article)
