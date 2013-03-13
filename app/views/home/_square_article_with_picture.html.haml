@@ -2,4 +2,4 @@
   = image_tag "http://lorempixel.com/400/#{250 + Random.rand(20)}/nature/", :style => 'width: 100%'
   %h2= article.title
   / %h3.subtitle Probably not a good idea, officials say
-  =render 'article_links'
+  =render 'article_links', :article => article
