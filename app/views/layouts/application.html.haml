@@ -13,7 +13,10 @@
       .row
         .span12
           = image_tag 'logo_small.png', :width => '200', :alt => 'October'
-          = link_to 'Login', '#', :class => 'btn', :style => 'float: right'
+          - if signed_in?
+            = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
+          - else
+            = link_to 'Login', new_user_session_url, :class => 'btn', :style => 'float: right'
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
         - if flash[:notice]
           .alert.alert-info= flash[:notice]
