@@ -1,0 +1,6 @@
+- comment = comment_list[:root]
+.comment
+  = comment.body
+  = render 'new_comment', :parent_id => comment.id, :post_id => comment.post_id
+  - comment_list[:children].each do |comment_and_child_comments|
+    = render 'comment_list', :comment_list => comment_and_child_comments
