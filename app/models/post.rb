@@ -2,6 +2,9 @@
 
 class Post < ActiveRecord::Base
   attr_accessible :title
+
+  has_many :comments
+
   # TODO: Remove this bit once we get real data
   FAKE_HEADLINES = [
     'Insatiable Water Droplet Barrels Down Windowpane Consuming Everything In Its Path',

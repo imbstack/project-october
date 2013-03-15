@@ -8,6 +8,7 @@ ProjectOctober::Application.routes.draw do
     member do
       get 'upvote'
       get 'downvote'
+      resources :comments
     end
   end
 
