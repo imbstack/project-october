@@ -134,39 +134,37 @@ The design is modelled after the front page of a newspaper -- articles that are 
 Users will be able to click on the headline (or associated image, if existent) to be taken to the original news source.
 
 Each news article will feature a link to view the associated comments as well as an icon (located in the corner of the article text/image) displaying the credibility (``cred'') a given article possesses.
-This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula. Therefore, cred serves two purposes: 1. To inform other users of the quality of the article. 2. To inform the recommender system of the user's interests. 
+This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula. Therefore, cred serves two purposes: 1. To inform other users of the quality of the article and 2. To inform the recommender system of the user's interests.
+
+Users will be able to click a link on the homepage which takes them to an article submission form.
+The submission form will request a URL and a headline for that news story.
+Upon entering the URL, the news story will be scraped in the background using a web scraping tool which will attempt to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text.
 
 \subsection{Backend}
-The backend will contain a recommender system, which will consist of a text
-classifier for incoming \& existing articles to be indexed into a graph
-database, a learning algorithm to combine what the recommender has learned about
-the user with the index information, and finally an API to receive queries and
-return results. The text classifier will be a combination of Latent Semantic
-Analysis with Singular Value Decomposition and Latent Dirchlet Allocation
-\cite{lda}, allowing for the clustering of learned topics to create categories
-of topics while maintaining coherence to produce an index similar to that formed
-by human judgement. As for the learning algorithm, we will be using a custom
-bayesian framework \cite{bayesian} that will allow for weighting based on a particular user's current interest instead of a stored calculated interest or utilizing the general population's interests.
-Finally, the method of receiving queries and returning results will utilize an API, which is discussed in the following section.
+The backend will contain a recommender system, which will recommend articles for users with the following technique.
+When an article is submitted from the frontend (via the API -- see Section \ref{sec:api}), we will peform TF/IDF\cite{tfidf} on the full body text returned by the scraper.
+The weighted terms returned by TF/IDF will be stored in a document database with a custom-maintained inverted index of the terms to which articles contain them.
+This will allow efficient access of articles about arbitrary terms.
 
-Essentially the approach works as follows:
-    \begin{enumerate}
-        \item October predicts the user’s authentic news interests regardless of the news trend, using the user’s clicks in each past time period
-        \item Predictions made with data in a series of past time periods are combined to gain an accurate prediction of the user’s authentic news interests
-        \item October predicts the user’s current interests by combining their authentic news interests and the current news trend in the cluster the user belongs to within the property graph.
-    \end{enumerate}
+When a user upvotes, downvotes, reads, or comments upon an article, the user's document will be modified to reflect that the user either cares more (in case of upvotes, comments, or reads) or cares less (in case of downvotes) about the terms associated with that article.
+When the frontend requests more articles via the API for that user at a later time, the new weights will be used, resulting in a different, more-tailored selection of news articles.
+
+The backend and the frontend will share access to the frontend database, which will contain all persistent information about articles such as their headline, image thumbnail URL, and other associated metadata.
+The backend will have read-only access to the frontend database.
+The backend will have exclusive control of a document database which tracks information about users and article terms.
 
 \subsection{Frontend/Backend API}
+\label{sec:api}
 October will employ an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
 
 To implement the API, we will use Apache Thrift, an Interface Description Language\cite{thrift}.
 The essence of the API is simple, featuring primarily two types of calls:
 \begin{description}
-\item[Give recommendations for user $n$]
+\item[Give $n$ recommendations for user $u$]
 This is the main output from the backend, returning recommended news stories or comments for a given user.
 Ancillary parameters will be added to this to facilitate the frontend placement of articles, e.g. the recommendation confidence and individual article weightings.
-\item[User took action $n$]
+\item[User $u$ took action $n$]
 This is the main input to the backend, allowing it to adjust recommendations according to user action.
 The parameters to this API call can be of many types. For example, "User commented on article \#$n$", "User gave cred to comment \#$n$", and "User visited link \#$n$" are all valid parameters for this API call.
 \end{description}
@@ -249,6 +247,8 @@ At the end of each iteration, team members will re-sync and make sure that we ha
   \bibitem{september} \url{http://en.wikipedia.org/wiki/Eternal\_September}
 
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
+  \bibitem{tfidf} \url{http://en.wikipedia.org/wiki/Tf-idf}
+
 
 \end{thebibliography}
 
