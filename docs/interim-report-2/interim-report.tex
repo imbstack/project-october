@@ -244,7 +244,7 @@ The other significant part of the user profile edit page is a section which show
 For example, if the backend has decided the user is in a certain clique, the frontend's user profile edit page should convey that information.
 Sometimes, the recommendation algorithm might be less accessible than a easily-named clique, so those inferences cannot be displayed.
 
-Furthermore, there should be a field where a user can submit additional categories they wish to voluntarily join. If there is such a category, they will be joined to it when they submit the form.
+Furthermore, there should be a field where a user can submit additional categories they wish to voluntarily join. If there is such a category, they will be joined to it when they submit the form. Another possible addition (if time permits) is the possibility for users to edit their current recommendations in the Profile Edit page via check-boxes or something similar.
 
 \subsection{Article Posting Requirements}
 Logged in users should be able to click a prominent link on the homepage to submit a story.
@@ -315,7 +315,10 @@ Ideally a beta release with the majority of bugs and a fairly accurate recommend
 The user interface for the homepage and other pages will surely evolve over time.
 
 The homepage is an especially crucial interface to get right. We mimic a newspaper feel with articles staggered in a rough column grid.
-This allows readers to be presented with many recommendations of different weights simultaneously.
+This allows readers to be presented with many recommendations of different weights simultaneously in a manner in which they are accustomed to. 
+Cred will be handled by placing two links (upvote and downvote) into the article area, along with the link to the comments next to it. 
+The search bar, along with a 'Submit Article' button, and Profile drop-down menu will be located at the top of the site. The latter will include options such as "view posts", "Profile Edit", "New Messages/Comments" and "Logout".
+The comments on each article are handled in a nested fashion, with each comment and reply having their own attributed cred value. 
 % TODO: Make sure we change this line/section as we go through the project:
 A pre-Alpha screenshot of the homepage is attached in figure \ref{fig:homepage}.
 
