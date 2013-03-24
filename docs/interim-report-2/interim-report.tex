@@ -208,6 +208,80 @@ At the end of each iteration, team members will re-sync and make sure that we ha
 % - Software Architecture (i.e., client - server architecture; three - tiered design, etc.)
 % - Design Document
 
+\subsection{Intended Audience}
+We intend Project October to be open to the public.
+At launch, we expect the user base to be somewhat technical in nature, being some of the Internet's power users, however, October should support the registration of any internet user.
+
+\subsection{Homepage Requirements}
+The are two cases for the homepage: logged in users and logged out users.
+
+Logged out users should arrive at the homepage and be presented with a splash page of sample content and a description of October's features.
+There should be a registration link so that interested users can register for their own account.
+
+Logged in users should, upon landing on the homepage, be presented with a display of news articles.
+The display will be pictures (when available) along with the headlines for each article.
+Each article should be accompanied with links to positively influence the article's recommendation rank, to negatively influence the article, and to comment on the article.
+
+\subsection{User Creation/Login/Display Requirements}
+Internet travelers should be able to create accounts on October easily by providing minimal information -- simply their desired username, their email, and a password.
+After creating a user, an email should be sent to the user welcoming them to October and containing a confirmation link to confirm their email address.
+
+When a user first uses October, we don't know anything about that user's interests. Users should be shown various sample topics until the recommender is confident enough in their browsing habits to hazard a recommendation.
+
+Every mention of a user's name (i.e. the credit for who posted an article or comment) should be a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
+
+\subsection{User Profile Page Requirements}
+\label{sec:profilepage}
+Each user has a profile page containing information related to that user.
+The profile page contains a list of comments that the user has made on posts and a list of articles the user has posted.
+All information on this page is public, as it is merely a summary of content available elsewhere on the public website.
+
+\subsection{User Profile Edit Page Requirements}
+In contrast to the profile page, which is a summary of a user's public activity, the profile edit page allows a logged in user to edit their own information.
+Settings such as their email address and password can be changed here.
+
+The other significant part of the user profile edit page is a section which shows the user their own recommendation settings.
+For example, if the backend has decided the user is in a certain clique, the frontend's user profile edit page should convey that information.
+Sometimes, the recommendation algorithm might be less accessible than a easily-named clique, so those inferences cannot be displayed.
+
+Furthermore, there should be a field where a user can submit additional categories they wish to voluntarily join. If there is such a category, they will be joined to it when they submit the form.
+
+\subsection{Article Posting Requirements}
+Logged in users should be able to click a prominent link on the homepage to submit a story.
+The submit story page will ask for the link to the desired story, and show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
+If the post looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
+
+\subsection{Article Page Requirements}
+The article display page is a page dedicated to a posted news article. Every news article will have an associated article page.
+The intent of the article page is to facilitate sharing of opinions around the posted news story through comments.
+
+A user arriving on an article's page arrives at a page which contains the title of the news article along with a threaded comment list.
+Users can interact with comments in the same way as they interact with news articles -- voting up, voting down, or commenting on them (in which case a child comment is created). Additionally, comments will have a field where they can be tagged with adjectives. These tags will be submitted through the API and reflect the ordering of comments for different users.
+
+\subsection{Frontend $\leftrightarrow$ Backend API Requirements}
+Since the frontend and backend are divided with a Service Oriented Architecture (with Apache Thrift bridging the gap\footnote{See Section \ref{sec:api} for more about Thrift}), there must be an API between them.
+
+The API should be as simple as possible to maintain the functionality of October. This is not a public API, so it needs to be robust to volume but we do not need to implement API endpoints for things that users might like.
+
+The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\cite{project-october-api}.
+
+\subsection{Web Scraping Requirements}
+\label{sec:scraping}
+When a user submits a link to a news article, October needs to know more about that article than its URL: the title of the article, any associated images, as well as the article's full text (for analysis purposes).
+We will employ a library which, given the URL to a webpage, will perform calculations and extract the main text of the article as well as make recommendations on what image might be the most relevant image on the page.
+The requirements of the web scraper are intended to allow the backend's NLP functionality to process the raw text of the article easily. It executes in three phases:
+\begin{enumerate}
+  \item Document Cleaning
+  \item Content Extraction
+  \item Document Cleanup
+\end{enumerate}
+Ultimately, this entails cleaning out junk and comments, grab the cluster of relevant text, attempt to determine the best image, and return these. Specifically the image extraction was troublesome, as Java's image functions were completely unreliable, which was resolved by using ImageMagick.
+
+\subsection{Backend Requirements} % Expand into multiple sections?
+The backend is a recommender black-box which provides suggestions via an API to the frontend.
+The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
+For more about the implementation of the backend, consult Section \ref{sec:backend-implementation}.
+
 \section{Project Management--Administrative Details}
 % Design/update your Gantt chart to show any changes in milestones, timetable,
 % or responsibility (especially if there are multiple team members). Be sure to
@@ -222,13 +296,59 @@ At the end of each iteration, team members will re-sync and make sure that we ha
 % management plan to carefully think about what can be realistically done by
 % your 3 team between now and the end of the semester.
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.35]{img/octoborg-gantt.png}
+\caption{Project October Gantt Chart}
+\label{fig:gantt}
+\end{figure}
+
+We have split the team into two parts, frontend and backend. With respect to the frontend, Tom and Mika have worked on the development and design respectively.
+The difficulty here is to determine how to represent the news in such a way that the user will be inclined to continue using the service.
+As for the backend, Brian and Raja have broken up the service architecture and the recommender tasks apart respectively.
+The difficulty here was to determine the best method of classification and clustering, while the graph traversal could be done via a classical method.
+To accommodate for the design changes in the frontend and the refinement of the recommender on the backend, the intended first release has been delayed by a 1.5 weeks.
+Despite this, the rest of the tasks have been on schedule and the completion of these tasks place the projected alpha release within the next weeks.
+Ideally a beta release with the majority of bugs and a fairly accurate recommender service will be available in early to mid April.
+
 \section{User Interface}
+The user interface for the homepage and other pages will surely evolve over time.
+
+The homepage is an especially crucial interface to get right. We mimic a newspaper feel with articles staggered in a rough column grid.
+This allows readers to be presented with many recommendations of different weights simultaneously.
+% TODO: Make sure we change this line/section as we go through the project:
+A pre-Alpha screenshot of the homepage is attached in figure \ref{fig:homepage}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.35]{img/homepage.png}
+\caption{Project October Homepage, pre-Alpha (Headlines courtesy The Onion)}
+\label{fig:homepage}
+\end{figure}
+
+The user interface for other pages will be in the same general content area, however there are no further screenshots to share at this time.
 
 \section{Testing \& Evaluation}
+Testing and evaluation will be performed as we progress through the project. Currently, only very minimal testing is implemented.
 
 \section{Project Progress}
+% This section should summarize the progress (or the lack of it) so far, and
+% address any issues that have arisen recently.
+The project is progressing satisfactorily.
+We are attempting to follow Agile Design Patterns, and we have been effective at meeting for short periods frequently.
+On the frontend, we have completed the user creation + login processes, mocked up the homepage, and connected the Thrift library.
+On the backend, we have implemented the API so it responds to requests from the frontend. The recommendation engine is still in-progress.
+We remain committed to maintaining team communication via scrum and continue working.
 
 \subsection{Discussions \& Conclusions}
+% These conclusions are not really conclusions since your project is not yet
+% finished. In this section you should discuss whether the project is on
+% schedule for completion at the end of the semester. Are there major problems
+% which require a reevaluation of the project results? If not, what is the new
+% schedule and what do you plan to have done by the end of the semester? You
+% can also comment on things which have worked better than expected or proved
+% easier to solve.
+Overall, the project is still on schedule. We still intend to complete a fully-featured product on-time.
 
 \section{Appendix}
 
