@@ -22,12 +22,11 @@
           = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
       - if flash[:notice] || flash[:alert]
-        .row#alert-bar
-          .span12
-            - if flash[:notice]
-              .alert.alert-info= flash[:notice]
-            - if flash[:alert]
-              .alert= flash[:alert]
+        #alert-bar
+          - if flash[:notice]
+            .alert.alert-info= flash[:notice]
+          - if flash[:alert]
+            .alert= flash[:alert]
     .container#articles
       = yield
     = javascript_include_tag "application"

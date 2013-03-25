@@ -13,10 +13,13 @@
  *= require_self
  */
 
+$october-orange: #CA6B00;
+$body-background: #EEEEEE;
+
 body, html {
   font-family: "ff-nuvo-sc-web-pro";
   font-size: 10px;
-  background-color: #eee;
+  background-color: $body-background;
 }
 h1 { font-size: 3.85em; }
 h2 { font-size: 3.15em; line-height: 1.3em; }
@@ -127,6 +130,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
   border-radius: 0px;
 }
 textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-  box-shadow: 0 0 3px #CB6924;
-  border-color: #CB6924;
+  box-shadow: 0 0 3px $october-orange;
+  border-color: $october-orange;
+}
+.alert {
+  color: $october-orange;
+  border-radius: 0px;
+  background-color: mix($october-orange, $body-background, 10%);
+  border: 0px;
 }
