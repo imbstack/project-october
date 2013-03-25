@@ -22,12 +22,12 @@
           - if signed_in?
             = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
-      - if flash[:notice] || flash[:alert]
+      - if flash[:notice] || flash[:error]
         #alert-bar
           - if flash[:notice]
             .alert.alert-info= flash[:notice]
-          - if flash[:alert]
-            .alert= flash[:alert]
+          - if flash[:error]
+            .alert.alert-error= flash[:error]
     .container#articles
       = yield
     = javascript_include_tag "application"
