@@ -5,6 +5,7 @@ gem 'haml'
 gem 'sass' # rake was throwing errors without this
 gem 'devise'
 gem 'awesome_nested_set'
+gem 'foreman'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
