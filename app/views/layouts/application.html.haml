@@ -19,7 +19,8 @@
             = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
           - else
             = link_to 'Login', new_user_session_url, :class => 'btn', :style => 'float: right'
-          = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
+          - if signed_in?
+            = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
           = text_field_tag :search, '', :placeholder => "search", :style => 'float: right'
       - if flash[:notice] || flash[:alert]
         #alert-bar
