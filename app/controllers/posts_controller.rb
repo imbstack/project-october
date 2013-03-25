@@ -35,11 +35,22 @@ class PostsController < ApplicationController
       Backend::Token.new(:t => pair[0], :f => pair[1])
     end
 
-    # TODO: Save the post to the db to get the second param and get the first from the current user
-    THRIFTCLIENT.addPost(1, 1, oct_vec)
+    @post = Post.new(
+      :title => title,
+      :url => params[:post][:url],
+    )
 
-    redirect_to root_url, :flash => {
-      :notice => "Success! Your article has been submitted."
-    }
+    if @post.save
+      # TODO: Save the post to the db to get the second param and get the first from the current user
+      if THRIFTCLIENT.addPost(current_user.id, @post.id, oct_vec)
+        redirect_to root_url, :flash => {
+          :notice => "Success! Your article has been submitted."
+        }
+      else
+        redirect_to new_post_url, :flash => { :error => "Could not add article to backend database!" }
+      end
+    else
+      redirect_to new_post_url, :flash => { :error => "Could not add article to frontend database!" }
+    end
   end
 end
