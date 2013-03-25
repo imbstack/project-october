@@ -1,15 +1,15 @@
 .span12
   %h2 Post A New Article
-  = form_for(Post.new, :html => { :class => 'form-horizontal' }) do |f|
-    .control-group
-      .control-label
-        =f.label :title
-      .controls
-        =f.text_field :title
+  = form_for(Post.new, :method => :post, :html => { :class => 'form-horizontal' }) do |f|
     .control-group
       .control-label
         =f.label :url
       .controls
         =f.text_field :url
+    .control-group
+      .control-label
+        =f.label :title
+      .controls
+        =f.text_field :title
     .form-actions
       =f.submit 'Post Article!', :class => 'btn btn-primary'
