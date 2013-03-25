@@ -139,3 +139,12 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
   background-color: mix($october-orange, $body-background, 10%);
   border: 0px;
 }
+.btn {
+  border-radius: 0px;
+  font-family: 'ff-nuvo-sc-web-pro';
+  font-weight: normal;
+}
+.btn-primary {
+  background-color: $october-orange;
+  &:hover { background-color: scale-color($october-orange, $lightness: -10%); }
+}
