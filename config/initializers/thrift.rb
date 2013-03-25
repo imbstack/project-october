@@ -11,8 +11,12 @@ begin
   protocol = Thrift::BinaryProtocol.new(transport)
   THRIFTCLIENT = Backend::Recommender::Client.new(protocol)
 
-  transport.open()
+  transport.open
+  if THRIFTCLIENT.ping != "Pong"
+    raise Thrift::TransportException
+  end
 rescue Thrift::TransportException => e
-  Rails.logger.error "Cannot Connect to Thrift Backend"
+  STDERR.write "Cannot Connect to Thrift Backend. Exiting...\n"
+  Process.exit
 end
 
