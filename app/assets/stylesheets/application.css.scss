@@ -27,6 +27,7 @@ h3 { font-size: 2.45em; }
 
 h1, h2, h3 {
   font-family: 'adelle', serif;
+  font-weight: lighter;
 }
 
 p {
@@ -79,6 +80,7 @@ p {
   margin: 0;
   padding: 20px;
   color: #eee;
+  text-shadow: 2px 2px 0px #000;
 }
 .article.square {
   padding: 0 0 10px;
