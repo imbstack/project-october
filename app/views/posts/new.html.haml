@@ -3,24 +3,44 @@
     var OctoberSubmitPage = (function($) {
       var $form = $("#new_post");
       var $urlField = $form.find("#post_url");
+      var $titleField = $form.find("#post_title");
       var $imagesArea = $form.find("#form-image-group");
       var $keywordsArea = $form.find("#form-keywords-group");
       var $loadingGif = $form.find(".loading-gif");
       var fetchUrl = "#{fetch_posts_path}"
 
       var init = function() {
+        $urlField.on('change', urlChangeHandler);
+        hideSections();
+        resetSections();
+      };
+
+      var hideSections = function() {
         $imagesArea.hide();
         $keywordsArea.hide();
         $loadingGif.hide();
-        $urlField.on('change', urlChangeHandler);
+      };
+
+      var resetSections = function() {
+        $titleField.val("");
+        $imagesArea.find(".controls").html('');
+        $keywordsArea.find(".controls").html('<ul></ul>');
       };
 
       var urlChangeHandler = function(e) {
+        if (this.value === "") {
+          resetSections();
+        }
         $loadingGif.show();
         $.post(fetchUrl, { url: this.value }, postFetchedHandler, 'json');
       };
 
       var postFetchedHandler = function(data) {
+        if (data.error) {
+          resetSections();
+          hideSections();
+        }
+
         // Done loading, hide the loading animation
         $loadingGif.hide();
 
@@ -82,7 +102,6 @@
       .control-label
         =f.label :keywords
       .controls
-        %ul
     .control-group
       .control-label
         =f.label :title
