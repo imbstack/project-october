@@ -4,11 +4,14 @@ ProjectOctober::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  resources :posts do
+  resources :posts, :id => /\d+/ do
     member do
       get 'upvote'
       get 'downvote'
       resources :comments
+    end
+    collection do
+      post 'fetch'
     end
   end
 

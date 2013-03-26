@@ -7,6 +7,29 @@ class PostsController < ApplicationController
 
   end
 
+  def fetch
+    return unless request.xhr?
+    begin
+      post = Pismo::Document.new(params[:url])
+      images = post.images
+      title = post.title
+      leader = post.lede # This is the first couple sentences.
+      keywords = post.keywords(
+        :minimum_score => 1,
+        :stem_at => 2,
+        :word_length_limit => 30,
+        :limit => 500
+      )
+    rescue
+      return render :json => { :error => 'Could not fetch!' }
+    end
+    return render :json => {
+      :images => images,
+      :title => title,
+      :keywords => keywords,
+    }
+  end
+
   def create
     begin
       post = Pismo::Document.new(params[:post][:url])

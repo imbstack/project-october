@@ -1,3 +1,71 @@
+- content_for :javascripts do
+  :javascript
+    var OctoberSubmitPage = (function($) {
+      var $form = $("#new_post");
+      var $urlField = $form.find("#post_url");
+      var $imagesArea = $form.find("#form-image-group");
+      var $keywordsArea = $form.find("#form-keywords-group");
+      var $loadingGif = $form.find(".loading-gif");
+      var fetchUrl = "#{fetch_posts_path}"
+
+      var init = function() {
+        $imagesArea.hide();
+        $keywordsArea.hide();
+        $loadingGif.hide();
+        $urlField.on('change', urlChangeHandler);
+      };
+
+      var urlChangeHandler = function(e) {
+        $loadingGif.show();
+        $.post(fetchUrl, { url: this.value }, postFetchedHandler, 'json');
+      };
+
+      var postFetchedHandler = function(data) {
+        // Done loading, hide the loading animation
+        $loadingGif.hide();
+
+        // Populate the images
+        $imageControlsArea = $imagesArea.find(".controls");
+        $.each(data.images, function(index, url) {
+          $imageControlsArea.append("<div style=\"background: url('" + url + "'); background-size: cover; width: 100px; height: 100px; float: left;\">&nbsp;</div>");
+        });
+        $imagesArea.show();
+
+        // Populate the title
+        $form.find('#post_title')[0].value = data.title
+
+        // Populate the keywords
+        $keywordListArea = $keywordsArea.find(".controls ul");
+        $.each(data.keywords, function(index, keyword) {
+          if (index >= 5) { return false; }
+          $keywordListArea.append("<li>" + keyword[0] + "</li>");
+        });
+        $keywordsArea.show();
+      };
+
+      return { init : init };
+    }($));
+
+    $(function() {
+      OctoberSubmitPage.init();
+    });
+:css
+  #form-keywords-group .controls ul {
+    list-style: none;
+    margin: 0;
+    padding-top: 5px;
+  }
+  #form-keywords-group .controls li {
+    float: left;
+    font-size: 1.6em;
+    margin-right: 15px;
+  }
+  .loading-gif {
+    position: relative;
+    right: 27px;
+    width: 16px;
+  }
+
 .span12
   %h2 Post A New Article
   = form_for(Post.new, :method => :post, :html => { :class => 'form-horizontal' }) do |f|
@@ -5,11 +73,21 @@
       .control-label
         =f.label :url
       .controls
-        =f.text_field :url
+        =f.text_field :url, :class => 'span6'
+    .control-group#form-image-group
+      .control-label
+        =f.label :image
+      .controls
+    .control-group#form-keywords-group
+      .control-label
+        =f.label :keywords
+      .controls
+        %ul
     .control-group
       .control-label
         =f.label :title
       .controls
-        =f.text_field :title
+        =f.text_field :title, :class => 'span6'
+        =image_tag 'loading.gif', :class => 'loading-gif'
     .form-actions
       =f.submit 'Post Article!', :class => 'btn btn-primary'
