@@ -44,7 +44,11 @@
       OctoberHomepage.init();
     });
 .row
-  = render 'feature_article', :article => @posts.first
+  -# The following is a temporary fix until tom figures out a better way to do this
+  - if @posts.empty?
+    = "There aren't any posts yet!"
+  - else
+    = render 'feature_article', :article => @posts.first
   -@posts.drop(1).each do |p|
     - if Random.rand > 0.5
       = render 'square_article', :article => p
