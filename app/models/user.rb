@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :subscriptions
+
   after_create :backend_register
 
   # Setup accessible (or protected) attributes for your model
