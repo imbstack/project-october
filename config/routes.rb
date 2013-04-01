@@ -15,7 +15,9 @@ ProjectOctober::Application.routes.draw do
     end
   end
 
-  resources :users, :only => :show
+  resources :users, :only => :show do
+    post 'subscriptions'
+  end
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
