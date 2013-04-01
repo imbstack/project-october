@@ -1,7 +1,8 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
   before_filter :authenticate_user!
 
-  def view
-    @user = User.find_by_name(params[:name])
+  def show
+    @user = User.where(:name => params[:id]).first
+    return redirect_to root_url, :flash => { :error => "Unknown User!" } unless @user.present?
   end
 end
