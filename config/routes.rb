@@ -1,5 +1,5 @@
 ProjectOctober::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :path => 'auth'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -15,7 +15,7 @@ ProjectOctober::Application.routes.draw do
     end
   end
 
-  get "/:name" => "user#view"
+  resources :users
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
