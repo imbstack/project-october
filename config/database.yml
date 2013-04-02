@@ -21,6 +21,6 @@ test:
   encoding: unicode
 
 production:
-  adapter: postresql
+  adapter: postgresql
   database: october_prod
   encoding: unicode
