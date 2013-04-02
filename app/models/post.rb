@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Post < ActiveRecord::Base
-  attr_accessible :title, :url
+  attr_accessible :title, :url, :image_url
 
   has_many :comments
 

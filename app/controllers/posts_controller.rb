@@ -58,8 +58,9 @@ class PostsController < ApplicationController
     end
 
     @post = Post.new(
-      :title => params[:post][:title] || post.title,
-      :url => params[:post][:url],
+      :title     => params[:post][:title] || post.title,
+      :image_url => params[:post][:image_url],
+      :url       => params[:post][:url],
     )
 
     if @post.save

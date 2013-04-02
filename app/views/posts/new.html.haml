@@ -3,6 +3,7 @@
     var OctoberSubmitPage = (function($) {
       var $form = $("#new_post");
       var $urlField = $form.find("#post_url");
+      var $imageUrlField = $form.find("#post_image_url");
       var $titleField = $form.find("#post_title");
       var $imagesArea = $form.find("#form-image-group");
       var $keywordsArea = $form.find("#form-keywords-group");
@@ -35,6 +36,17 @@
         $.post(fetchUrl, { url: this.value }, postFetchedHandler, 'json');
       };
 
+      var selectImage = function($img) {
+        $img.parent().children().removeClass('selected');
+        $imageUrlField.val($img.data('image-url'));
+        $img.addClass('selected');
+      };
+
+      var selectImageHandler = function(ev) {
+        selectImage($(ev.target));
+        return false;
+      };
+
       var postFetchedHandler = function(data) {
         if (data.error) {
           resetSections();
@@ -47,8 +59,10 @@
         // Populate the images
         $imageControlsArea = $imagesArea.find(".controls");
         $.each(data.images, function(index, url) {
-          $imageControlsArea.append("<div style=\"background: url('" + url + "'); background-size: cover; width: 100px; height: 100px; float: left;\">&nbsp;</div>");
+          $imageControlsArea.append("<div data-image-url=\"" + url + "\" style=\"background: url('" + url + "'); background-size: cover;\" class=\"article-image\"></div>");
         });
+        selectImage($imageControlsArea.find(":first"));
+        $imageControlsArea.on('click', selectImageHandler);
         $imagesArea.show();
 
         // Populate the title
@@ -80,6 +94,21 @@
     font-size: 1.6em;
     margin-right: 15px;
   }
+  #form-image-group .article-image {
+    float: left;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+    border: 3px solid #888;
+    opacity: 0.3;
+    cursor: pointer;
+    user-select: none;
+  }
+  #form-image-group .selected {
+    /* TODO: Use variable when we put this in sass */
+    border: 3px solid #ff8930;
+    opacity: 1;
+  }
   .loading-gif {
     position: relative;
     right: 27px;
@@ -97,6 +126,7 @@
     .control-group#form-image-group
       .control-label
         =f.label :image
+        =f.hidden_field :image_url
       .controls
     .control-group#form-keywords-group
       .control-label

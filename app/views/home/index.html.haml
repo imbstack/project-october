@@ -45,14 +45,16 @@
     });
 .row
   -# The following is a temporary fix until tom figures out a better way to do this
+  - featured = @posts.detect{ |p| p.image_url.present? }
   - if @posts.empty?
     = "There aren't any posts yet!"
   - else
-    = render 'feature_article', :article => @posts.first
-  -@posts.drop(1).each do |p|
-    - if Random.rand > 0.5
-      = render 'square_article', :article => p
-    - else
+    = render 'feature_article', :article => featured
+  -@posts.each do |p|
+    - next if p == featured
+    - if p.image_url.present?
       = render 'square_article_with_picture', :article => p
+    - else
+      = render 'square_article', :article => p
   -#['feature_article', 'square_article_with_picture', 'square_article'].cycle(10).to_a.sample(8).each do |a|
     =# render a
