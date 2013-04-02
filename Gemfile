@@ -14,6 +14,7 @@ gem 'font-awesome-rails'
 gem 'sqlite3'
 group :production do
   gem 'pg'
+  gem 'activerecord-postresql-adapter'
 end
 
 # So that console works
