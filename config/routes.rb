@@ -16,7 +16,7 @@ ProjectOctober::Application.routes.draw do
   end
 
   resources :users, :only => :show do
-    post 'subscriptions'
+    resources :subscriptions, :only => [:create, :destroy]
   end
 
   # Sample of regular route:

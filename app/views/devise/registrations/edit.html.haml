@@ -38,8 +38,15 @@
         = link_to "Back", :back, :class => 'btn'
   .span5.offset1
     %h3 My Subscriptions
-    %p
-      List of RSS feeds will go here.
+    %ul
+      - resource.subscriptions.each do |s|
+        %li
+          %p
+            = s.url
+            = link_to '[x]', user_subscription_url(resource.id, s.id), :method => :delete
+    = form_for Subscription.new, :url => user_subscriptions_url(resource.id), :html => { :class => 'form-inline' } do |f|
+      =f.text_field :url, :class => 'input-large', :placeholder => 'RSS Feed URL'
+      =f.submit 'Subscribe', :class => 'btn btn-primary'
     %h3 Cancel my account
     %p
       Unhappy?
