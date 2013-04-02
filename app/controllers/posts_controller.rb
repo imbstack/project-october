@@ -34,7 +34,6 @@ class PostsController < ApplicationController
     begin
       post = Pismo::Document.new(params[:post][:url])
       images = post.images
-      title = post.title
       leader = post.lede # This is the first couple sentences.
       keywords = post.keywords(
         :minimum_score => 1,
@@ -59,7 +58,7 @@ class PostsController < ApplicationController
     end
 
     @post = Post.new(
-      :title => title,
+      :title => params[:post][:title] || post.title,
       :url => params[:post][:url],
     )
 
