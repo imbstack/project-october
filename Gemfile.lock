@@ -52,6 +52,8 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     fast-stemmer (1.0.2)
+    font-awesome-rails (3.0.2.0)
+      railties (>= 3.1)
     foreman (0.62.0)
       thor (>= 0.13.6)
     haml (3.1.4)
@@ -139,6 +141,7 @@ DEPENDENCIES
   awesome_nested_set
   coffee-rails (~> 3.2.1)
   devise
+  font-awesome-rails
   foreman
   haml
   jquery-rails

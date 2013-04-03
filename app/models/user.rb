@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :votes
+
   after_create :backend_register
 
   # Setup accessible (or protected) attributes for your model
@@ -19,6 +21,12 @@ class User < ActiveRecord::Base
   validate :name_cannot_have_whitespace
   validate :name_cannot_have_special_chars
   validate :name_cannot_have_twitter_chars
+
+  def vote(post, direction=Vote.UP)
+    vote = post.votes.where(:user_id => id, :post_id => post.id).first_or_initialize
+    vote.direction = direction
+    vote.save
+  end
 
   private
     def name_cannot_have_whitespace

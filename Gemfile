@@ -6,6 +6,7 @@ gem 'sass' # rake was throwing errors without this
 gem 'devise'
 gem 'awesome_nested_set'
 gem 'foreman'
+gem 'font-awesome-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

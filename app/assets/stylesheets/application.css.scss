@@ -10,6 +10,7 @@
  *
  *= require bootstrap.min.css
  *= require bootstrap-responsive.min.css
+ *= require font-awesome
  *= require_self
  */
 
@@ -81,6 +82,9 @@ p {
   padding: 20px;
   color: #eee;
   text-shadow: 2px 2px 0px #000;
+  background-image: linear-gradient(transparent, rgba(0,0,0,0.9));
+
+  a { color: #eee; }
 }
 .article.square {
   padding: 0 0 10px;
@@ -96,6 +100,7 @@ p {
 .article-links {
   list-style: none;
   margin-left: 0px;
+  font-size: 1.4em;
 }
 .article-links li {
   float: left;

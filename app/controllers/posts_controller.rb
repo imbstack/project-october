@@ -76,4 +76,14 @@ class PostsController < ApplicationController
       redirect_to new_post_url, :flash => { :error => "Could not add article to frontend database!" }
     end
   end
+
+  def upvote
+    @post = Post.find(params[:id])
+    render :text => current_user.vote(@post, Vote.UP)
+  end
+
+  def downvote
+    @post = Post.find(params[:id])
+    render :text => current_user.vote(@post, Vote.DOWN)
+  end
 end

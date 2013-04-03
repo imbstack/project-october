@@ -1,4 +1,8 @@
 %ul.article-links
-  %li= link_to 'upvote', upvote_post_url(article)
-  %li= link_to 'downvote', downvote_post_url(article)
+  %li
+    = link_to upvote_post_url(article), :remote => 'true' do
+      %i.icon-plus
+  %li
+    = link_to downvote_post_url(article), :remote => 'true' do
+      %i.icon-minus
   %li= link_to 'comments', post_url(article)
