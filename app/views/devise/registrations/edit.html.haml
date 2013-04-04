@@ -1,0 +1,53 @@
+.row
+  .span5
+    %h2 Edit #{resource_name.to_s.humanize} #{resource.name}
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-horizontal'}) do |f|
+      = devise_error_messages!
+
+      .control-group
+        = f.label :email, :class => 'control-label'
+        .controls
+          = f.email_field :email, :autofocus => true
+
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        %div
+          Currently waiting confirmation for:
+          = resource.unconfirmed_email
+
+      .control-group
+        = f.label :password, :class => 'control-label'
+        .controls
+          = f.password_field :password, :autocomplete => "off"
+          %br
+          %i (leave blank if you don't want to change it)
+
+      .control-group
+        = f.label :password_confirmation, :class => 'control-label'
+        .controls
+          = f.password_field :password_confirmation
+
+      .control-group
+        = f.label :current_password, :class => 'control-label'
+        .controls
+          = f.password_field :current_password
+          %br
+          %i (we need your current password to confirm your changes)
+
+      .form-actions
+        = f.submit "Update", :class => 'btn btn-primary'
+        = link_to "Back", :back, :class => 'btn'
+  .span5.offset1
+    %h3 My Subscriptions
+    %ul
+      - resource.subscriptions.each do |s|
+        %li
+          %p
+            = s.url
+            = link_to '[x]', user_subscription_url(resource.id, s.id), :method => :delete
+    = form_for Subscription.new, :url => user_subscriptions_url(resource.id), :html => { :class => 'form-inline' } do |f|
+      =f.text_field :url, :class => 'input-large', :placeholder => 'RSS Feed URL'
+      =f.submit 'Subscribe', :class => 'btn btn-primary'
+    %h3 Cancel my account
+    %p
+      Unhappy?
+      = button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete

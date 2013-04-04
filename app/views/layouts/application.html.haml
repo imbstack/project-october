@@ -17,6 +17,7 @@
             = image_tag 'logo_small.png', :width => '200', :alt => 'October'
           - if signed_in?
             = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
+            = link_to current_user.name, user_url(current_user.name), :class => 'btn', :style => 'float: right'
           - else
             = link_to 'Login', new_user_session_url, :class => 'btn', :style => 'float: right'
           - if signed_in?
