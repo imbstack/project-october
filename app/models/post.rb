@@ -26,6 +26,22 @@ class Post < ActiveRecord::Base
     end
 
     def new_from_url(url)
+      images, title, leader, keywords = fetch_from_url(url)
+
+      oct_vec = keywords.map do |pair|
+        Backend::Token.new(:t => pair[0], :f => pair[1])
+      end
+
+      Post.new(
+        :title     => title,
+        :image_url => images.first,
+        :url       => url,
+        :keywords  => oct_vec,
+        :images    => images,
+      )
+    end
+
+    def fetch_from_url(url)
       post = Pismo::Document.new(url)
       images = post.images || []
       leader = post.lede # This is the first couple sentences.
@@ -35,17 +51,12 @@ class Post < ActiveRecord::Base
         :word_length_limit => 30,
         :limit => 500
       )
-      oct_vec = keywords.map do |pair|
-        Backend::Token.new(:t => pair[0], :f => pair[1])
-      end
-
-      Post.new(
-        :title     => post.title,
-        :image_url => images.first,
-        :url       => url,
-        :keywords  => oct_vec,
-        :images    => images,
-      )
+      return [
+        post.images || [],
+        post.title,
+        post.lede,
+        keywords
+      ]
     end
   end
 end

@@ -54,6 +54,8 @@ gem 'thrift'
 gem 'pismo'
 
 group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl'
   gem 'minitest'
   gem 'turn', :require => false
 end
