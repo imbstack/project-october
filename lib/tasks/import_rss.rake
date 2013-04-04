@@ -8,6 +8,7 @@ def post_article(url, title, current_user)
 
   begin
     @post = Post.new_from_url(url)
+    @post.user_id = current_user.id
   rescue
     return [false, "Could not fetch article."]
   end

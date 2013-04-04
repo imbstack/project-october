@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402031342) do
+ActiveRecord::Schema.define(:version => 20130404185720) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -31,7 +31,10 @@ ActiveRecord::Schema.define(:version => 20130402031342) do
     t.datetime "updated_at", :null => false
     t.string   "url"
     t.string   "image_url"
+    t.integer  "user_id"
   end
+
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "user_id"

@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :posts
   has_many :subscriptions
   has_many :votes
 
@@ -14,6 +15,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+
   validates :name, :length => {:minimum => 3,
     :maximum => 25,
     :too_short => "Usernames must have at least %{count} characters",

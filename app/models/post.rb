@@ -4,8 +4,12 @@ class Post < ActiveRecord::Base
   attr_accessor :keywords, :images  # Only populated in Post.new_from_url()
   attr_accessible :title, :url, :image_url, :keywords, :images
 
+  belongs_to :user
+
   has_many :comments
   has_many :votes
+
+  validates_presence_of :user
 
   def type
     # Everything is square for now.
