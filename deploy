@@ -1,0 +1,14 @@
+#! /bin/bash
+
+# Script to deploy october
+# USAGE: ./deploy <username>
+
+if [ $1 ]; then
+    user=$1;
+else
+    user=$(whoami)
+fi
+
+ssh $user@october.case.edu /bin/bash << 'ENDSSH'
+    sudo /usr/sbin/deploy-frontend;
+ENDSSH

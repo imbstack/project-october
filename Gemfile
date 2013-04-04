@@ -12,6 +12,9 @@ gem 'font-awesome-rails'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+group :production do
+  gem 'pg'
+end
 
 # So that console works
 gem 'rb-readline'
