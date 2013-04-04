@@ -6,37 +6,16 @@ def post_article(url, title, current_user)
     return [false, "Article already posted!"]
   end
 
-  # Copy-pasted from posts controller D:
   begin
-    post = Pismo::Document.new(url)
-    images = post.images
-    leader = post.lede # This is the first couple sentences.
-    keywords = post.keywords(
-      :minimum_score     => 1,
-      :stem_at           => 2,
-      :word_length_limit => 30,
-      :limit             => 500
-    )
+    @post = Post.new_from_url(url)
   rescue
     return [false, "Could not fetch article."]
   end
-
-  if keywords.empty?
-    return [false, "Could not determine keywords."]
-  end
-
-  oct_vec = keywords.map do |pair|
-    Backend::Token.new(:t => pair[0], :f => pair[1])
-  end
-
-  @post = Post.new(
-    :title => title,
-    :url => url,
-  )
+  return [false, "Could not determine keywords."] if @post.keywords.empty?
 
   if @post.save
-    if THRIFTCLIENT.addPost(current_user.id, @post.id, oct_vec)
-      return [true, "Article posted!   (Keywords: #{oct_vec.first(5).map(&:t).join(', ')})"]
+    if THRIFTCLIENT.addPost(current_user.id, @post.id, @post.keywords)
+      return [true, "Article posted!   (Keywords: #{@post.keywords.first(5).map(&:t).join(', ')})"]
     else
       return [false, "Could not save to backend database!"]
     end

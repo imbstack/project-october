@@ -72,7 +72,7 @@
         $keywordListArea = $keywordsArea.find(".controls ul");
         $.each(data.keywords, function(index, keyword) {
           if (index >= 5) { return false; }
-          $keywordListArea.append("<li>" + keyword[0] + "</li>");
+          $keywordListArea.append("<li>" + keyword + "</li>");
         });
         $keywordsArea.show();
       };
