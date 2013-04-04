@@ -49,21 +49,23 @@ desc "Import Articles from Tom's RSS Feeds"
 task :import_rss => :environment do
   current_user = User.where(:name => "rssbot").first_or_create(
     :email => 'tomdooner+rss@gmail.com',
+    :password => (('A'..'Z').to_a + ('a'..'z').to_a).sample(45).join,
   )
-  url = 'http://planet.mozilla.org/rss20.xml'
-  open(url) do |rss|
+  feeds = Subscription.select(:url).uniq
 
-    feed = RSS::Parser.parse(rss)
-    STDOUT.write "===========================================================\n"
-    STDOUT.write "Title: #{feed.channel.title}\n"
-    STDOUT.write "===========================================================\n"
+  feeds.each do |f|
+    open(f.url) do |rss|
+      feed = RSS::Parser.parse(rss)
+      STDOUT.write "===========================================================\n"
+      STDOUT.write "Title: #{feed.channel.title}\n"
+      STDOUT.write "===========================================================\n"
 
-    feed.items.each do |item|
-      STDOUT.write "  Item: #{item.title}\n"
-      STDOUT.write "        #{item.link}\n"
-      success, msg = post_article(item.link, item.title, current_user)
-      STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
+      feed.items.each do |item|
+        STDOUT.write "  Item: #{item.title}\n"
+        STDOUT.write "        #{item.link}\n"
+        success, msg = post_article(item.link, item.title, current_user)
+        STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
+      end
     end
-    Process.wait()
   end
 end
