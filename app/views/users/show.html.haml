@@ -1,14 +1,19 @@
 .row
   .span8
-    %h2 #{@user.name}
+    %h2 posts
     %ul
       - @user.posts.each do |p|
         %li
-          %p= p.title
-  .span3
-    - if current_user.can_follow?(@user)
-      = link_to 'Follow Me', follow_user_url(@user.id), :class => 'btn'
+          %p= link_to p.title, p.url
+    %h2 comments
+  .span3.box
+    .avatar
+      = image_tag gravatar_url(@user), :width => '128', :height => '128'
+      %h2 #{@user.name}
+    - if current_user.id == @user.id
+      = link_to 'Manage Your Account', edit_user_registration_url, :class => 'btn btn-primary'
     - else
-      = link_to 'Followed!', unfollow_user_url(@user.id), :class => 'btn btn-primary'
-    %p
-      Other Stuff
+      - if current_user.can_follow?(@user)
+        = link_to 'Follow Me', follow_user_url(@user.id), :class => 'btn'
+      - else
+        = link_to 'Followed!', unfollow_user_url(@user.id), :class => 'btn btn-primary'

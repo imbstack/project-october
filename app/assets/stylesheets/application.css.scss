@@ -51,6 +51,12 @@ p {
     font-size: 8px;
   }
 }
+.box {
+  padding: 1% 10px;
+  background-color: $article-box-background;
+  border: 1px solid $article-box-border;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
 
 /*
  * ============================================================================
@@ -92,10 +98,6 @@ p {
   a { color: #eee; }
 }
 .article.square {
-  padding: 10px 1% 10px;
-  background-color: $article-box-background;
-  border: 1px solid $article-box-border;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   width: 29%;
 }
 .article.square .subtitle {
