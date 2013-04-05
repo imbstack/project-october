@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
   validates :name, :uniqueness => {:message => "This username already exists"}
   validate :name_cannot_have_whitespace
   validate :name_cannot_have_special_chars
-  validate :name_cannot_have_twitter_chars
 
   def vote(post, direction=Vote.UP)
     vote = post.votes.where(:user_id => id, :post_id => post.id).first_or_initialize
@@ -39,14 +38,8 @@ class User < ActiveRecord::Base
     end
 
     def name_cannot_have_special_chars
-      if name.match /[^\p{L}]/
+      if name.match /[^\w]/
         errors[:name] << "Usernames cannot have special characters in them"
-      end
-    end
-
-    def name_cannot_have_twitter_chars
-      if name.match /[@#]/
-        errors[:name] << "Usernames cannot have @ or # characters in them"
       end
     end
 

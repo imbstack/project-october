@@ -1,6 +1,20 @@
 require 'spec_helper'
 
 describe Post do
+  describe '#image_url' do
+    let(:the_post) { FactoryGirl.build(:post_from_url) }
+
+    it 'is set to the first image in the list when the post is saved' do
+      the_post.save
+      the_post.image_url.should == the_post.images.first
+    end
+
+    it 'is not set if the post already has an image_url' do
+      the_post.image_url = 'http://example.com/any_url.png'
+      expect { the_post.save }.to_not change { the_post.image_url }
+    end
+  end
+
   describe '#type' do
     subject { FactoryGirl.create(:post).type }
     it { should == :square_article }

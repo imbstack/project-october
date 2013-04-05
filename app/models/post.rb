@@ -9,6 +9,8 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_many :votes
 
+  before_validation :set_image_url_if_possible
+
   validates_presence_of :user
 
   def type
@@ -59,4 +61,11 @@ class Post < ActiveRecord::Base
       ]
     end
   end
+
+private
+
+  def set_image_url_if_possible
+    self.image_url = images.first if image_url.blank? && images.present?
+  end
+
 end
