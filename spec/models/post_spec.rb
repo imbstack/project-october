@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Post do
-  describe '#image_url' do
+  describe '#image' do
     let(:the_post) { FactoryGirl.build(:post_from_url) }
 
     it 'is set to the first image in the list when the post is saved' do

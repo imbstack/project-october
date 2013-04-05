@@ -10,7 +10,7 @@
 
       var init = function() {
         $(window).resize(updateHomepageHandler);
-        $articles.imagesLoaded(updateHomepageHandler);
+        updateHomepageHandler();
       }
 
       var updateHomepageHandler = function() {
@@ -29,9 +29,23 @@
         prevWidth = nowWidth;
         masonryEnabled = true;
 
+        updateImages();
+
         $articles.masonry({
           itemSelector: '.article',
           columnWidth: nowWidth / 3,
+        });
+      }
+
+      var updateImages = function() {
+        width = $articles.find(".article.square").width();
+
+        $articles.find(".article.square img").each(function(i) {
+          $this = $(this);
+          $this.css({
+            width: width,
+            height: width * $this.data('ratio')
+          });
         });
       }
 
@@ -45,14 +59,14 @@
     });
 .row
   -# The following is a temporary fix until tom figures out a better way to do this
-  - featured = @posts.detect{ |p| p.image_url.present? }
+  - featured = @posts.detect{ |p| p.image.present? }
   - if @posts.empty?
     = "There aren't any posts yet!"
   - else
     = render 'feature_article', :article => featured
   -@posts.each do |p|
     - next if p == featured
-    - if p.image_url.present?
+    - if p.image.present?
       = render 'square_article_with_picture', :article => p
     - else
       = render 'square_article', :article => p

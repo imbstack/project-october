@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     begin
       @post = Post.new_from_url(params[:post][:url])
       @post.title = params[:post][:title] if params[:post][:title].present?
-      @post.image_url = params[:post][:title] if params[:post][:image_url].present?
+      @post.image = open(params[:post][:image_url]) if params[:post][:image_url].present?
       @post.user_id = current_user.id
     rescue
       return redirect_to new_post_url, :flash => {

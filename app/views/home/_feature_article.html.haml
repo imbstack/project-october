@@ -1,4 +1,4 @@
-.article.featured{ :style => "background-image: url(#{article.image_url})" }
+.article.featured{ :style => "background-image: url(#{article.image.url})" }
   %h2
     =link_to article.title, article.url
   =render 'article_links', :article => article

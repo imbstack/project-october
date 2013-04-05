@@ -1,16 +1,19 @@
 # encoding: utf-8
 
 class Post < ActiveRecord::Base
-  attr_accessor :keywords, :images  # Only populated in Post.new_from_url()
-  attr_accessible :title, :url, :image_url, :keywords, :images
-  has_attached_file :image
+  attr_accessor :keywords, :images      # Only populated in Post.new_from_url()
+  attr_accessible :title, :url, :keywords, :images
+  has_attached_file :image, :styles => {
+    :featured => "749x400",
+    :square => '363'
+  }
 
   belongs_to :user
 
   has_many :comments
   has_many :votes
 
-  before_validation :set_image_url_if_possible
+  before_validation :set_image_if_necessary
 
   validates_presence_of :user
 
@@ -19,11 +22,19 @@ class Post < ActiveRecord::Base
     :square_article
   end
 
+  def image_height_as_pct
+    return 0 unless image.present?
+    width, height = image.image_size.split('x').map(&:to_f)
+    height / width
+  end
+
   # Class methods (i.e. Post.recommendations_for(user, n) )
   class << self
     def recommendations_for(user, n=10)
-      THRIFTCLIENT.recPosts(user.id).posts.map do |p|
-        # Make some garbage posts if the returned ones don't exist
+      posts = THRIFTCLIENT.recPosts(user.id).posts
+      return Post.order('created_at DESC').first(n) if posts.empty?
+
+      posts.map do |p|
         Post.where(:id => p.post_id).first
       end
     end
@@ -37,7 +48,6 @@ class Post < ActiveRecord::Base
 
       Post.new(
         :title     => title,
-        :image_url => images.first,
         :url       => url,
         :keywords  => oct_vec,
         :images    => images,
@@ -65,8 +75,8 @@ class Post < ActiveRecord::Base
 
 private
 
-  def set_image_url_if_possible
-    self.image_url = images.first if image_url.blank? && images.present?
+  def set_image_if_necessary
+    self.image = open(images.first) if image.blank? && images.present?
   end
 
 end

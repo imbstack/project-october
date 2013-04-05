@@ -1,5 +1,5 @@
 .article.square.with-picture
-  = image_tag article.image_url, :style => 'width: 100%'
+  = image_tag article.image.url(:square), :data => { :ratio => article.image_height_as_pct }
   %h2= article.title
   / %h3.subtitle Probably not a good idea, officials say
   =render 'article_links', :article => article
