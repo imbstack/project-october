@@ -2,18 +2,18 @@ FactoryGirl.define do
   factory :post do
     sequence(:title) { |n| "Post title ##{n}" }
     url "http://google.com"
-    image_url nil
+    image_file_name ""
     images []
     keywords []
 
     user
 
     factory :image_post do
-      image_url "http://example.com/image.jpg"
+      image File.new(Rails.root + 'spec/support/images/logo1.png')
     end
 
     factory :post_from_url do
-      images ['image1', 'image2']
+      images [Rails.root + 'spec/support/images/logo1.png', Rails.root + 'spec/support/images/logo2.png']
       keywords [['keyword1', 5], ['keyword2', 3], ['keyword1', 2]]
     end
 
@@ -22,7 +22,7 @@ FactoryGirl.define do
     end
 
     factory :post_from_url_without_keywords do
-      images ['image1', 'image2']
+      images [Rails.root + 'spec/support/images/logo1.png', Rails.root + 'spec/support/images/logo2.png']
     end
   end
 end
