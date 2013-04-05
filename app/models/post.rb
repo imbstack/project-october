@@ -33,7 +33,11 @@ class Post < ActiveRecord::Base
   class << self
     def recommendations_for(user, n=10)
       posts = THRIFTCLIENT.recPosts(user.id).posts.sort_by(&:weight).reverse
-      # todo:  return Post.order('created_at DESC').first(n) if posts.empty?
+      if posts.empty?
+        return Post.order('created_at DESC').first(n).map do |p|
+          [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
+        end
+      end
 
       post_weights = posts.inject({}) { |a, i| a.merge(i.post_id => i.weight) }
       posts = Post.find(posts.map(&:post_id)).sort_by { |p| post_weights[p.id] }.reverse
