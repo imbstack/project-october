@@ -10,13 +10,20 @@
 
       var init = function() {
         $(window).resize(updateHomepageHandler);
+        $(window).on('load', function() {
+          window.setTimeout(function() {
+            updateHomepageHandler({ force: true });
+          }, 10);
+        });
         updateHomepageHandler();
       }
 
-      var updateHomepageHandler = function() {
+      var updateHomepageHandler = function(ev) {
+        force = !!ev && !!ev.force;
+
         var nowWidth = $articles.width();
 
-        if (masonryEnabled && nowWidth == prevWidth) { return; }
+        if (masonryEnabled && nowWidth == prevWidth && !force) { return; }
         if (nowWidth < 724) {
           if (masonryEnabled) {
             $articles.masonry('destroy');
@@ -57,6 +64,7 @@
     $(function() {
       OctoberHomepage.init();
     });
+
 .row
   -# The following is a temporary fix until tom figures out a better way to do this
   - featured = @posts.detect{ |p| p.image.present? }
