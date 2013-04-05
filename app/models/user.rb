@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :subscriptions
   has_many :votes
+  has_many :followings, :foreign_key => :follower_id
 
   after_create :backend_register
 
@@ -28,6 +29,13 @@ class User < ActiveRecord::Base
     vote = post.votes.where(:user_id => id, :post_id => post.id).first_or_initialize
     vote.direction = direction
     vote.save
+  end
+
+  def can_follow?(other)
+    return false if id == other.id
+    return false if followings.pluck(:following_id).include?(other.id)
+
+    true
   end
 
   private

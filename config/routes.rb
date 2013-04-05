@@ -17,6 +17,11 @@ ProjectOctober::Application.routes.draw do
 
   resources :users, :only => :show do
     resources :subscriptions, :only => [:create, :destroy]
+
+    member do
+      get 'follow'
+      get 'unfollow'
+    end
   end
 
   # Sample of regular route:

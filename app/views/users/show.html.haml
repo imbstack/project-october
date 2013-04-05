@@ -4,7 +4,11 @@
     %ul
       - @user.posts.each do |p|
         %li
-          %p=p.title
+          %p= p.title
   .span3
+    - if current_user.can_follow?(@user)
+      = link_to 'Follow Me', follow_user_url(@user.id), :class => 'btn'
+    - else
+      = link_to 'Followed!', unfollow_user_url(@user.id), :class => 'btn btn-primary'
     %p
       Other Stuff
