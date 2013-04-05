@@ -15,7 +15,9 @@
  */
 
 $october-orange: #ff8930;
-$body-background: #EEEEEE;
+$body-background: #f8f8f8;
+$article-box-background: #fff;
+$article-box-border: #ccc;
 
 body, html {
   font-family: "ff-nuvo-sc-web-pro";
@@ -27,7 +29,7 @@ h2 { font-size: 3.15em; line-height: 1.3em; }
 h3 { font-size: 2.45em; }
 
 h1, h2, h3 {
-  font-family: 'adelle', serif;
+  font-family: "museo-sans",sans-serif;
   font-weight: lighter;
 }
 
@@ -87,9 +89,11 @@ p {
   a { color: #eee; }
 }
 .article.square {
-  padding: 0 0 10px;
-  border-bottom: 1px solid #ccc;
-  width: 31%;
+  padding: 10px 1% 10px;
+  background-color: $article-box-background;
+  border: 1px solid $article-box-border;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  width: 29%;
 }
 .article.square .subtitle {
   font-family: 'ff-nuvo-sc-web-pro';
