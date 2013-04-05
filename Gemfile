@@ -7,6 +7,7 @@ gem 'devise'
 gem 'awesome_nested_set'
 gem 'foreman'
 gem 'font-awesome-rails'
+gem 'paperclip'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -3,6 +3,7 @@
 class Post < ActiveRecord::Base
   attr_accessor :keywords, :images  # Only populated in Post.new_from_url()
   attr_accessible :title, :url, :image_url, :keywords, :images
+  has_attached_file :image
 
   belongs_to :user
 

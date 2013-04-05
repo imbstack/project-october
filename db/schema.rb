@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404185720) do
+ActiveRecord::Schema.define(:version => 20130405041027) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -25,13 +25,23 @@ ActiveRecord::Schema.define(:version => 20130404185720) do
     t.integer  "user_id"
   end
 
+  create_table "followings", :force => true do |t|
+    t.integer "follower_id"
+    t.integer "following_id"
+  end
+
+  add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
+
   create_table "posts", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "url"
-    t.string   "image_url"
     t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
