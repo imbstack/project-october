@@ -17,9 +17,10 @@ class Post < ActiveRecord::Base
 
   validates_presence_of :user
 
-  def type
-    # Everything is square for now.
-    :square_article
+  def types
+    base = Set.new([:square_article])
+    base.merge([:feature_article, :square_article_with_picture]) if image.present?
+    base
   end
 
   def image_height_as_pct
@@ -31,11 +32,21 @@ class Post < ActiveRecord::Base
   # Class methods (i.e. Post.recommendations_for(user, n) )
   class << self
     def recommendations_for(user, n=10)
-      posts = THRIFTCLIENT.recPosts(user.id).posts
-      return Post.order('created_at DESC').first(n) if posts.empty?
+      posts = THRIFTCLIENT.recPosts(user.id).posts.sort_by(&:weight).reverse
+      # todo:  return Post.order('created_at DESC').first(n) if posts.empty?
 
-      posts.map do |p|
-        Post.where(:id => p.post_id).first
+      post_weights = posts.inject({}) { |a, i| a.merge(i.post_id => i.weight) }
+      posts = Post.find(posts.map(&:post_id)).sort_by { |p| post_weights[p.id] }.reverse
+
+      # Frontpage display algorithm:
+      # 1) Find the highest weighted story that is eligible to be a featured
+      #    post. It is the featured post.
+      # 2) All other articles are to be displayed with an image if possible in
+      #    order according to weight.
+      featured = posts.detect { |p| p.types.include?(:feature_article) }
+
+      [[featured, :feature_article]] + (posts - [featured]).map do |p|
+        [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
       end
     end
 
