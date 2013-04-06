@@ -15,6 +15,8 @@ ProjectOctober::Application.routes.draw do
     end
   end
 
+  # todo: make this ajax --> post 'subscriptions/verify'
+
   resources :users, :only => :show do
     resources :subscriptions, :only => [:create, :destroy]
 

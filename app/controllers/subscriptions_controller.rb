@@ -3,7 +3,11 @@ class SubscriptionsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    @user.subscriptions.create(:url => params[:subscription][:url])
+    @subscription = @user.subscriptions.new(:url => params[:subscription][:url])
+    if !@subscription.save
+      flash[:error] = @subscription.errors.full_messages.first
+    end
+
     return redirect_to edit_user_registration_url
   end
 
