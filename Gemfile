@@ -9,6 +9,7 @@ gem 'foreman'
 gem 'font-awesome-rails'
 gem 'paperclip'
 gem 'paperclip-meta'
+gem 'feedzirra'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
