@@ -29,7 +29,13 @@ class User < ActiveRecord::Base
   def vote(post, direction=Vote.UP)
     vote = post.votes.where(:user_id => id, :post_id => post.id).first_or_initialize
     vote.direction = direction
-    vote.save
+    if vote.save
+      if direction == Vote.UP
+        THRIFTCLIENT.userVPost(id, Backend::Action::VOTE_UP, post.id)
+      else
+        THRIFTCLIENT.userVPost(id, Backend::Action::VOTE_DOWN, post.id)
+      end
+    end
   end
 
   def can_follow?(other)
