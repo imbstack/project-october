@@ -8,14 +8,14 @@ class Post < ActiveRecord::Base
     :square => '363'
   }
 
-  belongs_to :user
+  belongs_to :posted_by, :polymorphic => true
 
   has_many :comments
   has_many :votes
 
   before_validation :set_image_if_necessary
 
-  validates_presence_of :user
+  validates_presence_of :posted_by_id
 
   def types
     base = Set.new([:square_article])

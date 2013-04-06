@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405050032) do
+ActiveRecord::Schema.define(:version => 20130406054357) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(:version => 20130405050032) do
     t.integer  "user_id"
   end
 
+  create_table "feeds", :force => true do |t|
+    t.string "url"
+  end
+
   create_table "followings", :force => true do |t|
     t.integer "follower_id"
     t.integer "following_id"
@@ -34,27 +38,27 @@ ActiveRecord::Schema.define(:version => 20130405050032) do
 
   create_table "posts", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "url"
-    t.integer  "user_id"
+    t.integer  "posted_by_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "image_meta"
+    t.string   "posted_by_type",     :default => "User"
   end
 
-  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+  add_index "posts", ["posted_by_id"], :name => "index_posts_on_user_id"
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "user_id"
-    t.string   "url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "feed_id"
   end
 
-  add_index "subscriptions", ["url"], :name => "index_subscriptions_on_url"
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
 
   create_table "users", :force => true do |t|

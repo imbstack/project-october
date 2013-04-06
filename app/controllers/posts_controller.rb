@@ -26,7 +26,7 @@ class PostsController < ApplicationController
       @post = Post.new_from_url(params[:post][:url])
       @post.title = params[:post][:title] if params[:post][:title].present?
       @post.image = open(params[:post][:image_url]) if params[:post][:image_url].present?
-      @post.user_id = current_user.id
+      @post.posted_by = current_user
     rescue
       return redirect_to new_post_url, :flash => {
         :error => "Could not fetch article!"

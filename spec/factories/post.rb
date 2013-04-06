@@ -6,7 +6,7 @@ FactoryGirl.define do
     images []
     keywords []
 
-    user
+    association :posted_by, :factory => :user
 
     factory :image_post do
       image File.new(Rails.root + 'spec/support/images/logo1.png')

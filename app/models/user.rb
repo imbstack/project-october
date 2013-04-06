@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :posts
+  has_many :posts, :as => :posted_by
   has_many :subscriptions
+  has_many :feeds, :through => :subscriptions
   has_many :votes
   has_many :followings, :foreign_key => :follower_id
 
@@ -38,6 +39,13 @@ class User < ActiveRecord::Base
     true
   end
 
+  def subscribe_to_feed(url)
+    feed = Feed.where(:url => url).first_or_create
+    return false unless feed.present?
+    subscription = subscriptions.where(:feed_id => feed.id).first_or_create
+    subscription.persisted?
+  end
+
   private
     def name_cannot_have_whitespace
       if name.match /\s/
@@ -46,7 +54,7 @@ class User < ActiveRecord::Base
     end
 
     def name_cannot_have_special_chars
-      if name.match /[^\w]/
+      if name.match /[^\w-]/
         errors[:name] << "Usernames cannot have special characters in them"
       end
     end

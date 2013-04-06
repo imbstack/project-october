@@ -3,8 +3,8 @@ class SubscriptionsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    @subscription = @user.subscriptions.new(:url => params[:subscription][:url])
-    if !@subscription.save
+
+    if !@user.subscribe_to_feed(params[:feed][:url])
       flash[:error] = @subscription.errors.full_messages.first
     end
 
