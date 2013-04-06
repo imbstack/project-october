@@ -49,9 +49,12 @@ class Post < ActiveRecord::Base
       #    order according to weight.
       featured = posts.detect { |p| p.types.include?(:feature_article) }
 
-      [[featured, :feature_article]] + (posts - [featured]).map do |p|
+      post_type_list = (posts - [featured]).map do |p|
         [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
       end
+      post_type_list.unshift([featured, :feature_article]) if featured.present?
+
+      post_type_list
     end
 
     def new_from_url(url)
