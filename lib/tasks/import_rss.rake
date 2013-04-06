@@ -34,18 +34,16 @@ task :import_rss => :environment do
   feeds = Subscription.select(:url).uniq
 
   feeds.each do |f|
-    open(f.url) do |rss|
-      feed = RSS::Parser.parse(rss)
-      STDOUT.write "===========================================================\n"
-      STDOUT.write "Title: #{feed.channel.title}\n"
-      STDOUT.write "===========================================================\n"
+    feed = Feedzirra::Feed.fetch_and_parse(f.url)
+    STDOUT.write "===========================================================\n"
+    STDOUT.write "Title: #{feed.title}\n"
+    STDOUT.write "===========================================================\n"
 
-      feed.items.each do |item|
-        STDOUT.write "  Item: #{item.title}\n"
-        STDOUT.write "        #{item.link}\n"
-        success, msg = post_article(item.link, item.title, current_user)
-        STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
-      end
+    feed.entries.each do |item|
+      STDOUT.write "  Item: #{item.title}\n"
+      STDOUT.write "        #{item.url}\n"
+      success, msg = post_article(item.url, item.title, current_user)
+      STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
     end
   end
 end
