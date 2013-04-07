@@ -10,6 +10,7 @@ gem 'font-awesome-rails'
 gem 'paperclip'
 gem 'paperclip-meta'
 gem 'feedzirra'
+gem 'airbrake'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
