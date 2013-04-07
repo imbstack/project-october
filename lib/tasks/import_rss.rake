@@ -27,7 +27,7 @@ end
 
 desc "Import Articles from Tom's RSS Feeds"
 task :import_rss => :environment do
-  feeds = Feed.group(:url)
+  feeds = Feed.select('DISTINCT(url), *')
 
   feeds.each do |f|
     feed = Feedzirra::Feed.fetch_and_parse(f.url)
