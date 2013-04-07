@@ -71,4 +71,4 @@
     = "There aren't any posts yet!"
   - else
     - @posts.each do |p|
-      = render p[1].to_s, :article => p[0]
+      = render "home/#{p[1]}", :article => p[0]

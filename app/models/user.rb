@@ -52,6 +52,19 @@ class User < ActiveRecord::Base
     subscription.persisted?
   end
 
+  class << self
+    def search(query)
+      terms = query.split(' ').first(10)
+      results = Hash.new(0)
+      terms.each do |t|
+        User.where('name LIKE ?', "%#{t}%").limit(30).each do |u|
+          results[u] = results[u] + 1
+        end
+      end
+      results.sort_by { |_, v| v }.reverse.map(&:first)
+    end
+  end
+
   private
     def name_cannot_have_whitespace
       if name.match /\s/

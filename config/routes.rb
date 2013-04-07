@@ -12,6 +12,7 @@ ProjectOctober::Application.routes.draw do
     end
     collection do
       post 'fetch'
+      post 'search'
     end
   end
 

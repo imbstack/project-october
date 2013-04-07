@@ -32,15 +32,19 @@ class Post < ActiveRecord::Base
   # Class methods (i.e. Post.recommendations_for(user, n) )
   class << self
     def recommendations_for(user, n=10)
-      posts = THRIFTCLIENT.recPosts(user.id).posts.sort_by(&:weight).reverse
+      posts = THRIFTCLIENT.recPosts(user.id).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
       if posts.empty?
         return Post.order('created_at DESC').first(n).map do |p|
           [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
         end
       end
 
-      post_weights = posts.inject({}) { |a, i| a.merge(i.post_id => i.weight) }
-      posts = Post.find(posts.map(&:post_id)).sort_by { |p| post_weights[p.id] }.reverse
+      assign_types(posts)
+    end
+
+    # Takes a hash of { post_id => weight } and assigns display types for them.
+    def assign_types(post_list)
+      posts = Post.find(post_list.keys).sort_by { |p| post_list[p.id] }.reverse
 
       # Frontpage display algorithm:
       # 1) Find the highest weighted story that is eligible to be a featured

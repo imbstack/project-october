@@ -7,6 +7,14 @@ class PostsController < ApplicationController
 
   end
 
+  def search
+    @query = params[:search][:query]
+    results = THRIFTCLIENT.textSearch(@query.split(' '))
+    @posts = Post.assign_types(results)
+    @user_results = User.search(@query)
+    render 'home/index'
+  end
+
   def fetch
     return unless request.xhr?
     begin

@@ -136,6 +136,15 @@ p {
     width: 100%;
   }
 }
+.user-results {
+  list-style: none;
+  margin: 0;
+}
+.user-results li {
+  width: 200px;
+  float: left;
+  margin-right: 20px;
+}
 
 /*
  * ============================================================================
