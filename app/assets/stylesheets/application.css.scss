@@ -13,6 +13,7 @@
  *= require font-awesome
  *= require_self
  */
+@import "bourbon";
 
 $october-orange: #ff8930;
 $body-background: #f8f8f8;
@@ -55,7 +56,7 @@ p {
   padding: 1% 10px;
   background-color: $article-box-background;
   border: 1px solid $article-box-border;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  @include box-shadow(2px 2px 10px rgba(0, 0, 0, 0.1));
 }
 
 /*
@@ -90,10 +91,10 @@ p {
   position: absolute;
   bottom: 0px;
   margin: 0;
-  padding: 20px;
+  padding: 20px 20px 30px;
   color: #eee;
   text-shadow: 2px 2px 0px #000;
-  background-image: linear-gradient(transparent, rgba(0,0,0,0.9));
+  @include linear-gradient(transparent, rgba(0,0,0,0.9));
 
   a { color: #eee; }
 }
@@ -125,8 +126,8 @@ p {
 .article.featured .article-links {
   position: absolute;
   bottom: 0px;
-  margin-bottom: 4px;
-  padding-left: 20px;
+  margin-bottom: 6px;
+  padding-left: 23px;
 }
 .article.featured .article-links a {
   color: #fff;
@@ -164,7 +165,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
   border-radius: 0px;
 }
 textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-  box-shadow: 0 0 3px $october-orange;
+  @include box-shadow(0 0 3px $october-orange);
   border-color: $october-orange;
 }
 .alert {

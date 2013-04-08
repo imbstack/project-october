@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'haml'
-gem 'sass' # rake was throwing errors without this
+gem 'sass'
+gem 'bourbon'
 gem 'devise'
 gem 'awesome_nested_set'
 gem 'foreman'
