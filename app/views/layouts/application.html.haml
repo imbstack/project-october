@@ -13,18 +13,19 @@
   %body
     .container#logobar
       .row
-        .span12
-          = link_to root_url do
-            = image_tag 'logo_small.png', :width => '200', :alt => 'October'
-          - if signed_in?
-            = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
-            = link_to current_user.name, user_url(current_user.name), :class => 'btn', :style => 'float: right'
-          - else
-            = link_to 'Login', new_user_session_url, :class => 'btn', :style => 'float: right'
-          - if signed_in?
-            = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
-          = form_for('search', :url => search_posts_url, :html => { :style => 'float: right;'}) do |f|
-            =f.text_field :query, :placeholder => "Search for user, keyword, or feed", :class => 'span4'
+        .span4
+          %h1.logo= link_to 'October', root_url
+        .span8
+          .right-nav-items
+            - if signed_in?
+              = link_to 'Logout', destroy_user_session_url, :class => 'btn', :method => 'delete', :style => 'float: right'
+              = link_to current_user.name, user_url(current_user.name), :class => 'btn', :style => 'float: right'
+            - else
+              = link_to 'Login', new_user_session_url, :class => 'btn', :style => 'float: right'
+            - if signed_in?
+              = link_to 'Post an Article', new_post_url, :class => 'btn', :style => 'float: right'
+            = form_for('search', :url => search_posts_url, :html => { :style => 'float: right;'}) do |f|
+              =f.text_field :query, :placeholder => "Search for user, keyword, or feed", :class => 'span4'
       - if flash[:notice] || flash[:error]
         #alert-bar
           - if flash[:notice]
