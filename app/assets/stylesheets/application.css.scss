@@ -122,6 +122,47 @@ p {
   line-height: 1em;
   color: #555;
 }
+.recommended-because .icon-question-sign {
+  color: #888;
+  right: 12px;
+  position: absolute;
+  cursor: default;
+  font-size: 16px;
+  display: none;
+}
+.recommended-because .reason {
+  display: none;
+  position: absolute;
+  background-color: rgb(204, 204, 204);
+  right: -25px;
+  top: 30px;
+  width: 150px;
+  text-align: center;
+  padding: 7px;
+  font-family: 'museo-sans', sans-serif;
+  font-size: 12px;
+}
+.recommended-because .reason:after {
+  border: 8px solid transparent;
+  border-bottom-color: #CCCCCC;
+  content: " ";
+  position: absolute;
+  right: 23px;
+  text-align: center;
+  top: -16px;
+  width: 0;
+  display: none;
+}
+.article:hover {
+  .icon-question-sign {
+    display: block;
+  }
+  .icon-question-sign:hover {
+    .reason, .reason:after {
+      display: block;
+    }
+  }
+}
 .article-links {
   list-style: none;
   margin-left: 0px;

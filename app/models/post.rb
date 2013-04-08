@@ -2,6 +2,7 @@
 
 class Post < ActiveRecord::Base
   attr_accessor :keywords, :images      # Only populated in Post.new_from_url()
+  attr_accessor :weight                 # Only populated in Post.recommendations_for
   attr_accessible :title, :url, :keywords, :images
   has_attached_file :image, :styles => {
     :featured => "749x400",
@@ -44,7 +45,11 @@ class Post < ActiveRecord::Base
 
     # Takes a hash of { post_id => weight } and assigns display types for them.
     def assign_types(post_list)
-      posts = Post.find(post_list.keys).sort_by { |p| post_list[p.id] }.reverse
+      posts = Post.
+        find(post_list.keys).
+        each { |p| p.weight = post_list[p.id] }.
+        sort_by { |p| p.weight }.
+        reverse
 
       # Frontpage display algorithm:
       # 1) Find the highest weighted story that is eligible to be a featured
