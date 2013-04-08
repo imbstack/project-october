@@ -2,7 +2,7 @@
 
 class Post < ActiveRecord::Base
   attr_accessor :keywords, :images      # Only populated in Post.new_from_url()
-  attr_accessor :weight                 # Only populated in Post.recommendations_for
+  attr_accessor :weight                 # Only populated in Post.assign_types()
   attr_accessible :title, :url, :keywords, :images
   has_attached_file :image, :styles => {
     :featured => "749x400",
@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_many :votes
 
-  before_validation :set_image_if_necessary
+  before_save :set_image_if_necessary
 
   validates_presence_of :posted_by_id
 
@@ -103,7 +103,12 @@ class Post < ActiveRecord::Base
 private
 
   def set_image_if_necessary
-    self.image = open(images.first) if image.blank? && images.present?
+    if image.blank? && images.present?
+      images.each do |url|
+        self.image = URI.parse(url)
+        return if self.image.width > 200 && self.image.height > 50
+      end
+    end
+    self.image.destroy
   end
-
 end
