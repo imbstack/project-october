@@ -1,5 +1,4 @@
 class Feed < ActiveRecord::Base 
-  attr_accessor :title
   attr_accessible :title
 
   has_many :subscriptions

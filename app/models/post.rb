@@ -32,7 +32,7 @@ class Post < ActiveRecord::Base
   # Class methods (i.e. Post.recommendations_for(user, n) )
   class << self
     def recommendations_for(user, n=10)
-      posts = THRIFTCLIENT.recPosts(user.id).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
+      posts = THRIFTCLIENT.recPosts(user.id, n).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
       if posts.empty?
         return Post.order('created_at DESC').first(n).map do |p|
           [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]

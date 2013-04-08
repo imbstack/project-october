@@ -2,5 +2,14 @@
   = image_tag article.image.url(:square), :data => { :ratio => article.image_height_as_pct }
   %h2
     =link_to article.title, article.url
-  / %h3.subtitle Probably not a good idea, officials say
+  .posted_by
+    - if article.posted_by.is_a?(Feed)
+      from
+      = article.posted_by.title
+    - elsif article.posted_by.is_a?(User)
+      by
+      = link_to article.posted_by.name, user_url(article.posted_by)
+    &middot; posted
+    = distance_of_time_in_words(article.created_at, Time.now)
+    ago
   =render 'home/article_links', :article => article
