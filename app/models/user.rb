@@ -30,10 +30,11 @@ class User < ActiveRecord::Base
     vote = post.votes.where(:user_id => id, :post_id => post.id).first_or_initialize
     vote.direction = direction
     if vote.save
+      # TODO: add undo directions here
       if direction == Vote.UP
-        THRIFTCLIENT.userVPost(id, Backend::Action::VOTE_UP, post.id)
+        THRIFTCLIENT.userToPost(id, Backend::Action::VOTE_UP, post.id)
       else
-        THRIFTCLIENT.userVPost(id, Backend::Action::VOTE_DOWN, post.id)
+        THRIFTCLIENT.userToPost(id, Backend::Action::VOTE_DOWN, post.id)
       end
     end
   end
