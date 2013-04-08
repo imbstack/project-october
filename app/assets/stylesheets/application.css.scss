@@ -42,6 +42,7 @@ p {
 #logobar {
   margin: 30px auto;
 }
+
 .logo {
   padding-left: 50px;
   background-image: image-url('logo_small.png');
@@ -134,6 +135,9 @@ p {
 .article-links a {
   color: #555;
 }
+.article-links a.voted {
+  color: $october-orange !important;
+}
 .article-links li:first-child {
   margin-left: 0px;
 }
@@ -145,6 +149,8 @@ p {
 }
 .article.featured .article-links a {
   color: #fff;
+  text-decoration: none;
+  &:active, &:focus { text-decoration: none; }
 }
 .article .posted_by {
   font-size: 1.4em;

@@ -3,5 +3,6 @@ class HomeController < ApplicationController
 
   def index
     @posts = Post.recommendations_for(current_user)
+    @votes = current_user.votes.where(:post_id => @posts.map(&:first))
   end
 end

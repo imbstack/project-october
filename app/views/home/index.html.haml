@@ -15,6 +15,7 @@
             updateHomepageHandler({ force: true });
           }, 10);
         });
+        $articles.on("ajax:success", orangifyUpvoteDownvote);
         updateHomepageHandler();
       }
 
@@ -54,6 +55,12 @@
             height: width * $this.data('ratio')
           });
         });
+      }
+
+      var orangifyUpvoteDownvote = function(data, status, xhr) {
+        $target = $(data.target);
+        $target.parents("ul").find("a").removeClass("voted");
+        $target.addClass("voted");
       }
 
       return {

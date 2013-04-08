@@ -11,6 +11,7 @@ class PostsController < ApplicationController
     @query = params[:search][:query]
     results = THRIFTCLIENT.textSearch(@query.split(' '), 50)
     @posts = Post.assign_types(results)
+    @votes = current_user.votes.where(:post_id => @posts.map(&:first))
     @user_results = User.search(@query)
     render 'home/index'
   end
