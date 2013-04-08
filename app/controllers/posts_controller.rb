@@ -9,7 +9,7 @@ class PostsController < ApplicationController
 
   def search
     @query = params[:search][:query]
-    results = THRIFTCLIENT.textSearch(@query.split(' '))
+    results = THRIFTCLIENT.textSearch(@query.split(' '), 50)
     @posts = Post.assign_types(results)
     @user_results = User.search(@query)
     render 'home/index'
