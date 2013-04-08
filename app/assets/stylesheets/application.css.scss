@@ -131,6 +131,10 @@ p {
 .article.featured .article-links a {
   color: #fff;
 }
+.article .posted_by {
+  font-size: 1.4em;
+  margin: 11px 0;
+}
 @media (max-width: 767px) {
   .article.featured, .article.square {
     width: 100%;
