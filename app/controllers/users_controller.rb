@@ -26,4 +26,12 @@ class UsersController < ApplicationController
 
     redirect_to user_url(@user.name)
   end
+
+  def add_terms
+    @user = User.find(params[:id])
+    @user.add_keywords(params[:tags])
+    flash[:notice] = "Okay, here are some articles that are more like that!"
+
+    redirect_to root_url
+  end
 end

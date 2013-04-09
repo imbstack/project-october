@@ -43,6 +43,14 @@ class User < ActiveRecord::Base
     THRIFTCLIENT.userTopTerms(id, n).sort_by { |_, v| v }.reverse
   end
 
+  def add_keywords(ary)
+    return THRIFTCLIENT.addUserTerms(id, ary)
+  end
+
+  def needs_onboarding?
+    THRIFTCLIENT.recPosts(id, 10).posts.empty?
+  end
+
   def can_follow?(other)
     return false if id == other.id
     return false if followings.pluck(:following_id).include?(other.id)

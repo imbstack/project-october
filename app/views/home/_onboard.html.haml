@@ -1,0 +1,20 @@
+- content_for :javascripts do
+  = javascript_include_tag 'tag-it.min'
+  :javascript
+    $(function() {
+      $("#onboard_terms").tagit({ fieldName: 'tags[]' });
+    });
+- content_for :stylesheets do
+  = stylesheet_link_tag 'tag-it'
+.article.box{ :style => ' width: 63%; height: 400px;' }
+  %h2{ :style => 'text-align: center;margin-bottom: 20px;' } Welcome to October!
+  %p
+    %b Hmm, it looks like we don't know each other.
+  %p
+    You're looking at some of the newest content submitted to October. We want to
+    %b customize
+    it to your liking, so would you please give us a couple keywords you'd like to follow?
+  = form_for('onboard', :url => add_terms_user_url(current_user)) do |f|
+    %ul#onboard_terms
+    = f.submit 'Customize!', :class => 'btn btn-primary'
+

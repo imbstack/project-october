@@ -25,6 +25,7 @@ ProjectOctober::Application.routes.draw do
     member do
       get 'follow'
       get 'unfollow'
+      post 'add_terms'
     end
   end
 
