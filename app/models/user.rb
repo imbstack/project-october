@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def top_keywords(n = 10)
+    THRIFTCLIENT.userTopTerms(id, n).sort_by { |_, v| v }.reverse
+  end
+
   def can_follow?(other)
     return false if id == other.id
     return false if followings.pluck(:following_id).include?(other.id)

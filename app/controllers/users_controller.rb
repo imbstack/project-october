@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(:name => params[:id]).includes(:posts).first
+    @keywords = @user.top_keywords(20)
     return redirect_to root_url, :flash => { :error => "Unknown User!" } unless @user.present?
   end
 
