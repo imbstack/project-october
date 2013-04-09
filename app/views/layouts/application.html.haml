@@ -53,7 +53,7 @@
                   %li.box
                     %h3
                       #{image_tag gravatar_url(u, 32)}
-                      = link_to u.name, user_url(u)
+                      = link_to u.name, user_url(u.name)
     .container#articles
       = yield
     = javascript_include_tag "application"
