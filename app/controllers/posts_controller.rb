@@ -45,13 +45,13 @@ class PostsController < ApplicationController
       @post.image = open(params[:post][:image_url]) if params[:post][:image_url].present?
       @post.posted_by = current_user
     rescue
-      return redirect_to new_post_url, :flash => {
+      return redirect_to new_post_path, :flash => {
         :error => "Could not fetch article!"
       }
     end
 
     if @post.keywords.empty?
-      return redirect_to new_post_url, :flash => {
+      return redirect_to new_post_path, :flash => {
         :error => "Could not determine article keywords!"
       }
     end
@@ -59,14 +59,14 @@ class PostsController < ApplicationController
     if @post.save
       # TODO: Save the post to the db to get the second param and get the first from the current user
       if THRIFTCLIENT.addPost(current_user.id, @post.id, @post.keywords)
-        redirect_to root_url, :flash => {
+        redirect_to root_path, :flash => {
           :notice => "Success! Your article has been submitted."
         }
       else
-        redirect_to new_post_url, :flash => { :error => "Could not add article to backend database!" }
+        redirect_to new_post_path, :flash => { :error => "Could not add article to backend database!" }
       end
     else
-      redirect_to new_post_url, :flash => { :error => "Could not add article to frontend database!" }
+      redirect_to new_post_path, :flash => { :error => "Could not add article to frontend database!" }
     end
   end
 

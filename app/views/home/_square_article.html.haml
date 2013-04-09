@@ -1,7 +1,7 @@
 .article.square.box
   - if current_user.debug_user?
     .recommended-because
-      = link_to debug_post_url(article) do
+      = link_to debug_post_path(article) do
         %i.icon-question-sign
           .reason
             Weight: #{article.try(:weight).try(:round, 2) || "(unknown)"}
@@ -13,7 +13,7 @@
       = article.posted_by.title
     - elsif article.posted_by.is_a?(User)
       by
-      = link_to article.posted_by.name, user_url(article.posted_by)
+      = link_to article.posted_by.name, user_path(article.posted_by)
     &middot; posted
     = distance_of_time_in_words(article.created_at, Time.now)
     ago

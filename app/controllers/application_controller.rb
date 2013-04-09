@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_debug!
-    redirect_to root_url, :flash => { :error => 'You cannot view that page!' } unless current_user.try(:debug_user)
+    redirect_to root_path, :flash => { :error => 'You cannot view that page!' } unless current_user.try(:debug_user)
   end
 end

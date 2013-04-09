@@ -11,7 +11,7 @@
       = image_tag gravatar_url(@user), :width => '128', :height => '128'
       %h2 #{@user.name}
     - if current_user.id == @user.id
-      = link_to 'Manage Your Account', edit_user_registration_url, :class => 'btn btn-primary'
+      = link_to 'Manage Your Account', edit_user_registration_path, :class => 'btn btn-primary'
       %h3 your top keywords
       %ol
         - @keywords.each do |k|
@@ -19,6 +19,6 @@
             %p{ :title => "Weight: #{k[1]}" }= k[0]
     - else
       - if current_user.can_follow?(@user)
-        = link_to 'Follow Me', follow_user_url(@user.id), :class => 'btn'
+        = link_to 'Follow Me', follow_user_path(@user.id), :class => 'btn'
       - else
-        = link_to 'Followed!', unfollow_user_url(@user.id), :class => 'btn btn-primary'
+        = link_to 'Followed!', unfollow_user_path(@user.id), :class => 'btn btn-primary'

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.where(:name => params[:id]).includes(:posts).first
     @keywords = @user.top_keywords(20)
-    return redirect_to root_url, :flash => { :error => "Unknown User!" } unless @user.present?
+    return redirect_to root_path, :flash => { :error => "Unknown User!" } unless @user.present?
   end
 
   def follow
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Now following #{@user.name}"
     end
 
-    redirect_to user_url(@user.name)
+    redirect_to user_path(@user.name)
   end
 
   def unfollow
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Stopped following #{@user.name}"
     end
 
-    redirect_to user_url(@user.name)
+    redirect_to user_path(@user.name)
   end
 
   def add_terms
@@ -32,6 +32,6 @@ class UsersController < ApplicationController
     @user.add_keywords(params[:tags])
     flash[:notice] = "Okay, here are some articles that are more like that!"
 
-    redirect_to root_url
+    redirect_to root_path
   end
 end

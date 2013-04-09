@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
       flash[:error] = @subscription.errors.full_messages.first
     end
 
-    return redirect_to edit_user_registration_url
+    return redirect_to edit_user_registration_path
   end
 
   def destroy
@@ -16,9 +16,9 @@ class SubscriptionsController < ApplicationController
 
     if @subscription.user_id == current_user.id
       @subscription.delete
-      return redirect_to edit_user_registration_url
+      return redirect_to edit_user_registration_path
     else
-      return redirect_to edit_user_registration_url, :flash => {
+      return redirect_to edit_user_registration_path, :flash => {
         :error => "You cannot delete this RSS Feed Subscription"
       }
     end

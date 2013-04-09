@@ -14,6 +14,6 @@ class CommentsController < ApplicationController
       flash[:error] = "Could not post comment: #{@comment.errors.full_messages.first}"
     end
 
-    redirect_to post_url(@post)
+    redirect_to post_path(@post)
   end
 end
