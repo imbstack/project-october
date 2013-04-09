@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def needs_onboarding?
-    THRIFTCLIENT.recPosts(id, 10).posts.empty?
+    THRIFTCLIENT.userTopTerms(id, 1).empty?
   end
 
   def can_follow?(other)
