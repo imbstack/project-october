@@ -1,3 +1,134 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "shared";
+
+#articles {
+  position: relative;
+}
+#articles .row {
+  width: 100%;
+  margin: auto;
+}
+.article {
+  float: left;
+  margin-bottom: 20px;
+  a { color: #222; }
+  a:hover { text-decoration: none; color: #333; }
+  a:visited { color: #888; }
+}
+.article.featured {
+  background-size: cover;
+  width: 64%;
+  height: 400px;
+  position: relative;
+}
+.article.featured .title {
+  width: 100%;
+}
+.article.featured h2 {
+  position: absolute;
+  bottom: 0px;
+  margin: 0;
+  padding: 20px 20px 30px;
+  color: #eee;
+  text-shadow: 2px 2px 0px #000;
+  @include linear-gradient(transparent, rgba(0,0,0,0.9));
+
+  a { color: #eee; }
+}
+.article.square {
+  width: 29%;
+}
+.article.square .subtitle {
+  font-family: 'ff-nuvo-sc-web-pro';
+  font-weight: normal;
+  line-height: 1em;
+  color: #555;
+}
+.recommended-because .icon-question-sign {
+  color: #888;
+  right: 12px;
+  position: absolute;
+  cursor: pointer;
+  font-size: 16px;
+  display: none;
+}
+.recommended-because .reason {
+  display: none;
+  position: absolute;
+  background-color: rgb(204, 204, 204);
+  right: -25px;
+  top: 30px;
+  width: 150px;
+  text-align: center;
+  padding: 7px;
+  font-family: 'museo-sans', sans-serif;
+  font-size: 12px;
+}
+.recommended-because .reason:after {
+  border: 8px solid transparent;
+  border-bottom-color: #CCCCCC;
+  content: " ";
+  position: absolute;
+  right: 23px;
+  text-align: center;
+  top: -16px;
+  width: 0;
+  display: none;
+}
+.article:hover {
+  .icon-question-sign {
+    display: block;
+  }
+  .icon-question-sign:hover {
+    .reason, .reason:after {
+      display: block;
+    }
+  }
+}
+.article-links {
+  list-style: none;
+  margin-left: 0px;
+  font-size: 1.4em;
+}
+.article-links li {
+  float: left;
+  padding: 0;
+  margin-left: 10px;
+}
+.article-links a {
+  color: #555;
+}
+.article-links a.voted {
+  color: $october-orange !important;
+}
+.article-links li:first-child {
+  margin-left: 0px;
+}
+.article.featured .article-links {
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 6px;
+  padding-left: 23px;
+}
+.article.featured .article-links a {
+  color: #fff;
+  text-decoration: none;
+  &:active, &:focus { text-decoration: none; }
+}
+.article .posted_by {
+  font-size: 1.4em;
+  margin: 11px 0;
+}
+@media (max-width: 767px) {
+  .article.featured, .article.square {
+    width: 100%;
+  }
+}
+.user-results {
+  list-style: none;
+  margin: 0;
+}
+.user-results li {
+  width: 200px;
+  float: left;
+  margin-right: 20px;
+}
