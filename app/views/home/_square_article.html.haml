@@ -1,9 +1,10 @@
 .article.square.box
   - if current_user.debug_user?
     .recommended-because
-      %i.icon-question-sign
-        .reason
-          Weight: #{article.try(:weight).try(:round, 2) || "(unknown)"}
+      = link_to debug_post_url(article) do
+        %i.icon-question-sign
+          .reason
+            Weight: #{article.try(:weight).try(:round, 2) || "(unknown)"}
   %h2
     =link_to article.title, article.url
   .posted_by

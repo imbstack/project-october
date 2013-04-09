@@ -1,10 +1,18 @@
 class PostsController < ApplicationController
+  before_filter :authenticate_user!, :only => :debug
+  before_filter :ensure_debug!, :only => :debug
+
   def show
     @post = Post.find(params[:id])
   end
 
   def new
 
+  end
+
+  def debug
+    @post = Post.find(params[:id])
+    @post = Post.new_from_url(@post.url)
   end
 
   def search
