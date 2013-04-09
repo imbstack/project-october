@@ -1,0 +1,14 @@
+%h2= @post.title
+%p= link_to @post.url, @post.url
+.clearfix
+  %h3 Images
+  - @post.images.each do |img|
+    = image_tag img, :style => 'float: left;'
+.clearfix
+  %h3 Keywords
+  %ul
+    - @post.keywords.each do |token|
+      %li
+        %p
+          %b=token.t
+          (#{token.f})
