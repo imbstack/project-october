@@ -32,6 +32,7 @@
         if (this.value === "") {
           resetSections();
         }
+        $titleField.attr('placeholder', 'Please wait, fetching...');
         $loadingGif.show();
         $.post(fetchUrl, { url: this.value }, postFetchedHandler, 'json');
       };
@@ -55,6 +56,7 @@
 
         // Done loading, hide the loading animation
         $loadingGif.hide();
+        $titleField.attr('placeholder', '');
 
         // Populate the images
         $imageControlsArea = $imagesArea.find(".controls");
@@ -66,7 +68,7 @@
         $imagesArea.show();
 
         // Populate the title
-        $form.find('#post_title')[0].value = data.title
+        $titleField.val(data.title);
 
         // Populate the keywords
         $keywordListArea = $keywordsArea.find(".controls ul");
@@ -74,6 +76,7 @@
           if (index >= 5) { return false; }
           $keywordListArea.append("<li>" + keyword + "</li>");
         });
+        $keywordListArea.tagit({ fieldName: 'keywords[]' });
         $keywordsArea.show();
       };
 
@@ -83,39 +86,12 @@
     $(function() {
       OctoberSubmitPage.init();
     });
-:css
-  #form-keywords-group .controls ul {
-    list-style: none;
-    margin: 0;
-    padding-top: 5px;
-  }
-  #form-keywords-group .controls li {
-    float: left;
-    font-size: 1.6em;
-    margin-right: 15px;
-  }
-  #form-image-group .article-image {
-    float: left;
-    height: 100px;
-    width: 100px;
-    margin: 0 10px 0 0;
-    border: 3px solid #888;
-    opacity: 0.3;
-    cursor: pointer;
-    user-select: none;
-  }
-  #form-image-group .selected {
-    /* TODO: Use variable when we put this in sass */
-    border: 3px solid #ff8930;
-    opacity: 1;
-  }
-  .loading-gif {
-    position: relative;
-    right: 27px;
-    width: 16px;
-  }
-
-.span12
+- content_for :javascripts do
+  = javascript_include_tag 'tag-it.min'
+- content_for :stylesheets do
+  = stylesheet_link_tag 'posts'
+  = stylesheet_link_tag 'tag-it'
+.span8
   %h2 Post A New Article
   = form_for(Post.new, :method => :post, :html => { :class => 'form-horizontal' }) do |f|
     .control-group
