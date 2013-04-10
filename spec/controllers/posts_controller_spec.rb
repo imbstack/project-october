@@ -21,6 +21,7 @@ describe PostsController do
 
       before do
         Post.stub(:new_from_url => the_post)
+        URI.stub(:parse => open(the_post.images.first))
       end
 
       it 'saves the post with the correct title, url, and image' do

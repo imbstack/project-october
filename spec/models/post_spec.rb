@@ -36,7 +36,7 @@ describe Post do
 
     context 'given a post with images' do
       before do
-        Post.stub(:fetch_from_url => [["#{Rails.root}spec/support/images/logo1.png"], 'title', 'lede', keywords])
+        Post.stub(:fetch_from_url => [["file://#{Rails.root}spec/support/images/logo1.png"], 'title', 'lede', keywords])
       end
 
       it 'sets the image' do
@@ -48,7 +48,7 @@ describe Post do
   describe '.fetch_from_url' do
     before do
       @blog_post = stub(
-        :images => ["#{Rails.root}spec/support/images/logo1.png", "#{Rails.root}spec/support/images/logo2.png"],
+        :images => ["file://#{Rails.root}spec/support/images/logo1.png", "file://#{Rails.root}spec/support/images/logo2.png"],
         :lede => 'this is the leader of the post',
         :title => 'this is the title of the post',
         :keywords => [['keyword1', 3], ['keyword2', 2], ['keyword3', 1]],

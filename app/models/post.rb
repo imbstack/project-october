@@ -106,9 +106,8 @@ private
     if image.blank? && images.present?
       images.each do |url|
         self.image = URI.parse(url)
-        return if self.image.width > 200 && self.image.height > 50
+        self.image.destroy if self.image.width < 200 || self.image.height < 50
       end
     end
-    self.image.destroy
   end
 end

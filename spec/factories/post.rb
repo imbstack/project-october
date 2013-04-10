@@ -9,11 +9,11 @@ FactoryGirl.define do
     association :posted_by, :factory => :user
 
     factory :image_post do
-      image File.new(Rails.root + 'spec/support/images/logo1.png')
+      image File.new("#{Rails.root}/spec/support/images/logo1.png")
     end
 
     factory :post_from_url do
-      images [Rails.root + 'spec/support/images/logo1.png', Rails.root + 'spec/support/images/logo2.png']
+      images ["#{Rails.root}/spec/support/images/logo1.png", "#{Rails.root}/spec/support/images/logo2.png"]
       keywords [['keyword1', 5], ['keyword2', 3], ['keyword1', 2]]
     end
 
