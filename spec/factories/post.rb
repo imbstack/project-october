@@ -21,6 +21,12 @@ FactoryGirl.define do
       keywords [['keyword1', 5], ['keyword2', 3], ['keyword1', 2]]
     end
 
+    factory :post_from_url_without_title do
+      images ["#{Rails.root}/spec/support/images/logo1.png", "#{Rails.root}/spec/support/images/logo2.png"]
+      keywords [['keyword1', 5], ['keyword2', 3], ['keyword1', 2]]
+      title nil
+    end
+
     factory :post_from_url_without_keywords do
       images [Rails.root + 'spec/support/images/logo1.png', Rails.root + 'spec/support/images/logo2.png']
     end

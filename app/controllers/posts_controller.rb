@@ -43,6 +43,7 @@ class PostsController < ApplicationController
       @post = Post.new_from_url(params[:post][:url])
       @post.title = params[:post][:title] if params[:post][:title].present?
       @post.image = open(params[:post][:image_url]) if params[:post][:image_url].present?
+      @post.keywords = params[:post][:keywords] if params[:post][:keywords].present?
       @post.posted_by = current_user
     rescue
       return redirect_to new_post_path, :flash => {
@@ -53,6 +54,12 @@ class PostsController < ApplicationController
     if @post.keywords.empty?
       return redirect_to new_post_path, :flash => {
         :error => "Could not determine article keywords!"
+      }
+    end
+
+    if @post.title.blank?
+      return redirect_to new_post_path, :flash => {
+        :error => "Could not determine article title!"
       }
     end
 

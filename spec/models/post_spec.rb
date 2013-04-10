@@ -72,4 +72,13 @@ describe Post do
       Post.fetch_from_url('http://example.com')[3].should == @blog_post.keywords
     end
   end
+
+  describe '#set_image_if_necessary' do
+    it 'does nothing if the post already has an image'
+    context 'when the post has no image' do
+      it 'assigns the post the first image in the images array'
+      it 'skips images that are smaller than 200px wide'
+      it 'skips images that are smaller than 50px wide'
+    end
+  end
 end

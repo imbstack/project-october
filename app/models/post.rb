@@ -17,6 +17,7 @@ class Post < ActiveRecord::Base
   before_save :set_image_if_necessary
 
   validates_presence_of :posted_by_id
+  validates_presence_of :title
 
   def types
     base = Set.new([:square_article])
