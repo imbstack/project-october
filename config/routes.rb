@@ -1,8 +1,4 @@
 ProjectOctober::Application.routes.draw do
-  devise_for :users, :path => 'auth', :controllers => {
-    :registrations => 'users',
-  }
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -21,13 +17,18 @@ ProjectOctober::Application.routes.draw do
 
   # todo: make this ajax --> post 'subscriptions/verify'
 
-  resources :users, :only => :show do
-    resources :subscriptions, :only => [:create, :destroy]
+  devise_for :users, :path => 'auth', :controllers => {
+    :registrations => 'users',
+  }
+  devise_scope :user do
+    resources :users, :only => :show do
+      resources :subscriptions, :only => [:create, :destroy]
 
-    member do
-      get 'follow'
-      get 'unfollow'
-      post 'add_terms'
+      member do
+        get 'follow'
+        get 'unfollow'
+        post 'add_terms'
+      end
     end
   end
 
