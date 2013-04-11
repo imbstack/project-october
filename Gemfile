@@ -13,6 +13,7 @@ gem 'paperclip-meta'
 gem 'feedzirra'
 gem 'airbrake'
 gem 'newrelic_rpm'
+gem 'premailer'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

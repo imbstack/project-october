@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    addressable (2.3.3)
     airbrake (3.1.8)
       activesupport
       builder
@@ -54,6 +55,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    css_parser (1.2.6)
+      addressable
+      rdoc
     curb (0.8.3)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
@@ -80,6 +84,7 @@ GEM
       thor (>= 0.13.6)
     haml (3.1.4)
     hike (1.2.1)
+    htmlentities (4.3.1)
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.2.0)
@@ -117,6 +122,9 @@ GEM
       nokogiri
       sanitize
     polyglot (0.3.3)
+    premailer (1.7.3)
+      css_parser (>= 1.1.9)
+      htmlentities (>= 4.0.0)
     rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -208,6 +216,7 @@ DEPENDENCIES
   paperclip-meta
   pg
   pismo
+  premailer
   rails (= 3.2.11)
   rb-readline
   rspec-rails
