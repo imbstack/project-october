@@ -39,6 +39,14 @@ ProjectOctober::Application.configure do
   config.assets.debug = true
   
   # Set the host for Devise emails
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.default_url_options = {
+    :host => 'localhost:3000',
+  }
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.case.edu',
+    :port => '25',
+    :authentication => :login,
+    :enable_starttls_auto => true,
+  }
+  config.action_mailer.delivery_method = :smtp
 end

@@ -55,9 +55,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
-    css_parser (1.2.6)
+    css_parser (1.3.4)
       addressable
-      rdoc
     curb (0.8.3)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
@@ -125,6 +124,9 @@ GEM
     premailer (1.7.3)
       css_parser (>= 1.1.9)
       htmlentities (>= 4.0.0)
+    premailer-rails (1.4.0)
+      premailer (~> 1.7)
+      rails (>= 3)
     rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -216,7 +218,7 @@ DEPENDENCIES
   paperclip-meta
   pg
   pismo
-  premailer
+  premailer-rails
   rails (= 3.2.11)
   rb-readline
   rspec-rails
