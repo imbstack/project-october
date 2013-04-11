@@ -6,19 +6,4 @@
         %li
           %p= link_to p.title, p.url
     %h2 comments
-  .span3.box
-    .avatar
-      = image_tag gravatar_url(@user), :width => '128', :height => '128'
-      %h2 #{@user.name}
-    - if current_user.id == @user.id
-      = link_to 'Manage Your Account', edit_user_registration_path, :class => 'btn btn-primary'
-      %h3 your top keywords
-      %ol
-        - @keywords.each do |k|
-          %li
-            %p{ :title => "Weight: #{k[1]}" }= k[0]
-    - else
-      - if current_user.can_follow?(@user)
-        = link_to 'Follow Me', follow_user_path(@user.id), :class => 'btn'
-      - else
-        = link_to 'Followed!', unfollow_user_path(@user.id), :class => 'btn btn-primary'
+  = render 'avatar_box', :user => @user

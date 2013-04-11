@@ -3,7 +3,6 @@ class UsersController < Devise::RegistrationsController
 
   def show
     @user = User.where(:name => params[:id]).includes(:posts).first
-    @keywords = @user.top_keywords(20)
     return redirect_to root_path, :flash => { :error => "Unknown User!" } unless @user.present?
   end
 
@@ -33,6 +32,11 @@ class UsersController < Devise::RegistrationsController
     flash[:notice] = "Okay, here are some articles that are more like that!"
 
     redirect_to root_path
+  end
+
+  def keywords
+    @user = User.where(:name => params[:id]).first
+    @keywords = @user.top_keywords(20)
   end
 
   # From Devise:

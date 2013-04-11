@@ -1,0 +1,22 @@
+- content_for :javascripts do
+  = javascript_include_tag 'tag-it.min'
+  :javascript
+    $(function() {
+      $("#more_keywords").tagit({ fieldName: 'tags[]' });
+    });
+- content_for :stylesheets do
+  = stylesheet_link_tag 'tag-it'
+.row
+  .span8
+    - if current_user == @user
+      .box
+        %h2 suggest more keywords for yourself:
+        = form_for('onboard', :url => add_terms_user_path(current_user)) do |f|
+          %ul#more_keywords
+          = f.submit 'Add Keywords!', :class => 'btn btn-primary'
+    %h2 top keywords
+    %ol
+      - @keywords.each do |k|
+        %li
+          %p{ :title => "Weight: #{k[1]}" }= k[0]
+  = render 'avatar_box', :user => @user
