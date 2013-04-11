@@ -46,6 +46,8 @@ class Post < ActiveRecord::Base
 
     # Takes a hash of { post_id => weight } and assigns display types for them.
     def assign_types(post_list)
+      num_primary = (0.5 * post_list.length).round
+
       posts = Post.
         find(post_list.keys).
         each { |p| p.weight = post_list[p.id] }.
@@ -58,11 +60,27 @@ class Post < ActiveRecord::Base
       # 2) All other articles are to be displayed with an image if possible in
       #    order according to weight.
       featured = posts.detect { |p| p.types.include?(:feature_article) }
+      posts = posts - [featured]
+      other_featured = posts.detect { |p| p.types.include?(:feature_article) }
+      posts = posts - [other_featured]
 
-      post_type_list = (posts - [featured]).map do |p|
-        [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
+      post_type_list = posts.map do |p|
+        primary = (num_primary -= 1) > 0 ? :primary : :secondary
+        type = if p.types.include?(:square_article_with_picture)
+          "square_article_#{primary}_picture"
+               else
+          "square_article_#{primary}"
+               end.to_sym
+
+        [ p, type ]
       end
+
+      # Pseudo-shuffle here:
+      post_type_list = post_type_list.group_by { |p, _| p.id % 4 }.values.flatten(1)
+
+      # Add the featured articles back in:
       post_type_list.unshift([featured, :feature_article]) if featured.present?
+      post_type_list.insert(post_type_list.length / 4, [other_featured, :feature_article])
 
       post_type_list
     end

@@ -45,9 +45,11 @@ var OctoberHomepage = (function($) {
 
     $articles.find(".article.square img").each(function(i) {
       $this = $(this);
+      imgWidth = $this.is(".img-secondary") ? 0.45 * width : width;
+
       $this.css({
-        width: width,
-        height: width * $this.data('ratio')
+        width: imgWidth,
+        height: imgWidth * $this.data('ratio')
       });
     });
   }

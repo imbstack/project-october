@@ -1,0 +1,7 @@
+.article.square.notbox.secondary
+  = render 'home/debug', :article => article if current_user.debug_user?
+  .title
+    %h2
+      =link_to article.title, article.url
+  = render 'home/posted_by', :article => article
+  = render 'home/article_links', :article => article

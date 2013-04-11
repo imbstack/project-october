@@ -1,0 +1,7 @@
+.article.square.with-picture.box.primary
+  = render 'home/debug', :article => article if current_user.debug_user?
+  = image_tag article.image.url(:square), :data => { :ratio => article.image_height_as_pct }
+  %h2
+    = link_to article.title, article.url
+  = render 'home/posted_by', :article => article
+  = render 'home/article_links', :article => article

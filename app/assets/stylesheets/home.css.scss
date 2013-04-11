@@ -12,7 +12,6 @@
   margin-bottom: 20px;
   a { color: #222; }
   a:hover { text-decoration: none; color: #333; }
-  a:visited { color: #888; }
 }
 .article.featured {
   background-size: cover;
@@ -54,6 +53,30 @@
   font-weight: normal;
   line-height: 1em;
   color: #555;
+}
+.article.primary {
+  h2 {
+    font-weight: 400;
+  }
+}
+.article.secondary {
+  .title {
+    font-size: 0.75em;
+    h2 {
+      margin-top: 0;
+      a {
+        color: #777;
+      }
+    }
+  }
+  a, .posted_by {
+    color: #888;
+  }
+}
+.article .img-secondary {
+  width: 45%;
+  margin-right: 20px;
+  float: left;
 }
 .recommended-because .icon-question-sign {
   color: #888;
@@ -107,7 +130,6 @@
   margin-left: 10px;
 }
 .article-links a {
-  color: #555;
 }
 .article-links a.voted {
   color: $october-orange !important;
@@ -131,6 +153,7 @@
 .article .posted_by {
   font-size: 1.4em;
   margin: 11px 0;
+  clear: both;
 }
 @media (max-width: 767px) {
   .article.featured, .article.square {

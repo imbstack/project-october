@@ -1,0 +1,5 @@
+.recommended-because
+  = link_to debug_post_path(article) do
+    %i.icon-question-sign
+      .reason
+        Weight: #{article.try(:weight).try(:round, 2) || "(unknown)"}
