@@ -4,14 +4,8 @@
   = javascript_include_tag 'home'
   :javascript
     $(function() {
-      OctoberHomepage.init();
+      OctoberHomepage.init("#{current_user.name}");
     });
-.row
-  - if current_user.needs_onboarding? && !@query
-    = render "home/onboard"
-  -# The following is a temporary fix until tom figures out a better way to do this
-  - if @posts.empty?
-    = "There aren't any posts yet!"
-  - else
-    - @posts.each do |p|
-      = render "home/#{p[1]}", :article => p[0]
+.row#articles
+  =image_tag 'loading.gif', :style => 'width: 14px; float: left; margin-right: 10px; margin-top: 3px;'
+  %p Please wait, we'll have your recommendations in just a moment...

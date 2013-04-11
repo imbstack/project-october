@@ -3,14 +3,18 @@ var OctoberHomepage = (function($) {
     prevWidth = 0,
     masonryEnabled = false;
 
-  var init = function() {
+  var init = function(userId) {
     $(window).resize(updateHomepageHandler);
-    $(window).on('load', function() {
-      window.setTimeout(function() {
-        updateHomepageHandler({ force: true });
-      }, 10);
-    });
     $articles.on("ajax:success", orangifyUpvoteDownvote);
+    $.ajax('/users/' + userId + '/recommendations', {
+      dataType: 'html',
+    }).done(receiveArticles);
+  }
+
+  var receiveArticles = function(data) {
+    $articles.hide();
+    $articles.html(data);
+    $articles.fadeIn();
     updateHomepageHandler();
   }
 
