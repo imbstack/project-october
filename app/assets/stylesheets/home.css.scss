@@ -20,6 +20,12 @@
   width: 64%;
   height: 400px;
   position: relative;
+  color: #bbb;
+}
+.article.featured a {
+  color: #fff;
+  text-decoration: none;
+  &:active, &:focus { text-decoration: none; }
 }
 .article.featured .title {
   width: 100%;
@@ -115,10 +121,12 @@
   margin-bottom: 6px;
   padding-left: 23px;
 }
-.article.featured .article-links a {
-  color: #fff;
-  text-decoration: none;
-  &:active, &:focus { text-decoration: none; }
+.article.featured .posted_by {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 23px;
+  margin-bottom: 6px;
 }
 .article .posted_by {
   font-size: 1.4em;
