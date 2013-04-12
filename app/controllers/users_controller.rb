@@ -1,5 +1,6 @@
 class UsersController < Devise::RegistrationsController
   before_filter :authenticate_user!
+  layout "splash", :only => :new
 
   def show
     @user = User.where(:name => params[:id]).includes(:posts).first
