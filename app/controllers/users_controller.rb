@@ -39,13 +39,6 @@ class UsersController < Devise::RegistrationsController
     @keywords = @user.top_keywords(20)
   end
 
-  def recommendations
-    @posts = Post.recommendations_for(current_user)
-    @votes = current_user.votes.where(:post_id => @posts.map(&:first))
-
-    render :layout => nil
-  end
-
   # From Devise:
   # POST /resource
   def create

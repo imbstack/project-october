@@ -43,7 +43,7 @@ class Post < ActiveRecord::Base
       num_primary = (0.5 * post_list.length).round
 
       posts = Post.
-        find(post_list.keys).
+        find(post_list.keys, :include => :posted_by).
         each { |p| p.weight = post_list[p.id] }.
         sort_by { |p| p.weight }.
         reverse

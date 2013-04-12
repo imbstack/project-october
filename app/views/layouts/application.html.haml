@@ -35,7 +35,7 @@
               = link_to 'Login', new_user_session_path, :class => 'btn', :style => 'float: right'
             - if signed_in?
               = link_to 'Post an Article', new_post_path, :class => 'btn', :style => 'float: right'
-            = form_for('search', :url => search_posts_path, :html => { :style => 'float: right;'}) do |f|
+            = form_for('search', :url => root_url, :html => { :style => 'float: right;'}) do |f|
               =f.text_field :query, :placeholder => "Search for user, keyword, or feed", :class => 'span4'
       - if flash[:notice] || flash[:error]
         #alert-bar

@@ -4,7 +4,7 @@
   = javascript_include_tag 'home'
   :javascript
     $(function() {
-      OctoberHomepage.init("#{current_user.name}");
+      OctoberHomepage.init("#{params[:search] && params[:search][:query] ? params[:search][:query] : ""}");
     });
 - if current_user.needs_onboarding?
   - content_for :javascripts do

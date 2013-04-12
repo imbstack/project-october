@@ -2,19 +2,6 @@ ProjectOctober::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  resources :posts, :id => /\d+/ do
-    member do
-      get 'upvote'
-      get 'downvote'
-      get 'debug'
-      resources :comments
-    end
-    collection do
-      post 'fetch'
-      post 'search'
-    end
-  end
-
   # todo: make this ajax --> post 'subscriptions/verify'
 
   devise_for :users, :path => 'auth', :controllers => {
@@ -30,6 +17,18 @@ ProjectOctober::Application.routes.draw do
         get 'unfollow'
         post 'add_terms'
         get 'keywords'
+      end
+    end
+
+    resources :posts, :id => /\d+/ do
+      member do
+        get 'upvote'
+        get 'downvote'
+        get 'debug'
+        resources :comments
+      end
+      collection do
+        post 'fetch'
         get 'recommendations'
       end
     end

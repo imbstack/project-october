@@ -3,11 +3,12 @@ var OctoberHomepage = (function($) {
     prevWidth = 0,
     masonryEnabled = false;
 
-  var init = function(userId) {
+  var init = function(query) {
     $(window).resize(updateHomepageHandler);
     $articles.on("ajax:success", orangifyUpvoteDownvote);
-    $.ajax('/users/' + userId + '/recommendations', {
+    $.ajax('/posts/recommendations', {
       dataType: 'html',
+      data: { 'search[query]' : query },
     }).done(receiveArticles);
   }
 
@@ -16,7 +17,11 @@ var OctoberHomepage = (function($) {
     $articles.html(data);
     $articles.fadeIn();
     updateHomepageHandler();
-    $("#onboard_terms").tagit({ fieldName: 'tags[]' });
+
+    $onboarder = $articles.find("#onboard_terms");
+    if ($onboarder.length > 0) {
+      $onboarder.tagit({ fieldName: 'tags[]' });
+    }
   }
 
   var updateHomepageHandler = function(ev) {

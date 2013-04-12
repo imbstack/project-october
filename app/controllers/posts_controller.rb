@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :authenticate_user!, :only => :debug
+  before_filter :authenticate_user!, :only => [:debug, :recommendations]
   before_filter :ensure_debug!, :only => :debug
 
   def show
@@ -15,13 +15,18 @@ class PostsController < ApplicationController
     @post = Post.new_from_url(@post.url)
   end
 
-  def search
-    @query = params[:search][:query]
-    results = THRIFTCLIENT.textSearch(@query.split(' '), 50)
-    @posts = Post.assign_types(results)
+  def recommendations
+    if params[:search][:query].present?
+      @query = params[:search][:query]
+      results = THRIFTCLIENT.textSearch(@query.split(' '), 50)
+      @posts = Post.assign_types(results)
+    else
+      @posts = Post.recommendations_for(current_user)
+    end
+
     @votes = current_user.votes.where(:post_id => @posts.map(&:first))
-    @user_results = User.search(@query)
-    render 'home/index'
+
+    render :layout => nil
   end
 
   def fetch
