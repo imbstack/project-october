@@ -17,7 +17,7 @@ module Backend
       end
 
       def textSearch(tokens, limit)
-        recPosts(-1, limit)
+        recPosts(-1, limit).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
       end
 
       def addUserTerms(user_id, terms)
