@@ -53,9 +53,9 @@ class Post < ActiveRecord::Base
       #    post. It is the featured post.
       # 2) All other articles are to be displayed with an image if possible in
       #    order according to weight.
-      featured = posts.detect { |p| p.types.include?(:feature_article) }
+      featured = posts.detect { |p| p.image.present? }
       posts = posts - [featured]
-      other_featured = posts.detect { |p| p.types.include?(:feature_article) }
+      other_featured = posts.detect { |p| p.image.present? }
       posts = posts - [other_featured]
 
       post_type_list = posts.map do |p|
