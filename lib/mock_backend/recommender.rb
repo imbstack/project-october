@@ -1,28 +1,35 @@
+require 'ostruct'
+
 module Backend
-  module Recommender
+  module RecommenderMock
     class Client
-      def initialize(protocol); end
+      def initialize(protocol)
+        @user_terms = Hash.new([])
+      end
 
       def ping; "Pong" end
 
-      def recPosts(user_id)
-        Post.first(10)
+      def recPosts(user_id, n=10)
+        posts = ::Post.first(n).map do |x|
+          OpenStruct.new(:post_id => x.id, :weight => Random.rand() * 20)
+        end
+        OpenStruct.new(:posts => posts)
       end
 
-      def addUser(user_id)
-        # don't do anything.
+      def textSearch(tokens, limit)
+        recPosts(-1, limit)
       end
 
-      def addPost(user_id, post_id, raw_freq)
-        # don't do anything.
+      def addUserTerms(user_id, terms)
+        @user_terms[user_id] = @user_terms[user_id] + terms
       end
 
-      def user_v_post(user_id, verb, post_id)
-        # don't do anything.
+      def userTopTerms(user_id, limit)
+        @user_terms[user_id].first(limit).map { |t| [t, Random.rand() * 20] }
       end
 
-      def user_v_comment(user_id, verb, comment_id)
-        # don't do anything.
+      def method_missing(m, *args)
+        true
       end
     end
   end
