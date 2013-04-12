@@ -66,5 +66,7 @@ module ProjectOctober
 
     # Set the host for Devise mailer
     config.action_mailer.default_url_options = { :host => 'octob.org' }
+
+    config.logger = Logger.new(STDOUT)
   end
 end
