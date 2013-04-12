@@ -19,6 +19,7 @@ ProjectOctober::Application.routes.draw do
 
   devise_for :users, :path => 'auth', :controllers => {
     :registrations => 'users',
+    :sessions => 'home',
   }
   devise_scope :user do
     resources :users, :only => :show do
@@ -80,7 +81,9 @@ ProjectOctober::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  devise_scope :user do
+    root :to => 'home#index'
+  end
 
   # See how all your routes lay out with "rake routes"
 
