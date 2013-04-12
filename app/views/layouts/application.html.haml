@@ -19,6 +19,9 @@
       try{Typekit.load();}catch(e){}
     = csrf_meta_tags
   %body
+    - if THRIFTCLIENT.read_only_mode?
+      .read-only-mode
+        %p We're experiencing some troubles at the moment. October is temporarily in read-only mode.
     .container#logobar
       .row
         .span4
