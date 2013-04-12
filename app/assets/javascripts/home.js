@@ -16,6 +16,7 @@ var OctoberHomepage = (function($) {
     $articles.html(data);
     $articles.fadeIn();
     updateHomepageHandler();
+    $("#onboard_terms").tagit({ fieldName: 'tags[]' });
   }
 
   var updateHomepageHandler = function(ev) {

@@ -6,6 +6,11 @@
     $(function() {
       OctoberHomepage.init("#{current_user.name}");
     });
+- if current_user.needs_onboarding?
+  - content_for :javascripts do
+    = javascript_include_tag 'tag-it.min'
+  - content_for :stylesheets do
+    = stylesheet_link_tag 'tag-it'
 .row#articles
   =image_tag 'loading.gif', :style => 'width: 14px; float: left; margin-right: 10px; margin-top: 3px;'
   %p Please wait, we'll have your recommendations in just a moment...
