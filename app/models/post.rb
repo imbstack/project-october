@@ -19,12 +19,6 @@ class Post < ActiveRecord::Base
   validates_presence_of :posted_by_id
   validates_presence_of :title
 
-  def types
-    base = Set.new([:square_article])
-    base.merge([:feature_article, :square_article_with_picture]) if image.present?
-    base
-  end
-
   def image_height_as_pct
     return 0 unless image.present?
     width, height = image.image_size.split('x').map(&:to_f)
@@ -37,7 +31,7 @@ class Post < ActiveRecord::Base
       posts = THRIFTCLIENT.recPosts(user.id, n).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
       if posts.empty?
         return Post.order('created_at DESC').first(n).map do |p|
-          [p, p.types.include?(:square_article_with_picture) ? :square_article_with_picture : :square_article]
+          [p, p.image.present? ? :square_article_primary_picture : :square_article_primary]
         end
       end
 
@@ -66,7 +60,7 @@ class Post < ActiveRecord::Base
 
       post_type_list = posts.map do |p|
         primary = (num_primary -= 1) > 0 ? :primary : :secondary
-        type = if p.types.include?(:square_article_with_picture)
+        type = if p.image.present?
           "square_article_#{primary}_picture"
                else
           "square_article_#{primary}"

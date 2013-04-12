@@ -1,18 +1,6 @@
 require 'spec_helper'
 
 describe Post do
-  describe '#types' do
-    context 'when the post has an image' do
-      subject { FactoryGirl.create(:image_post).types }
-      it { should == Set.new([:feature_article, :square_article, :square_article_with_picture]) }
-    end
-
-    context 'when the post does not have an image' do
-      subject { FactoryGirl.create(:post).types }
-      it { should == Set.new([:square_article]) }
-    end
-  end
-
   describe '.new_from_url' do
     let(:keywords) { [['keyword1', 3], ['keyword2', 2]] }
 
