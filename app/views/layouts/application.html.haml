@@ -27,16 +27,17 @@
         .span4
           %h1.logo= link_to 'October', root_path
         .span8
-          .right-nav-items
-            - if signed_in?
-              = link_to 'Logout', destroy_user_session_path, :class => 'btn', :method => 'delete', :style => 'float: right'
-              = link_to current_user.name, user_path(current_user.name), :class => 'btn', :style => 'float: right'
-            - else
-              = link_to 'Login', new_user_session_path, :class => 'btn', :style => 'float: right'
-            - if signed_in?
-              = link_to 'Post an Article', new_post_path, :class => 'btn', :style => 'float: right'
-            = form_for('search', :url => root_path, :html => { :style => 'float: right;'}) do |f|
+          .right-nav-items.btn-group
+            = link_to 'Logout', destroy_user_session_path, :class => 'btn', :method => 'delete', :style => 'float: right'
+            = link_to current_user.name, user_path(current_user.name), :class => 'btn', :style => 'float: right'
+            = link_to 'Post an Article', new_post_path, :class => 'btn hidden-phone', :style => 'float: right'
+            = link_to 'Search', '#', :class => 'hidden-desktop btn', :id => 'tablet-search-button'
+            = form_for('search', :url => root_path, :html => { :style => 'float: right;', :class => 'visible-desktop'}) do |f|
               =f.text_field :query, :placeholder => "Search for user, keyword, or feed", :class => 'span4'
+      .row#tablet-search-row
+        .span12
+          = form_for('search', :url => root_path) do |f|
+            =f.text_field :query, :placeholder => "Search for user, keyword, or feed"
       - if flash[:notice] || flash[:error]
         #alert-bar
           - if flash[:notice]

@@ -50,6 +50,7 @@ p {
 .right-nav-items {
   margin: 15px 0 0;
   padding-right: 4%; /* TODO: fix this */
+  display: block;
   * { float: right; }
 }
 #alert-bar {
@@ -58,6 +59,11 @@ p {
   line-height: 2.2em;
 }
 @media (min-width: 768px) and (max-width: 979px) {
+  body, html {
+    font-size: 8px;
+  }
+}
+@media (max-width: 767px) {
   body, html {
     font-size: 8px;
   }
@@ -78,6 +84,15 @@ p {
   width: 100%;
 
   p { margin: 10px 0; }
+}
+#tablet-search-row {
+  padding-top: 10px;
+  form {
+    margin: 0;
+  }
+  #search_query {
+    width: 97%;
+  }
 }
 
 /*

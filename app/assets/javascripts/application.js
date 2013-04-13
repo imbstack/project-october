@@ -13,3 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.masonry.min
+$(function() {
+  $tabletSearchBtn = $("#tablet-search-button");
+  $tabletSearchRow = $("#tablet-search-row");
+  $tabletSearchRow.hide();
+  $tabletSearchBtn.on('click', function(ev) {
+    $tabletSearchRow.toggle();
+    $tabletSearchRow.find("input").focus();
+  });
+});
