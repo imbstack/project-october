@@ -8,7 +8,11 @@ module Backend
   module RecommenderProxy
     class Client
       def initialize
-        return Backend::RecommenderMock::Client.new('fake') if Rails.env == 'test'
+        if Rails.env.test?
+          STDERR.write "API: Testing detected, using Mock backend\n"
+          @client = Backend::RecommenderMock::Client.new('fake')
+          return
+        end
 
         begin
           @client = try_connect()
