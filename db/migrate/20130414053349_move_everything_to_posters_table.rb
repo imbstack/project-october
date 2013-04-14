@@ -29,7 +29,7 @@ class MoveEverythingToPostersTable < ActiveRecord::Migration
 
     drop_table :feeds
 
-    remove_column :posters, :posted_by_type
+    remove_column :posts, :posted_by_type
   end
 
   def down
