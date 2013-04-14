@@ -8,7 +8,7 @@ def post_article(url, title, feed)
 
   begin
     @post = Post.new_from_url(url)
-    @post.posted_by = feed
+    @post.poster = feed
   rescue
     return [false, "Could not fetch article."]
   end

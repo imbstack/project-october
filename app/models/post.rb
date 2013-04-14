@@ -9,14 +9,13 @@ class Post < ActiveRecord::Base
     :square => '363'
   }
 
-  belongs_to :posted_by, :class_name => "Poster"
-
   has_many :comments
   has_many :votes
+  belongs_to :poster
 
   before_save :set_image_if_necessary
 
-  validates_presence_of :posted_by_id
+  validates_presence_of :poster_id
   validates_presence_of :title
 
   def image_height_as_pct
@@ -43,7 +42,7 @@ class Post < ActiveRecord::Base
       num_primary = (0.5 * post_list.length).round
 
       posts = Post.
-        find(post_list.keys, :include => :posted_by).
+        find(post_list.keys, :include => :poster).
         each { |p| p.weight = post_list[p.id] }.
         sort_by { |p| p.weight }.
         reverse

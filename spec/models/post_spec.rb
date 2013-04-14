@@ -73,7 +73,7 @@ describe Post do
   describe 'save' do
     context 'when the article is posted by an RSS feed' do
       let(:feed) { FactoryGirl.create(:feed) }
-      let(:post) { FactoryGirl.create(:post, :posted_by => feed) }
+      let(:post) { FactoryGirl.create(:post, :poster => feed) }
 
       before do
         Feed.stub(:attempt_to_get_title => feed.name)
@@ -85,7 +85,7 @@ describe Post do
       end
 
       it 'attributes ownership to the feed' do
-        post.posted_by.should == feed
+        post.poster.should == feed
       end
     end
   end

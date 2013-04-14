@@ -1,10 +1,10 @@
 .posted_by
-  - if article.posted_by.is_a?(Feed)
+  - if article.poster.is_a?(Feed)
     from
-    = article.posted_by.name
-  - elsif article.posted_by.is_a?(User)
+    = article.poster.name
+  - elsif article.poster.is_a?(User)
     by
-    = link_to article.posted_by.name, user_path(article.posted_by)
+    = link_to article.poster.name, user_path(article.poster)
   &middot; posted
   = distance_of_time_in_words(article.created_at, Time.now)
   ago
