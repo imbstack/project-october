@@ -69,4 +69,24 @@ describe Post do
       it 'skips images that are smaller than 50px wide'
     end
   end
+
+  describe 'save' do
+    context 'when the article is posted by an RSS feed' do
+      let(:feed) { FactoryGirl.create(:feed) }
+      let(:post) { FactoryGirl.create(:post, :posted_by => feed) }
+
+      before do
+        Feed.stub(:attempt_to_get_title => feed.title)
+        post.save
+      end
+
+      it 'saves properly' do
+        post.should be_persisted
+      end
+
+      it 'attributes ownership to the feed' do
+        post.posted_by.should == feed
+      end
+    end
+  end
 end
