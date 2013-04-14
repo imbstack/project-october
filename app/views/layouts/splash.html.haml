@@ -15,12 +15,23 @@
         background-color: rgba(255, 255, 255, 0.5);
         padding: 5px 0 30px;
         margin-top: 50px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
       }
       .logo a { color: #555; }
       .logo {
         display: inline-block;
         background: none;
         padding-left: 0;
+      }
+      #errorbar {
+        font-family: 'museo sans', Helvetica, sans-serif;
+        text-align: center;
+        background-color: #ff8930;
+        padding-top: 10px;
+        margin-bottom: 20px;
+      }
+      a.btn {
+        line-height: 23px;
       }
     :javascript
       $(function() {
@@ -45,6 +56,10 @@
         .row#logobar
           .span4
             %h1.logo= link_to 'October', root_path, :style => 'margin: auto;'
+        - if flash[:error] || flash[:alert]
+          .row
+            .span12#errorbar
+              %p #{flash[:error] || flash[:alert]}
         .row
           .span12
             =yield

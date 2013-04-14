@@ -80,14 +80,14 @@ class User < ActiveRecord::Base
 
   private
     def name_cannot_have_whitespace
-      if name.match /\s/
-        errors[:name] << "Usernames cannot have spaces in them"
+      if name.present? && name.match(/\s/)
+        errors[:username] << "cannot have spaces in it"
       end
     end
 
     def name_cannot_have_special_chars
-      if name.match /[^\w-]/
-        errors[:name] << "Usernames cannot have special characters in them"
+      if name.present? && name.match(/[^\w-]/)
+        errors[:username] << "cannot have special characters in it"
       end
     end
 

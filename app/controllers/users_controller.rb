@@ -58,7 +58,8 @@ class UsersController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      flash[:error] = resource.errors.full_messages.first
+      redirect_to new_user_registration_path
     end
   end
 end

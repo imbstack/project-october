@@ -121,7 +121,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
   background-color: mix($october-orange, $body-background, 10%);
 }
 .btn {
-  border-radius: 0px;
+  border-radius: 0px !important;
   font-family: 'ff-nuvo-sc-web-pro';
   font-weight: normal;
 }
