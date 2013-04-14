@@ -13,7 +13,7 @@ class MoveEverythingToPostersTable < ActiveRecord::Migration
 
     if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
       max_id = ActiveRecord::Base.connection.execute("SELECT max(id) as max_id FROM posters").first["max_id"]
-      ActiveRecord::Base.connection.execute("ALTER SEQUENCE posters_id_seq RESTART WITH #{max_id}");
+      ActiveRecord::Base.connection.execute("ALTER SEQUENCE posters_id_seq RESTART WITH #{max_id + 1}");
     end
 
     Feed.find_by_sql("SELECT *,title as name FROM feeds").each do |f|
