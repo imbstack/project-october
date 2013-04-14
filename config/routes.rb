@@ -83,6 +83,8 @@ ProjectOctober::Application.routes.draw do
   devise_scope :user do
     root :to => 'home#index'
     get '/about' => 'home#about'
+    match '/404', :to => 'errors#error_404'
+    match '/500', :to => 'errors#error_500'
   end
 
   # See how all your routes lay out with "rake routes"

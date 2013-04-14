@@ -68,5 +68,7 @@ module ProjectOctober
     config.action_mailer.default_url_options = { :host => 'octob.org' }
 
     config.logger = Logger.new(STDOUT)
+
+    config.exceptions_app = self.routes
   end
 end
