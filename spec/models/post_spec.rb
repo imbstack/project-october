@@ -76,7 +76,7 @@ describe Post do
       let(:post) { FactoryGirl.create(:post, :posted_by => feed) }
 
       before do
-        Feed.stub(:attempt_to_get_title => feed.title)
+        Feed.stub(:attempt_to_get_title => feed.name)
         post.save
       end
 
