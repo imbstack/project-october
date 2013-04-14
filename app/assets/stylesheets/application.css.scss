@@ -16,7 +16,7 @@
 @import "shared";
 
 body, html {
-  font-family: "ff-nuvo-sc-web-pro";
+  font-family: 'museo-sans', 'Helvetica', sans-serif;
   font-size: 10px;
   background-color: $body-background;
   overflow: auto;
@@ -123,7 +123,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 }
 .btn {
   border-radius: 0px !important;
-  font-family: 'ff-nuvo-sc-web-pro';
+  font-family: 'museo-sans', 'Helvetica', sans-serif;
   font-weight: normal;
 }
 .btn-primary {
