@@ -1,7 +1,8 @@
 - if current_user.needs_onboarding? && !@query
   = render "home/onboard"
 - if @posts.empty?
-  = "There aren't any posts yet!"
+  .article
+    %p Couldn't find any posts!
 - else
   - @posts.each do |p|
     = render "home/#{p[1]}", :article => p[0]

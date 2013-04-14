@@ -74,7 +74,7 @@ class Post < ActiveRecord::Base
 
       # Add the featured articles back in:
       post_type_list.unshift([featured, :feature_article]) if featured.present?
-      post_type_list.insert(post_type_list.length / 4, [other_featured, :feature_article])
+      post_type_list.insert(post_type_list.length / 4, [other_featured, :feature_article]) if other_featured.present?
 
       post_type_list
     end
