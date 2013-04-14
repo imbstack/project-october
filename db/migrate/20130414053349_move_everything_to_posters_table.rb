@@ -12,7 +12,7 @@ class MoveEverythingToPostersTable < ActiveRecord::Migration
     drop_table :users
 
     if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
-      max_id = ActiveRecord::Base.connection.execute("SELECT max(id) FROM posters").first["max_id"]
+      max_id = ActiveRecord::Base.connection.execute("SELECT max(id) as max_id FROM posters").first["max_id"]
       ActiveRecord::Base.connection.execute("ALTER SEQUENCE posters_id_seq RESTART WITH #{max_id}");
     end
 
