@@ -19,6 +19,7 @@ body, html {
   font-family: "ff-nuvo-sc-web-pro";
   font-size: 10px;
   background-color: $body-background;
+  overflow: auto;
 }
 h1 { font-size: 3.85em; }
 h2 { font-size: 3.15em; line-height: 1.3em; }

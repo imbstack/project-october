@@ -6,31 +6,32 @@
     .control-group
       = f.label :name, 'Username', :class => 'control-label'
       .controls
-        = f.text_field :name, :autofocus => true
+        = f.text_field :name, :autofocus => true, :class => 'span3'
 
     .control-group
       = f.label :email, :class => 'control-label'
       .controls
-        = f.email_field :email
+        = f.email_field :email, :class => 'span3'
 
     .control-group
       = f.label :password, :class => 'control-label'
       .controls
-        = f.password_field :password
+        = f.password_field :password, :class => 'span3'
 
     .control-group
       = f.label :password_confirmation, :class => 'control-label'
       .controls
-        = f.password_field :password_confirmation
+        = f.password_field :password_confirmation, :class => 'span3'
 
     .control-group
       .controls
         .btn-group
-          = f.submit 'Sign up', :class => 'btn btn-primary'
+          = f.submit 'Create Account', :class => 'btn btn-primary'
+          = link_to 'Cancel', new_user_session_path, :class => 'btn'
           = render 'devise/shared/links'
-.span6
+.span5.offset1
   %h2 You're just about there...
   %p
     In
     %b just a few moments
-    you will be reading the news you want to read.
+    you will be reading only the news you want to read.
