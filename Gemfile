@@ -59,7 +59,7 @@ gem 'jquery-ui-rails'
 
 # To do things with the backend
 gem 'thrift'
-gem 'pismo'
+gem 'pismo', '>= 0.8.0', :git => 'git://github.com/peterc/pismo.git'
 
 group :test do
   gem 'rspec-rails'
