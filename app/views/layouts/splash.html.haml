@@ -30,8 +30,29 @@
         padding-top: 10px;
         margin-bottom: 20px;
       }
-      a.btn {
-        line-height: 23px;
+      #footer {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #ddd;
+      }
+      #footer ul {
+        list-style: none;
+        margin: 0 0 0 30px;
+      }
+      #footer li {
+        float: left;
+      }
+      #footer li:before {
+        content: "\00b7";
+        margin: 0 10px;
+        display: inline-block;
+      }
+      #footer li:first-child:before {
+        display: none;
+        content: '';
+      }
+      #footer a {
+        color: #ddd;
       }
       @media (max-width: 767px) {
         #splash {
@@ -67,4 +88,9 @@
         .row
           .span12
             =yield
+      #footer
+        %ul
+          %li
+            October is a project for EECS395 at Case Western Reserve University
+          %li= link_to 'About Us', about_path
     = yield :javascripts

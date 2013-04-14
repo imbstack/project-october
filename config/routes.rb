@@ -82,6 +82,7 @@ ProjectOctober::Application.routes.draw do
   # just remember to delete public/index.html.
   devise_scope :user do
     root :to => 'home#index'
+    get '/about' => 'home#about'
   end
 
   # See how all your routes lay out with "rake routes"
