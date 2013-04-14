@@ -4,10 +4,10 @@ class MoveEverythingToPostersTable < ActiveRecord::Migration
     created_at, updated_at, email, encrypted_password,
     reset_password_token, reset_password_sent_at, remember_created_at,
     sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip,
-    last_sign_in_ip, debug_user, type) SELECT id, name, created_at, updated_at, email, encrypted_password,
+    last_sign_in_ip, debug_user) SELECT id, name, created_at, updated_at, email, encrypted_password,
     reset_password_token, reset_password_sent_at, remember_created_at,
     sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip,
-    last_sign_in_ip, debug_user, "User" as "type" FROM users')
+    last_sign_in_ip, debug_user FROM users')
 
     drop_table :users
 
