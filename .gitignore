@@ -34,3 +34,6 @@
 
 # Ignore all logfiles and tempfiles.
 /tmp
+
+# Ignore the downloaded images
+/public/system
