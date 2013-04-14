@@ -1,22 +1,24 @@
-class Feed < ActiveRecord::Base 
-  attr_accessible :title
+class Feed < Poster
+  attr_accessible :name, :url
 
   has_many :subscriptions
 
-  before_create :set_title
+  before_create :set_name
 
   validates_uniqueness_of :url
 
 private
 
-  def set_title
-    title = attempt_to_get_title()
-    if title.present?
-      self.title = title
+  def set_name
+    return if self.name.present?
+
+    name = attempt_to_get_name()
+    if name.present?
+      self.name = name
     end
   end
 
-  def attempt_to_get_title
+  def attempt_to_get_name
     feed = Feedzirra::Feed.fetch_and_parse(url)
     if feed.nil? || feed == 0
       errors.add(:url, "is not a valid feed!")

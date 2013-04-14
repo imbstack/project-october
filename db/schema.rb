@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408180255) do
+ActiveRecord::Schema.define(:version => 20130414172803) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -25,17 +25,36 @@ ActiveRecord::Schema.define(:version => 20130408180255) do
     t.integer  "user_id"
   end
 
-  create_table "feeds", :force => true do |t|
-    t.string "url"
-    t.string "title"
-  end
-
   create_table "followings", :force => true do |t|
     t.integer "follower_id"
     t.integer "following_id"
   end
 
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
+
+  create_table "posters", :force => true do |t|
+    t.string   "name",                                      :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.boolean  "debug_user",             :default => false
+    t.string   "type"
+    t.string   "url"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "posters", ["email"], :name => "index_posters_on_email"
+  add_index "posters", ["name", "type"], :name => "index_posters_on_name_and_type", :unique => true
+  add_index "posters", ["reset_password_token"], :name => "index_posters_on_reset_password_token"
+  add_index "posters", ["url"], :name => "index_posters_on_url"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -61,27 +80,6 @@ ActiveRecord::Schema.define(:version => 20130408180255) do
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
-
-  create_table "users", :force => true do |t|
-    t.string   "name",                                      :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "email",                  :default => "",    :null => false
-    t.string   "encrypted_password",     :default => "",    :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.boolean  "debug_user",             :default => false
-  end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "votes", :force => true do |t|
     t.integer "post_id"

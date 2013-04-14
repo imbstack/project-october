@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
     :square => '363'
   }
 
-  belongs_to :posted_by, :polymorphic => true
+  belongs_to :posted_by, :class_name => "Poster"
 
   has_many :comments
   has_many :votes

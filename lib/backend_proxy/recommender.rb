@@ -52,7 +52,7 @@ module Backend
 
         begin
           time = Benchmark.measure { @result = @client.send(m, *args) }
-        rescue Thrift::TransportException
+        rescue
           Rails.logger.error "API: Transport exception received! Attempting reconnect..."
           begin
             @client = try_connect()

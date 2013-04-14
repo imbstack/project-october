@@ -1,7 +1,7 @@
 .posted_by
   - if article.posted_by.is_a?(Feed)
     from
-    = article.posted_by.title
+    = article.posted_by.name
   - elsif article.posted_by.is_a?(User)
     by
     = link_to article.posted_by.name, user_path(article.posted_by)

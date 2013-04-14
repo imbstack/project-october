@@ -1,17 +1,15 @@
 # encoding: UTF-8
 
-class User < ActiveRecord::Base
+class User < Poster
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :posts, :as => :posted_by
   has_many :subscriptions
   has_many :feeds, :through => :subscriptions
   has_many :votes
-  has_many :followings, :foreign_key => :follower_id
 
   after_create :backend_register
 
