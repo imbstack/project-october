@@ -95,14 +95,11 @@ class Post < ActiveRecord::Base
     end
 
     def fetch_from_url(url)
-      post = Pismo::Document.new(url)
+      post = Pismo::Document.new(url, :reader => :cluster)
       images = post.images || []
       leader = post.lede # This is the first couple sentences.
       keywords = post.keywords(
-        :minimum_score => 2,
-        :stem_at => 2,
-        :word_length_limit => 30,
-        :limit => 500
+        :limit => 50
       ).delete_if { |keyword, occur| keyword.to_i != 0 }
 
       return [
