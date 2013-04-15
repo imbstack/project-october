@@ -9,14 +9,14 @@ module Backend
 
       def ping; "Pong" end
 
-      def recPosts(user_id, n=10)
+      def recPosts(user_id, n=10, offset=0)
         posts = ::Post.first(n).map do |x|
           OpenStruct.new(:post_id => x.id, :weight => Random.rand() * 20)
         end
         OpenStruct.new(:posts => posts)
       end
 
-      def textSearch(tokens, limit)
+      def textSearch(tokens, limit, offset=0)
         recPosts(-1, limit).posts.inject({}) { |a,i| a.merge(i.post_id => i.weight) }
       end
 
