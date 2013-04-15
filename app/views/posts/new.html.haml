@@ -8,12 +8,14 @@
       var $imagesArea = $form.find("#form-image-group");
       var $keywordsArea = $form.find("#form-keywords-group");
       var $loadingGif = $form.find(".loading-gif");
-      var fetchUrl = "#{fetch_posts_path}"
+      var fetchUrl = "#{fetch_posts_path}";
 
       var init = function() {
         $urlField.on('change', urlChangeHandler);
         hideSections();
         resetSections();
+
+        mixpanel.track_forms("#new_post", "Submitted Post");
       };
 
       var hideSections = function() {

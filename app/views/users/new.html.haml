@@ -1,3 +1,8 @@
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      mixpanel.track_forms("#new_user", "User Registration Attempt");
+    });
 .span5
   %h2 Sign Up
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|

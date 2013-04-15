@@ -5,6 +5,7 @@
   :javascript
     $(function() {
       OctoberHomepage.init("#{params[:search] && params[:search][:query] ? params[:search][:query] : ""}");
+      #{"mixpanel.track(\"Search\", { query: \"#{params[:search][:query]}\", });" if params[:search]}
     });
 - if current_user.needs_onboarding?
   - content_for :javascripts do

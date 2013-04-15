@@ -2,6 +2,8 @@
   :javascript
     $(function() {
       $("#user_email").focus();
+
+      mixpanel.track_forms("#new_user", "Sign In Attempt");
     });
 .span5
   %h2 Sign In
