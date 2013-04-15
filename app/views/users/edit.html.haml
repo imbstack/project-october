@@ -42,7 +42,7 @@
       - resource.subscriptions.each do |s|
         %li
           %p
-            = s.feed.url
+            = s.feed.name
             = link_to '[x]', user_subscription_path(resource.id, s.id), :method => :delete
     = form_for Feed.new, :url => user_subscriptions_path(resource.id), :html => { :class => 'form-inline' } do |f|
       =f.text_field :url, :class => 'input-large', :placeholder => 'RSS Feed URL'
