@@ -15,8 +15,8 @@ ProjectOctober::Application.routes.draw do
       member do
         get 'follow'
         get 'unfollow'
-        post 'add_terms'
         get 'keywords'
+        resource :keywords, :only => [:create, :destroy], :controller => 'user_keywords'
       end
     end
 

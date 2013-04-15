@@ -34,14 +34,6 @@ class UsersController < Devise::RegistrationsController
     redirect_to user_path(@user.name) if @user.is_a?(User)
   end
 
-  def add_terms
-    @user = User.find(params[:id])
-    @user.add_keywords(params[:tags])
-    flash[:notice] = "Okay, here are some articles that are more like that!"
-
-    redirect_to root_path
-  end
-
   def keywords
     @user = User.where(:name => params[:id]).first
     @keywords = @user.top_keywords(20)

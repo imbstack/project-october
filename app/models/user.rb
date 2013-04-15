@@ -45,6 +45,10 @@ class User < Poster
     return THRIFTCLIENT.addUserTerms(id, ary)
   end
 
+  def remove_keywords(ary)
+    return THRIFTCLIENT.removeUserTerms(id, ary)
+  end
+
   def needs_onboarding?
     THRIFTCLIENT.userTopTerms(id, 1).empty?
   end

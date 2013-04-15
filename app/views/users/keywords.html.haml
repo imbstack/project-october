@@ -11,13 +11,20 @@
     - if current_user == @user
       .box
         %h2 suggest more keywords for yourself:
-        = form_for('onboard', :url => add_terms_user_path(current_user)) do |f|
+        = form_for('onboard', :url => keywords_path(current_user)) do |f|
           %ul#more_keywords
           %span.help-block seperate keywords with commas
           = f.submit 'Add Keywords!', :class => 'btn btn-primary'
     %h2 top keywords
+    %p Click the [x] next to a keyword to no longer receive recommendations based on that keyword.
     %ol
       - @keywords.each do |k|
         %li
-          %p{ :title => "Weight: #{k[1]}" }= k[0]
+          %p{ :title => "Weight: #{k[1]}" }
+            #{k[0]} #{link_to '[x]', keywords_path(@user.id, :tags => k[0]), :method => :delete}
+    %h2 clear all my keywords
+    %p This will remove our most powerful recommendation signals for you. This cannot be undone.
+    = link_to 'Clear Top 20 Keywords', keywords_path(@user.id, :tags => @keywords.map(&:first).join(',')), :method => :delete, :class => 'btn'
+    %p
+      &nbsp;
   = render 'avatar_box', :user => @user
