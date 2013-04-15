@@ -38,7 +38,12 @@ task :import_rss => :environment do
     feed.entries.each do |item|
       STDOUT.write "  Item: #{item.title}\n"
       STDOUT.write "        #{item.url}\n"
-      success, msg = post_article(item.url, item.title, f)
+      begin
+        success, msg = post_article(item.url, item.title, f)
+      rescue Exception => e
+        success = false
+        msg = e.to_s
+      end
       STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
     end
   end
