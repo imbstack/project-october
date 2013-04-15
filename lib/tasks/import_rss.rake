@@ -15,7 +15,7 @@ def post_article(url, title, feed)
   return [false, "Could not determine keywords."] if @post.keywords.empty?
 
   if @post.save
-    if THRIFTCLIENT.addPost(-1, @post.id, @post.keywords)
+    if THRIFTCLIENT.addPost(feed.id, @post.id, @post.keywords)
       return [true, "Article posted!   (Keywords: #{@post.keywords.first(5).map(&:t).join(', ')})"]
     else
       return [false, "Could not save to backend database!"]

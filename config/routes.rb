@@ -20,6 +20,13 @@ ProjectOctober::Application.routes.draw do
       end
     end
 
+    resources :feeds, :only => :show, :controller => 'users' do
+      member do
+        get 'follow'
+        get 'unfollow'
+      end
+    end
+
     resources :posts, :id => /\d+/ do
       member do
         get 'upvote'

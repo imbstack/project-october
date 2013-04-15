@@ -3,28 +3,35 @@ class UsersController < Devise::RegistrationsController
   layout "splash", :only => :new
 
   def show
-    @user = User.where(:name => params[:id]).includes(:posts).first
+    if request.fullpath.match(/\A\/feed/)
+      @user = Feed.find(params[:id])
+    else
+      @user = User.where(:name => params[:id]).includes(:posts).first
+    end
+
     return redirect_to root_path, :flash => { :error => "Unknown User!" } unless @user.present?
   end
 
   def follow
-    @user = User.find(params[:id])
+    @user = Poster.find(params[:id])
 
     if current_user.followings.create(:following_id => @user.id)
       flash[:notice] = "Now following #{@user.name}"
     end
 
-    redirect_to user_path(@user.name)
+    redirect_to feed_path(@user.id) if @user.is_a?(Feed)
+    redirect_to user_path(@user.name) if @user.is_a?(User)
   end
 
   def unfollow
-    @user = User.find(params[:id])
+    @user = Poster.find(params[:id])
 
     if current_user.followings.where(:following_id => @user.id).delete_all
       flash[:notice] = "Stopped following #{@user.name}"
     end
 
-    redirect_to user_path(@user.name)
+    redirect_to feed_path(@user.id) if @user.is_a?(Feed)
+    redirect_to user_path(@user.name) if @user.is_a?(User)
   end
 
   def add_terms
