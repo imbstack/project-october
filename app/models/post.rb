@@ -18,6 +18,9 @@ class Post < ActiveRecord::Base
   validates_presence_of :poster_id
   validates_presence_of :title
 
+  validates_uniqueness_of :title, :scope => :poster_id
+  validates_uniqueness_of :url, :scope => :poster_id
+
   def image_height_as_pct
     return 0 unless image.present?
     width, height = image.image_size.split('x').map(&:to_f)

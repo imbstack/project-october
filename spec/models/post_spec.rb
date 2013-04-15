@@ -88,5 +88,63 @@ describe Post do
         post.poster.should == feed
       end
     end
+
+    context 'when a post with the same url already exists' do
+      let(:feed) { FactoryGirl.create(:feed) }
+      let(:post) { FactoryGirl.create(:post, :poster => feed) }
+
+      context 'by the same poster' do
+        let(:duplicate_post) { FactoryGirl.create(:post, :poster => feed, :url => post.url) }
+
+        it "doesn't persist the duplicate post" do
+          post.save
+          post.should be_persisted
+
+          expect { duplicate_post.save }.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
+
+      context 'by a different poster' do
+        let(:other_feed) { FactoryGirl.create(:feed) }
+        let(:duplicate_post) { FactoryGirl.create(:post, :poster => other_feed, :url => post.url) }
+
+        it "saves the post" do
+          post.save
+          post.should be_persisted
+
+          duplicate_post.save
+          duplicate_post.should be_persisted
+        end
+      end
+    end
+
+    context 'when a duplicate title by the same poster' do
+      let(:feed) { FactoryGirl.create(:feed) }
+      let(:post) { FactoryGirl.create(:post, :poster => feed) }
+
+      context 'by the same poster' do
+        let(:duplicate_post) { FactoryGirl.create(:post, :poster => feed, :title => post.title) }
+
+        it "doesn't persist the duplicate post" do
+          post.save
+          post.should be_persisted
+
+          expect { duplicate_post.save }.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
+
+      context 'by a different poster' do
+        let(:other_feed) { FactoryGirl.create(:feed) }
+        let(:duplicate_post) { FactoryGirl.create(:post, :poster => other_feed, :title => post.title) }
+
+        it "saves the post" do
+          post.save
+          post.should be_persisted
+
+          duplicate_post.save
+          duplicate_post.should be_persisted
+        end
+      end
+    end
   end
 end
