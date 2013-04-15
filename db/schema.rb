@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130414193424) do
+ActiveRecord::Schema.define(:version => 20130415003104) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(:version => 20130414193424) do
 
   create_table "posts", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "url"
     t.integer  "poster_id"
     t.string   "image_file_name"
@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(:version => 20130414193424) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "image_meta"
-    t.string   "posted_by_type",     :default => "User"
   end
 
   add_index "posts", ["poster_id"], :name => "index_posts_on_user_id"
