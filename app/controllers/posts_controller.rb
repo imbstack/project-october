@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   def recommendations
     if params[:search][:query].present?
       @query = params[:search][:query]
-      results = THRIFTCLIENT.textSearch(@query.split(' '), 50)
+      results = THRIFTCLIENT.textSearch(@query.split(' '), 50, 0)
       @posts = Post.assign_types(results)
     else
       @posts = Post.recommendations_for(current_user)
