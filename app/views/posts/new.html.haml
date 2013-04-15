@@ -78,7 +78,7 @@
           if (index >= 5) { return false; }
           $keywordListArea.append("<li>" + keyword + "</li>");
         });
-        $keywordListArea.tagit({ fieldName: 'keywords[]' });
+        $keywordListArea.tagit({ fieldName: 'keywords[]', allowSpaces: true });
         $keywordsArea.show();
       };
 
@@ -103,12 +103,14 @@
         =f.text_field :url, :class => 'span6'
     .control-group#form-image-group
       .control-label
-        =f.label :image
+        =f.label :images
+        %span.help-block select one
         =hidden_field_tag 'post[image_url]'
       .controls
     .control-group#form-keywords-group
       .control-label
         =f.label :keywords
+        %span.help-block seperate keywords with commas
       .controls
     .control-group
       .control-label

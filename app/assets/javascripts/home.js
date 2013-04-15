@@ -24,7 +24,7 @@ var OctoberHomepage = (function($) {
 
     $onboarder = $articles.find("#onboard_terms");
     if ($onboarder.length > 0) {
-      $onboarder.tagit({ fieldName: 'tags[]' });
+      $onboarder.tagit({ fieldName: 'tags[]', allowSpaces: true});
     }
   }
 

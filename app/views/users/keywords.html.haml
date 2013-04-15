@@ -2,7 +2,7 @@
   = javascript_include_tag 'tag-it.min'
   :javascript
     $(function() {
-      $("#more_keywords").tagit({ fieldName: 'tags[]' });
+      $("#more_keywords").tagit({ fieldName: 'tags[]', allowSpaces: true});
     });
 - content_for :stylesheets do
   = stylesheet_link_tag 'tag-it'
@@ -13,6 +13,7 @@
         %h2 suggest more keywords for yourself:
         = form_for('onboard', :url => add_terms_user_path(current_user)) do |f|
           %ul#more_keywords
+          %span.help-block seperate keywords with commas
           = f.submit 'Add Keywords!', :class => 'btn btn-primary'
     %h2 top keywords
     %ol
