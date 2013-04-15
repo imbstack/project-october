@@ -4,7 +4,7 @@
     = link_to article.poster.name, feed_path(article.poster_id)
   - elsif article.poster.is_a?(User)
     by
-    = link_to article.poster.name, user_path(article.poster)
+    = link_to article.poster.name, user_path(article.poster.name)
   &middot; posted
   = distance_of_time_in_words(article.created_at, Time.now)
   ago
