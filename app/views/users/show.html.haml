@@ -4,6 +4,6 @@
     %ul
       - @user.posts.each do |p|
         %li
-          %p= link_to p.title, p.url
+          %p= link_to p.title, post_url(p)
     %h2 comments
   = render 'avatar_box', :user => @user

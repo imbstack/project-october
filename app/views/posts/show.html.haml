@@ -14,7 +14,7 @@
         }
       });
     });
-%h2= @post.title
+%h2= link_to @post.title, @post.url
 %h3 Comments:
 .comments
   - @comments = recursify_array_of_comments(@post.comments)
