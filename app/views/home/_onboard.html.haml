@@ -6,7 +6,7 @@
     You're looking at some of the newest content submitted to October. We want to
     %b customize
     it to your liking, so would you please give us a couple keywords you'd like to follow?
-  = form_for('onboard', :url => keywords_url(current_user)) do |f|
+  = form_for('onboard', :url => keywords_path(current_user)) do |f|
     %ul#onboard_terms
     %span.help-block seperate keywords with commas
     = f.submit 'Customize!', :class => 'btn btn-primary'
