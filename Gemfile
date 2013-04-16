@@ -14,6 +14,7 @@ gem 'feedzirra'
 gem 'airbrake'
 gem 'newrelic_rpm'
 gem 'premailer-rails'
+gem 'mixpanel'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

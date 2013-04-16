@@ -14,7 +14,7 @@ def post_article(url, title, feed)
   end
   return [false, "Could not determine keywords."] if @post.keywords.empty?
 
-  if @post.save
+  if @post.valid? && @post.save
     if THRIFTCLIENT.addPost(feed.id, @post.id, @post.keywords)
       return [true, "Article posted!   (Keywords: #{@post.keywords.first(5).map(&:t).join(', ')})"]
     else
@@ -38,13 +38,20 @@ task :import_rss => :environment do
     feed.entries.each do |item|
       STDOUT.write "  Item: #{item.title}\n"
       STDOUT.write "        #{item.url}\n"
+
       begin
         success, msg = post_article(item.url, item.title, f)
       rescue Exception => e
         success = false
         msg = e.to_s
+        MIXPANEL.track "RSS Post Error"
       end
+
       STDOUT.write "        #{success ? 'POSTED:' : 'FAILED:'} #{msg}\n"
+
+      if success
+        MIXPANEL.track "RSS Post Success"
+      end
     end
   end
 end
