@@ -2,7 +2,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // TODO: Improve display of the comments on the posts page
-.comment { margin-left: 40px; }
+.comments > .new_comment > .comment-reply-area > .comment { margin-left: 0; }
+.comments > .comment { margin-left: 0; }
+.comment {
+  margin-left: 40px;
+
+  p {
+    margin: 0;
+  }
+}
 
 /* ***************************************************************************
  * Stuff for when submitting a new post

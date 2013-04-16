@@ -1,6 +1,13 @@
 = form_for(Comment.new(:post_id => post_id, :parent_id => parent_id)) do |f|
   = f.hidden_field :post_id
   = f.hidden_field :parent_id
-  = f.text_area :body, :class => 'span6', :style => 'height: 60px;'
+  .comment-reply-area
+    .comment
+      #{current_user.name} - [draft]
+      %p= f.text_area :body, :class => 'span6', :style => 'height: 100px;'
+      = f.submit 'Post Comment', :class => 'btn'
   .clearfix
-    =f.submit "Post Comment", :class => 'btn'
+    - if parent_id.nil?
+      =link_to 'Post New Comment', '#', :class => 'btn comment-reply-btn'
+    - else
+      = link_to 'Reply', '#', :class => 'comment-reply-btn'

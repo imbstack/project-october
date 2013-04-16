@@ -1,9 +1,23 @@
 - content_for :stylesheets do
   = stylesheet_link_tag 'posts'
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $(".comment-reply-area").hide();
+      $(".comments").on('click', function(ev) {
+        $target = $(ev.target);
+        if ($target.is(".comment-reply-btn")) {
+          $target.hide();
+          $commentReplyArea = $target.parent().siblings().filter(".comment-reply-area");
+          $commentReplyArea.show();
+          $commentReplyArea.find("textarea").focus();
+        }
+      });
+    });
 %h2= @post.title
 %h3 Comments:
 .comments
-  = render 'new_comment', :parent_id => nil, :post_id => @post.id
   - @comments = recursify_array_of_comments(@post.comments)
   - @comments.each do |comment_and_child_comments|
     = render 'comment_list', :comment_list => comment_and_child_comments
+  = render 'new_comment', :parent_id => nil, :post_id => @post.id
