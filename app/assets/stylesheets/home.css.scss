@@ -30,6 +30,7 @@
     a {
       color: #fff;
     }
+
     h2 {
       position: absolute;
       bottom: 0px;
@@ -39,6 +40,7 @@
       text-shadow: 2px 2px 0px #000;
       width: 100%;
       @include linear-gradient(transparent, rgba(0,0,0,0.9));
+
       a {
         color: #eee;
         padding-left: 23px;
@@ -75,9 +77,6 @@
           color: #777;
         }
       }
-    }
-    a, .posted_by {
-      color: #888;
     }
     img {
       width: 45%;
@@ -160,6 +159,7 @@
   font-size: 1.4em;
   margin: 11px 0;
   clear: both;
+  color: #888;
 }
 @media (max-width: 767px) {
   .article.featured, .article.square {
