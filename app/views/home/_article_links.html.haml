@@ -5,4 +5,4 @@
   %li
     = link_to downvote_post_path(article), :remote => 'true', :class => (@votes.detect { |v| v.post_id == article.id && v.direction == Vote.DOWN }.present? ? 'voted' : '') do
       %i.icon-minus
-  %li= link_to 'comments', post_path(article)
+  %li= link_to "#{article.comments.length} comments", post_path(article)
