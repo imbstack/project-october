@@ -13,7 +13,7 @@
         %h2 suggest more keywords for yourself:
         = form_for('onboard', :url => keywords_path(current_user)) do |f|
           %ul#more_keywords
-          %span.help-block seperate keywords with commas
+          %span.help-block separate keywords with commas
           = f.submit 'Add Keywords!', :class => 'btn btn-primary'
     %h2 top keywords
     %p Click the [x] next to a keyword to no longer receive recommendations based on that keyword.
