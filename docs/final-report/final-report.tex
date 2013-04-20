@@ -362,7 +362,7 @@ This is the main output from the backend, returning recommended news stories or 
 Ancillary parameters will be added to this to facilitate the frontend placement of articles, e.g. the recommendation confidence and individual article weightings.
 \item[User $u$ took action $n$]
 This is the main input to the backend, allowing it to adjust recommendations according to user action.
-The parameters to this API call can be of many types. For example, "User commented on article \#$n$", "User gave cred to comment \#$n$", and "User visited link \#$n$" are all valid parameters for this API call.
+The parameters to this API call can be of many types. For example, "User commented on article \#$n$", "User plused or minused comment \#$n$", and "User visited link \#$n$" are all valid parameters for this API call.
 \end{description}
 
 These two calls manifest themselves in Thrift with a few simple object
