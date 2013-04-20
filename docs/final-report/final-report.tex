@@ -138,11 +138,14 @@ For the sake of releasing a minimum viable product within the semester, we have 
   \end{itemize}
 \end{itemize}
 
-\subsection{This Report}
+\subsection{Report Structure}
 % First we will describe the two separate components of October -- the frontend
 % and then the backend. Then we will describe the API which ties them together.
 % Then, we will discuss *how* we built October, including the requirements and
 % the project management. etc.
+This report will take the following structure. First, we will describe the requirements of October.
+Then, we will describe the implementation of the frontend, the backend, and the API which ties them together.
+Finally, we will discuss how we built October, including the project management, testing procedures, lessons learned, and other non-code-related subjects.
 
 \section{Software Design Requirements}
 % This section will describe the progress towards the usual software design information, with likely components on
@@ -232,6 +235,8 @@ For more about the implementation of the backend, consult Section \ref{sec:backe
 \section{Application Architecture}
 \subsection{Frontend}
 The frontend is similar in function to a standard social news aggregator.
+It is written using the Ruby on Rails framework\cite{rubyonrails} and uses PostgreSQL for data persistence.
+
 Upon going to the homepage, new and logged-out users are presented with a splash page that describes the nature of Project October and are given a registration link.
 Users can register for the application by selecting a username and password.
 A registration confirmation is emailed to newly registered users.
@@ -519,6 +524,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api}
   \bibitem{sti} \url{http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance}
   \bibitem{masonry} \url{http://masonry.desandro.com/}
+  \bibitem{rubyonrails} \url{http://rubyonrails.org/}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
