@@ -207,59 +207,6 @@ The API should be as simple as possible to maintain the functionality of October
 
 The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\cite{project-october-api}.
 
-\subsection{Web Scraping}
-We use a library called Pismo~\cite{pismo} to scrape
-webpages.  While this may seem like a trivial operation that we should implement
-ourselves, there is much that must be done in order to determine the actual
-content of a webpage.  We have selected to use the "cluster" approach Pismo
-provides to determine which parts of the webpage are actually content.  This
-approach ranks each $<$div$>$ element on a page according to the following
-heuristics:
-
-\begin{enumerate}
- \item element must contain text
- \item earlier elements are more likely to be in the body of text
- \item each element must be over some minimum length (80 characters by default)
- \item more text in an element and more "." delimited sentences raise chance of
-being content
-\end{enumerate}
-
-This works well for our purposes.  It is possible that as time progresses, we
-can make use of HTML5 semantic tags such as $<$article$>$ in order to more
-accurately extract text.
-
-Once this text is extracted, Pismo relies upon the
-Phrasie~\cite{phrasie} library to determine keyword tokens.
-The initial version of Pismo we used was based upon a naive list of (token,
-freqency) pairs, however Phrasie uses parts-of-speech to determine keywords and
-gives them a weight rather than a straight frequency.  The strength of this
-approach is that it results in a much higher signal-to-noise ratio than the
-naive approach.  A weakness is that we've now reduced our possible languages
-down to just english.  As time goes on we can modify this approach to either
-support more languages or just work in a general sense on any language.
-
-We also make use of Pismo's ability to extract images on the page that have a
-high likelihood of being content rather than UI elements.
-
-Firgure \ref{fig:nytimes} gives a visual representation of the content on a page
-we want to scrape.
-
-\label{sec:scraping}
-\begin{figure}
-\centering
-\includegraphics[scale=0.5]{img/nytimes.png}
-\captionsetup{singlelinecheck=off}
-\caption[foo]{\begin{small}Sections of webpage colored by desirability. \begin{description}
- \item[Green] Sections are best for determining content of article. Also
-  includes potential images to use as a headline image for the article.
- \item[Yellow] Sections may contain useful information but are not part of the
-  body of the article.
- \item[Red] Sections do not contain useful information and will harm results if
-  included.
-\end{description}\end{small}}
-\label{fig:nytimes}
-\end{figure}
-
 \subsection{Backend} % Expand into multiple sections?
 The backend is a recommender black-box which provides suggestions via an API to the frontend.
 The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
@@ -321,8 +268,67 @@ Mixpanel helps us track user behavior by tracking an event every time a user per
 We currently use Mixpanel is a couple ways beyond simply tracking user events, however. Primarily, we track how many milliseconds the user waits to receive recommendations from the backend.
 We also track the direction of users' votes, so we can tell how satisfied users are, at a high level, with their article recommendations.
 
+\subsection{Web Scraping}
+\label{sec:scraping}
+We use a library called Pismo~\cite{pismo} to scrape
+webpages.  While this may seem like a trivial operation that we should implement
+ourselves, there is much that must be done in order to determine the actual
+content of a webpage.  We have selected to use the "cluster" approach Pismo
+provides to determine which parts of the webpage are actually content.  This
+approach ranks each $<$div$>$ element on a page according to the following
+heuristics:
+
+\begin{enumerate}
+ \item element must contain text
+ \item earlier elements are more likely to be in the body of text
+ \item each element must be over some minimum length (80 characters by default)
+ \item more text in an element and more "." delimited sentences raise chance of
+being content
+\end{enumerate}
+
+This works well for our purposes.  It is possible that as time progresses, we
+can make use of HTML5 semantic tags such as $<$article$>$ in order to more
+accurately extract text.
+
+Once this text is extracted, Pismo relies upon the
+Phrasie~\cite{phrasie} library to determine keyword tokens.
+The initial version of Pismo we used was based upon a naive list of (token,
+freqency) pairs, however Phrasie uses parts-of-speech to determine keywords and
+gives them a weight rather than a straight frequency.  The strength of this
+approach is that it results in a much higher signal-to-noise ratio than the
+naive approach.  A weakness is that we've now reduced our possible languages
+down to just english.  As time goes on we can modify this approach to either
+support more languages or just work in a general sense on any language.
+
+We also make use of Pismo's ability to extract images on the page that have a
+high likelihood of being content rather than UI elements.
+
+Firgure \ref{fig:nytimes} gives a visual representation of the content on a page
+we want to scrape.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{img/nytimes.png}
+\captionsetup{singlelinecheck=off}
+\caption[foo]{\begin{small}Sections of webpage colored by desirability. \begin{description}
+ \item[Green] Sections are best for determining content of article. Also
+  includes potential images to use as a headline image for the article.
+ \item[Yellow] Sections may contain useful information but are not part of the
+  body of the article.
+ \item[Red] Sections do not contain useful information and will harm results if
+  included.
+\end{description}\end{small}}
+\label{fig:nytimes}
+\end{figure}
+
 \subsection{Backend}
 \label{sec:backend-implementation}
+\subsubsection{Vectorization of Posts}
+The scraper from section \ref{sec:scraping}
+\subsubsection{Vectorization of Users}
+\subsubsection{Tf-Idf}
+\subsubsection{Signals}
+\subsubsection{Time Scaling}
 
 \subsection{Frontend/Backend API}
 \label{sec:api}
@@ -432,6 +438,8 @@ Alongside the ineffectiveness of agile development in a college setting, an impo
 Based on user feedback, we learned that October was, in fact, a viable web service, and we have had moderate user retention. 
 We have enjoyed working on this, and we hope to continue refining it after the class is over. 
 We will be keeping in contact with users to build upon October, enhancing the service and hopefully increasing user retention.
+
+\subsection{Advantages \& Disadvantages of a Service Oriented Architecture}
 
 \section{Appendix}
 
