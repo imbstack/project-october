@@ -304,6 +304,10 @@ Using custom responsive CSS and JavaScript event handlers on window resize, we e
 % It is a Ruby wrapper around the thrift library which will automatically retry an API call upon failing the first time (in case of disconnect) and will switch to the Mock Backend in case of total failure.
 % In that state, October is operating without its brain, so users are presented with a vibrant message
 
+Since the connection to the backend is via a web service, the frontend cannot always assume a working connection to the backend.
+Towards this end, we have written a Ruby proxy around Thrift which keeps the frontend function even in case of problems with the backend.
+It will try again to establish the connection in case of momentary connection break, and will switch to a mock backend if the real backend still does not reply. The mock backend is API-compatible with the real backend, but is not capable of making informed decisions so we display a message to October users that October is operating at diminished capacity (``amnesia mode'').
+
 \subsubsection{Sending Email to Users}
 October uses Ruby on Rails's packaged ActionMailer to send emails.
 We use the premailer Ruby gem to speed up development -- it allows for the use of real stylesheets which are then compiled inline to the appropriate HTML elements of the emails before they are sent.
