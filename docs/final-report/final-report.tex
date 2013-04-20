@@ -82,14 +82,15 @@ Date: & \today
 \section{Abstract}
 
 Longtime users of modern news aggregation services (such as Reddit, Slashdot, Digg, and Hacker News) report noticing a marked decrease in quality of discourse as the services gain mainstream attention.
-This gradual but irreversible decline was noted as early as in the newsgroup era, when new college students would log in for the first time in September, causing an influx of new users and subsequently diluting discussion upon the sites which they joined.
-As an example, after AOL opened newsgroups to the masses, the community standards continued to devolve, according to newsgroup veterans\cite{september}.
-This gradual decline of content quality due to large numbers of new users came to be known as ``Eternal September'', being ``Eternal'' as the influx of new users was no longer restricted to September, but persisted through all months of the year.
+This gradual, irreversible decline was noted as early as the newsgroup era, when new college students would log in for the first time in September, causing an influx of new users and subsequently diluting discussion upon the sites which they joined.
+The situation worsened after AOL opened newsgroups to the masses, causing the community standards to continue to devolve, according to newsgroup veterans\cite{september}.
+This gradual decline of content quality due to large numbers of new users came to be known as ``Eternal September'', being ``Eternal'' as the influx of new users was no longer restricted to September, but persisted through all months of the year. 
+This phenomenon indicates that balancing a large community with high quality content is a challenge.
 
 October is a solution to this problem.
-By providing users with an automatically-customized experience, we believe we can provide a large community to benefit from thoughtful discourse and interesting articles.
+By providing users with an automatically-customized experience, we believe we can provide a large community thoughtful discourse and interesting articles while avoiding the effects brought on by Eternal September.
 October will employ a technique to recommend news articles which, to our knowledge, is not currently applied on any other major news aggregators.
-With custom recommendations for each user, we believe that a community can attain both size and quality.
+With custom recommendations for each user, we believe that the October  community can attain large size without a sacrifice in quality.
 
 \newpage
 
@@ -111,17 +112,11 @@ It is our hypothesis that the recommendation of news sources will provide a scal
 Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users and thus prevent the Eternal September phenomenon.
 Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.
 
-This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
-In particular, we will be linking various news sources and user submitted sources.
-The resulting network of user-item relations and associated content features is converted into a unified mathematical model, which is applicable to our underlying neighbor-based prediction algorithm.
-By means of various experiments, we demonstrate the influence of supplementary users as well as item features on the prediction accuracy of October, our proposed hybrid recommender. In order to decrease system runtime and to reveal latent user and item relations, we factorize our hybrid model via singular value decomposition (SVD).
-
-For the development and evaluation of our proposed hybrid recommender system, we make use of various news outlets and user recommendations, importing them into a graph database.
-Both corpora are joined in a unified mathematical model, which describes the complex network of interdependencies.
+%Brian! Come fill this background part out about the backend!
 
 \subsection{Intended Audience}
-We intend Project October to be open to the public.
-At launch, we expect the user base to be somewhat technical in nature, being some of the Internet's power users.
+Project October will be open to the public.
+At launch, we will be inviting our friends from the CWRU community to try it out first, so we expect the user base to be somewhat technical in nature.
 
 \subsection{Progress Since Progress Report 2}
 % Fill in with details of our progress -- how far we have come and where we
@@ -150,9 +145,10 @@ For the sake of releasing a minimum viable product within the semester, we have 
 
 \section{Application}
 \subsection{Frontend}
-The frontend is what is commonly thought of as a standard social news aggregator, except that it displays articles on recommendation of the backend.
-Upon going to the homepage, new and logged-out users are presented with a splash page that describes the nature of Project October and offers a registration link.
-Users can register for the application by inputting their username, an email, and a password.
+The frontend is similar in function to a standard social news aggregator.
+Upon going to the homepage, new and logged-out users are presented with a splash page that describes the nature of Project October and are given a registration link.
+Users can register for the application by selecting a username and password.
+A registration confirmation is emailed to newly registered users.
 
 When logged in, users are presented with their personalized content.
 The design is modelled after the front page of a newspaper -- articles that are evaluated to be more interesting to a user are placed in more prominent positions while articles that are deemed less relevant to the user's interest will fill the side columns, be located further down the page, and occupy less space.
@@ -163,8 +159,8 @@ These are analogous to upvoting in Reddit, except that plusing or minusing an ar
 Therefore, voting serves two purposes: to inform other users of the quality of the article and to inform the recommender system of the user's interests.
 
 Users will be able to click a link on the homepage which takes them to an article submission form.
-The submission form will request a URL and a headline for that news story.
-Upon entering the URL, the news story will be scraped in the background using a web scraping tool which will attempt to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text.
+The submission form requests a URL and a headline for that news story.
+Upon entering the URL, the news story is scraped in the background using a web scraping tool which attempts to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text. The user is also presented with a list of tags that are garnered from the article, and they can delete or add their own tags to better represent the content of the article. A list of scraped images is also presented, and the user may select which one (if any) they want to head the article with. 
 
 \subsubsection{RSS Subscription}
 \label{sec:frontendrss}
@@ -244,8 +240,8 @@ attached as Appendix~\ref{app:thrift}.
 % - Design Document
 
 \subsection{Intended Audience}
-We intend October to be open to the public.
-Although the user base is currently somewhat technical in nature, October supports the registration of any internet user.
+October is completely open to the public.
+Although the user base is currently somewhat technical in nature, October supports the registration of any internet user and any type of content. 
 
 \subsection{Homepage Requirements}
 The are two cases for the homepage: logged in users and logged out users.
@@ -253,18 +249,20 @@ The are two cases for the homepage: logged in users and logged out users.
 Logged out users arrive at the homepage and are presented with a splash page containing a description of October's features.
 There is a registration link so that interested users can register for their own account.
 
-Logged in users should, upon landing on the homepage, be quickly presented with a display of news articles.
-The display will be pictures (when available) along with the headlines for each article.
-Each article should be accompanied with links to positively influence the article's recommendation rank, to negatively influence the article, and to comment on the article.
+Logged in users are, upon landing on the homepage, presented with a display of news articles.
+Articles are displayed with pictures (when available) along with headlines.
+Each article is accompanied with links to positively or negatively influence the article's recommendation rank, and also to comment on the article. 
+The source of the article is also provided, as is the time that it was posted. 
 
 \subsection{User Creation/Login/Display Requirements}
-Internet travelers should be able to create accounts on October easily by providing minimal information -- simply their desired username, their email, and a password.
-After creating a user, an email should be sent to the user welcoming them to October.
+New users are able to create October accounts with but three pieces of information --  their desired username, their email, and a password.
+After creating an account, an email is sent to the user welcoming them to October.
 
-When a user first uses October, the backend recommender won't know anything about that user's interests.
-Thus, users should be shown various sample topics and the ability to manually input keywords until the recommender is confident enough in their browsing habits to make recommendations.
+When a user first logs into October, the backend recommender won't know anything about their interests.
+Thus, users should be shown various sample topics to browse through. 
+They are also able to (via their account page) manually type in relevant keywords to aid the recommender in providing them with articles. 
 
-Every mention of a user's name (i.e. the credit for who posted an article or comment) should be a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
+Every mention of a user's name (i.e. the credit for who posted an article or comment) is a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
 
 \subsection{User Profile Page Requirements}
 \label{sec:profilepage}
@@ -284,7 +282,7 @@ Furthermore, there should be a field where a user can submit additional keywords
 The user will be associated with the keyword when they submit the form.
 
 \subsection{Article Posting Requirements}
-Logged in users should be able to click a prominent link on the homepage to submit a story.
+Logged in users are able to click a link on the homepage to submit a story.
 The submit story page will ask for the link to the desired story, and automatically show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
 If the post looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
 
@@ -391,7 +389,6 @@ We remain committed to maintaining team communication via scrum and continue wor
 Overall, the project is still on schedule. We still intend to complete a fully-featured product on-time.
 
 \section{Lessons Learned}
-\newpage
 
 %The lessons we've gleaned through development. If you've had any personal %revelations, visions, or epiphanies, please share below. 
 Throughout the development of October, we gained insight as how to properly design and create a product that will be used by many. 
@@ -403,8 +400,6 @@ Alongside the ineffectiveness of agile development in a college setting, an impo
 Based on user feedback, we learned that October was, in fact, a viable web service, and we have had moderate user retention. 
 We have enjoyed working on this, and we hope to continue refining it after the class is over. 
 We will be keeping in contact with users to build upon October, enhancing the service and hopefully increasing user retention.
- 
- 
 
 \section{Appendix}
 
