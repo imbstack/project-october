@@ -6,4 +6,12 @@
         %li
           %p= link_to p.title, post_url(p)
     %h2 comments
+    %ul
+      - @user.comments.each do |c|
+        %li
+          %p
+            = link_to c.body, post_url(c.post_id)
+            %span{:style => 'font-size: 0.6em'} #{distance_of_time_in_words(c.created_at, Time.now)} ago
+
+
   = render 'avatar_box', :user => @user
