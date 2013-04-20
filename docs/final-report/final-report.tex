@@ -152,6 +152,7 @@ For the sake of releasing a minimum viable product within the semester, we have 
 % - Design Document
 
 \subsection{Homepage}
+\label{sec:homepagerequirements}
 The are two cases for the homepage: logged in users and logged out users.
 
 Logged out users arrive at the homepage and are presented with a splash page containing a description of October's features.
@@ -258,14 +259,45 @@ The most important reason for this is because Users and Feeds must share the key
 
 This will also allow other types of posting entities in the future if we decide to add additional integrations.
 
+\subsubsection{Article Display Sizes}
+% articles can be in three sizes -- featured, primary, and secondary
+% primary and secondary can be either with image or without image
+According to the specification (in Section \ref{sec:homepagerequirements}), the homepage should display articles in a visually appealing fashion.
+Towards this end, we split the homepage into three equal-width columns and display each article with one of the following types:
+
+\begin{itemize}
+\item \verb+featured+ type articles take up two columns and contain a large image from the post. The headline is large and stands out. We intend these featured articles to be the eye-catching cornerstone(s) of the homepage.
+\item \verb+primary+ type articles are displayed in a white box to emphasize them from the background. The headline is large and flows with the picture to create the newspaper feel.
+\item \verb+secondary+ type articles are displayed with a grey headline and grey link text, to blend in with the background and offer the reader additional options if they desire to look harder to find them.
+\end{itemize}
+
+\verb+primary+ and \verb+secondary+ articles may take up any amount of vertical space, but are constrained to one column in width.
+If the homepage is not wide enough to fit three columns (on clients of less than 768px), the homepage goes into single-column mode where all articles are displayed linearly.
+
 \subsubsection{Article Layout Algorithm}
 % right now the layout algorithm is pretty basic. Receiving a list of weights, pick the top two with pictures and make them "featured" articles.
 % The next highest-weighted 50% of articles are displayed at a primary size and the rest are displayed in a secondary size.
 % Then, articles are shuffled slightly and displayed to users
+The article layout algorithm takes place in Ruby (the backend of the frontend) and determines the size and approximate position of the articles to be displayed to the user.
+The algorithm is complex enough to make intelligent decisions, yet simple enough that it can be performed quickly and repeatedly.
+The algorithm is, given a list of $n$ article IDs and weights for each article from the recommender, take the following steps:
 
-\subsubsection{Article Display Sizes}
-% articles can be in three sizes -- featured, primary, and secondary
-% primary and secondary can be either with image or without image
+\begin{enumerate}
+\item Sort the article list by weight, so the highest-weighted article is first.
+\item Take the top two highest-weighted articles with pictures. Assign them the type \verb+featured+.
+\item Take the remaining $round(\frac{n}{2}) - 2$ items and assign them the type \verb+primary+.
+\item Assign the remaining items the type \verb+secondary+.
+\item Introduce some randomness by na\"{i}vely grouping all posts into four categories by ID.
+\item Insert the \verb+featured+ articles into the first and the $\frac{n}{4}$th indexes of the list.
+\item Return the list of $(item, type)$ tuple to the frontend.
+\end{enumerate}
+
+The frontend will output HTML for each item and type in the order returned from the algorithm.
+The CSS for the homepage contains basic styling instructions, but not enough to create the desired homepage effect.
+For that, the user's browser will invoke the JavaScript masonry.js library\ref{masonry}.
+Masonry.js takes a set of arbitrarily-sized DOM nodes and displays them in a compact way, thus giving us the desired newspaper front-page effect.
+
+Using custom responsive CSS and JavaScript event handlers on window resize, we ensure that the newspaper feel is consistent and usable on any size screen and when the screen is resized after the page originally loads.
 
 \subsubsection{Backend Proxy}
 % a proxy exists which will keep the frontend functional in case of problems with the backend.
@@ -427,6 +459,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{mixpanel} \url{http://mixpanel.com}
   \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api}
   \bibitem{sti} \url{http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance}
+  \bibitem{masonry} \url{http://masonry.desandro.com/}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
