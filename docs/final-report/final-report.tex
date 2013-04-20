@@ -109,7 +109,7 @@ We believe Project October is the first attempt to apply recommendation techniqu
 \subsection{Background}
 It is our hypothesis that the recommendation of news sources will provide a scalable community experience that can be tailored to each person's interests.
 Providing an automatic, customized, recommendation of articles will prevent the community from being diluted by new users and thus prevent the Eternal September phenomenon.
-Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.  
+Each user will have their own viewing environment curated for them, with different mindsets and preferences forming their own communities in which like-minded individuals can partake in discussion, eliminating the cross-contamination of user bases.
 
 This proposal discusses an implementation of a hybrid collaborative and content-based filtering approach for a web-based recommender system (``October'').
 In particular, we will be linking various news sources and user submitted sources.
@@ -123,9 +123,24 @@ Both corpora are joined in a unified mathematical model, which describes the com
 We intend Project October to be open to the public.
 At launch, we expect the user base to be somewhat technical in nature, being some of the Internet's power users.
 
-\subsection{Progress}
+\subsection{Progress Since Progress Report 2}
 % Fill in with details of our progress -- how far we have come and where we
 % will go from here
+Since Progress Report 2, we have implemented all our design requirements, released a beta version to the CWRU EECS department, and collected user metrics. More details about the v1.0 minimum viable product can be found in Section \ref{sec:release1.0}.
+
+For the sake of releasing a minimum viable product within the semester, we have removed some complexity from our requirements in Progress Report 2. Specifically, we have made the following changes to the report, or the scope of our project:
+
+\begin{itemize}
+\item We have specified the plan for the backend recommendation engine in tangible terms.
+\item We have removed the ability to upvote, downvote, and tag comments. Those abilities will be easy to add later but are not core to the application, especially until October gains critical mass and more people comment.
+\item We have made numerous copy tweaks to the report, such as
+  \begin{itemize}
+  \item Reordering the report to list the requirements before the details of the project's implementation
+  \item Adding Sections \ref{sec:frontendrss}-\ref{sec:tracking} about the frontend and Section \ref{sec:progress} about the overall final status.
+  \item Moving the User Interface section into the requirements.
+  \item Describing our testing process in Section \ref{sec:testing}
+  \end{itemize}
+\end{itemize}
 
 \subsection{This Report}
 % First we will describe the two separate components of October -- the frontend
@@ -152,6 +167,7 @@ The submission form will request a URL and a headline for that news story.
 Upon entering the URL, the news story will be scraped in the background using a web scraping tool which will attempt to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text.
 
 \subsubsection{RSS Subscription}
+\label{sec:frontendrss}
 % we added the ability to subscribe to rss feeds. this is a cheap way to find more news articles but it also helps us get users who are longing for a replacement for google reader.
 
 \subsubsection{Article Layout Algorithm}
@@ -176,6 +192,7 @@ Currently, the only email that is delived is a welcome email for the user offeri
 However, in the future, we intend to engage users via email with customized recommendation emails (i.e. ``We just found this article that we know you will like!'')
 
 \subsubsection{User Tracking + Analysis}
+\label{sec:tracking}
 In order to understand how effective our users find October, we have instrumented the site with a heavy dosage of analytics.
 To track basic page views and real time events, we have installed Google Analytics.
 But, Google Analytics does not provide the granularity that we would need to adequately understand user behavior.
@@ -325,6 +342,7 @@ As for the backend, Brian has been tasked with creating both the service archite
 This includes the implementation of our backend's TF-IDF algorithm and the Scala connector to the Thrift API and Mongo that computes recommendations.
 
 \subsection{Release v1.0}
+\label{sec:release1.0}
 In Project Report 2, we promised a fully-functional beta by ``early to mid-April''.
 On April 15th, we released the beta to the CWRU community, and it has been met with a warm reception.
 
@@ -349,9 +367,11 @@ A pre-Alpha screenshot of the homepage is attached in figure \ref{fig:homepage}.
 The user interface for other pages will be in the same general content area, however there are no further screenshots to share at this time.
 
 \section{Testing \& Evaluation}
+\label{sec:testing}
 Testing and evaluation will be performed as we progress through the project. Currently, only very minimal testing is implemented.
 
 \section{Project Progress}
+\label{sec:progress}
 % This section should summarize the progress (or the lack of it) so far, and
 % address any issues that have arisen recently.
 The project is progressing satisfactorily.
