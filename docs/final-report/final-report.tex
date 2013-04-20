@@ -510,6 +510,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
   \bibitem{tfidf} \url{http://en.wikipedia.org/wiki/Tf-idf}
   \bibitem{pismo} \url{https://github.com/peterc/pismo}
+  \bibitem{mongodb} \url{http://www.mongodb.org/}
   \bibitem{phrasie} \url{https://github.com/ashleyw/phrasie}
   \bibitem{mixpanel} \url{http://mixpanel.com}
   \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api}
@@ -581,12 +582,33 @@ service Recommender {
 \subsection{Frontend Database}
 \begin{figure}
 \centering
-\includegraphics{db_diagram.pdf}
+\includegraphics[angle=90, scale=1.55]{db_diagram.pdf}
 \caption{Frontend Database Relational Diagram}
 \label{fig:database}
 \end{figure}
 Please see Figure \ref{fig:database}.
 \subsection{Backend Database}
+MongoDB~\cite{mongodb} is a schemaless database and as such there is no schema
+to show here. However, the backend uses ``models'' to access the data and as
+such there is a pseudo-schema which we can present here. The notation is simply
+cleaned up Scala without the actual logic attached.
+
+\begin{verbatim}
+class User(
+    id: Long,
+    tokens: Map[String, Long],
+    friends: Seq[Long])
+
+class Token(
+    id: String,
+    df: Long,
+    posts: Seq[Long])
+
+class Post(
+    id: Long,
+    posted: DateTime,
+    tokens: Map[String, Long])
+\end{verbatim}
 
 \section{User Manual}
 
