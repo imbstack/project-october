@@ -404,11 +404,11 @@ The scraper from section \ref{sec:scraping}
 
 \subsection{Frontend/Backend API}
 \label{sec:api}
-October will employ an API to promote separation between the frontend and the backend recommender system.
+October employs an API to promote separation between the frontend and the backend recommender system.
 This will provide a clear interface and facilitate easy simultaneous development of both parts of October.
 
-To implement the API, we will use Apache Thrift, an Interface Description Language\cite{thrift}.
-The essence of the API is simple, featuring primarily two types of calls:
+To implement the API, we use Apache Thrift, an Interface Description Language\cite{thrift}.
+The essence of the API is simple, featuring two important calls:
 \begin{description}
 \item[Give $n$ recommendations for user $u$]
 This is the main output from the backend, returning recommended news stories or comments for a given user.
@@ -418,9 +418,9 @@ This is the main input to the backend, allowing it to adjust recommendations acc
 The parameters to this API call can be of many types. For example, "User commented on article \#$n$", "User plused or minused comment \#$n$", and "User visited link \#$n$" are all valid parameters for this API call.
 \end{description}
 
-These two calls manifest themselves in Thrift with a few simple object
-definitions and an interface.  The abbreviated version \texttt{0.1.0} is
-attached as Appendix~\ref{app:thrift}.
+These two calls manifest themselves in Thrift with a few simple object definitions and an interface.
+There are many other additional calls so that the frontend and backend can cooperate on functionality such as text search, and user registration.
+The API specification as of document creation (API v\texttt{1.0.0}) is attached as Appendix~\ref{app:thrift}.
 
 \section{Project Management--Administrative Details}
 % Design/update your Gantt chart to show any changes in milestones, timetable,
@@ -439,13 +439,13 @@ attached as Appendix~\ref{app:thrift}.
 \begin{figure}
 \centering
 \includegraphics[scale=0.45]{img/octoborg-gantt.png}
-\caption{Project October Gantt Chart}
+\caption{Progress Report 2 Project October Gantt Chart}
 \label{fig:gantt}
 \end{figure}
 
-We have split the team into two parts, frontend and backend.
-With respect to the frontend, Tom and Mika have worked on the development and design respectively.
-The biggest difficulty here is to determine how to represent the news in such a way that the user will be inclined to continue using the service.
+From the beginning, we split the team into two parts, frontend and backend.
+With respect to the frontend, Tom and Mika have worked together on the development and design.
+The biggest difficulty here is to create an aesthetic represention of the news so that the user will be inclined to continue using the service.
 As for the backend, Brian has been tasked with creating both the service architecture and the recommender engine.
 This includes the implementation of our backend's TF-IDF algorithm and the Scala connector to the Thrift API and Mongo that computes recommendations.
 
