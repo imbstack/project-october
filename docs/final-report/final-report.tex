@@ -135,20 +135,56 @@ At launch, we expect the user base to be somewhat technical in nature, being som
 
 \section{Application}
 \subsection{Frontend}
-The frontend will be a standard social news aggregator.
-Upon going to the homepage, new and logged-out users will be presented with a splash page that describes the nature of Project October and offers a registration link.
-Users can register for the application by selecting a username and password.
+The frontend is what is commonly thought of as a standard social news aggregator, except that it displays articles on recommendation of the backend.
+Upon going to the homepage, new and logged-out users are presented with a splash page that describes the nature of Project October and offers a registration link.
+Users can register for the application by inputting their username, an email, and a password.
 
-When logged in, users will be presented with their personalized content.
-The design is modelled after the front page of a newspaper -- articles that are evaluated to be more interesting to a user will be placed in more prominent positions while articles that are deemed less relevant to the user's interest will fill the side columns, be located further down the page, and occupy less space.
-Users will be able to click on the headline (or associated image, if existent) to be taken to the original news source.
+When logged in, users are presented with their personalized content.
+The design is modelled after the front page of a newspaper -- articles that are evaluated to be more interesting to a user are placed in more prominent positions while articles that are deemed less relevant to the user's interest will fill the side columns, be located further down the page, and occupy less space.
+Users are able to click on the headline (or associated image, if existent) to be taken to the original news source.
 
-Each news article will feature a link to view the associated comments as well as an icon (located in the corner of the article text/image) displaying the credibility (``cred'') a given article possesses.
-This is analogous to upvoting in Reddit, except that giving an article cred on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula. Therefore, cred serves two purposes: 1. To inform other users of the quality of the article and 2. To inform the recommender system of the user's interests.
+Each news article features a link to view the associated comments as well as icons which allow the user to plus and minus the article.
+These are analogous to upvoting in Reddit, except that plusing or minusing an article on October will inform the recommendation engine of your individual preference, rather than directly impacting the weighting of an article by a predefined formula.
+Therefore, voting serves two purposes: to inform other users of the quality of the article and to inform the recommender system of the user's interests.
 
 Users will be able to click a link on the homepage which takes them to an article submission form.
 The submission form will request a URL and a headline for that news story.
 Upon entering the URL, the news story will be scraped in the background using a web scraping tool which will attempt to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text.
+
+\subsubsection{RSS Subscription}
+% we added the ability to subscribe to rss feeds. this is a cheap way to find more news articles but it also helps us get users who are longing for a replacement for google reader.
+
+\subsubsection{Article Layout Algorithm}
+% right now the layout algorithm is pretty basic. Receiving a list of weights, pick the top two with pictures and make them "featured" articles.
+% The next highest-weighted 50% of articles are displayed at a primary size and the rest are displayed in a secondary size.
+% Then, articles are shuffled slightly and displayed to users
+
+\subsubsection{Article Display Sizes}
+% articles can be in three sizes -- featured, primary, and secondary
+% primary and secondary can be either with image or without image
+
+\subsubsection{Backend Proxy}
+% a proxy exists which will keep the frontend functional in case of problems with the backend.
+% It is a Ruby wrapper around the thrift library which will automatically retry an API call upon failing the first time (in case of disconnect) and will switch to the Mock Backend in case of total failure.
+% In that state, October is operating without its brain, so users are presented with a vibrant message
+
+\subsubsection{Sending Email to Users}
+October uses Ruby on Rails's packaged ActionMailer to send emails.
+We use the premailer Ruby gem to speed up development -- it allows for the use of real stylesheets which are then compiled inline to the appropriate HTML elements of the emails before they are sent.
+
+Currently, the only email that is delived is a welcome email for the user offering basic onboarding instructions.
+However, in the future, we intend to engage users via email with customized recommendation emails (i.e. ``We just found this article that we know you will like!'')
+
+\subsubsection{User Tracking + Analysis}
+In order to understand how effective our users find October, we have instrumented the site with a heavy dosage of analytics.
+To track basic page views and real time events, we have installed Google Analytics.
+But, Google Analytics does not provide the granularity that we would need to adequately understand user behavior.
+To this end, we have instrumented the site with Mixpanel\cite{mixpanel}, which specializes in tracking user-triggered \textit{events} rather than simple pageviews.
+
+Mixpanel helps us track user behavior by tracking an event every time a user performs one of the following actions: log in, sign up, receive recommendations, vote, click article headline, or post a new article.
+
+We currently use Mixpanel is a couple ways beyond simply tracking user events, however. Primarily, we track how many milliseconds the user waits to receive recommendations from the backend.
+We also track the direction of users' votes, so we can tell how satisfied users are, at a high level, with their article recommendations.
 
 \subsection{Backend}
 The backend will contain a recommender system, which will recommend articles for users with the following technique.
@@ -360,6 +396,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
   \bibitem{tfidf} \url{http://en.wikipedia.org/wiki/Tf-idf}
   \bibitem{pismo} \url{https://github.com/peterc/pismo}
+  \bibitem{mixpanel} \url{http://mixpanel.com}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
