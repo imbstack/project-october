@@ -143,7 +143,83 @@ For the sake of releasing a minimum viable product within the semester, we have 
 % Then, we will discuss *how* we built October, including the requirements and
 % the project management. etc.
 
-\section{Application}
+\section{Software Design Requirements}
+% This section will describe the progress towards the usual software design information, with likely components on
+% - Application Software Requirements
+% - Application Software Specifications
+% - Software Architecture (i.e., client - server architecture; three - tiered design, etc.)
+% - Design Document
+
+\subsection{Homepage}
+The are two cases for the homepage: logged in users and logged out users.
+
+Logged out users arrive at the homepage and are presented with a splash page containing a description of October's features.
+There is a registration link so that interested users can register for their own account.
+
+Logged in users are, upon landing on the homepage, presented with a display of news articles.
+Articles are displayed with pictures (when available) along with headlines.
+Each article is accompanied with links to positively or negatively influence the article's recommendation rank, and also to comment on the article.
+The source of the article is also provided, as is the time that it was posted.
+
+\subsection{User Creation, Login, and Display}
+New users are able to create October accounts with but three pieces of information --  their desired username, their email, and a password.
+After creating an account, an email is sent to the user welcoming them to October.
+
+When a user first logs into October, the backend recommender won't know anything about their interests.
+Thus, users should be shown various sample topics to browse through.
+They are also able to (via their account page) manually type in relevant keywords to aid the recommender in providing them with articles.
+
+Every mention of a user's name (i.e. the credit for who posted an article or comment) is a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
+
+\subsection{User Profile Page}
+\label{sec:profilepage}
+Each user has a profile page containing information related to that user.
+The profile page contains a list of comments that the user has made on posts and a list of articles the user has posted.
+All information on this page is public, as it is merely a summary of content available elsewhere on the public website.
+
+\subsection{User Profile Edit Page}
+In contrast to the profile page, which is a summary of a user's public activity, the profile edit page allows a logged in user to edit their own information.
+Settings such as their email address and password can be changed here.
+
+The other significant part of the user profile edit page is a section which shows the user their own recommendation settings.
+This shows up in the format of a list of keywords that the backend has ascribed to that user.
+The user can remove keywords that they do not wish to be associated with.
+
+Furthermore, there should be a field where a user can submit additional keywords they wish to see more news from.
+The user will be associated with the keyword when they submit the form.
+
+\subsection{Article Posting}
+Logged in users are able to click a link on the homepage to submit a story.
+The submit story page will ask for the link to the desired story, and automatically show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
+If the post looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
+
+\subsection{Article Display Page}
+The article display page is a page dedicated to a posted news article. Every news article has an associated article page.
+The intent of the article page is to facilitate sharing of opinions around the posted news story through comments.
+
+A user arriving on an article's page arrives at a page which contains the title of the news article along with a threaded comment list.
+Users may leave comments as children of other comments, and thus may engage in a lively discussion.
+
+\subsection{Frontend $\leftrightarrow$ Backend API}
+Since the frontend and backend are divided with a Service Oriented Architecture (with Apache Thrift bridging the gap\footnote{See Section \ref{sec:api} for more about Thrift}), there must be an API between them.
+
+The API should be as simple as possible to maintain the functionality of October. This is not a public API, so it needs to be robust to volume but we do not need to implement API endpoints for the functionality mentioned elsewhere in the requirements.
+
+The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\cite{project-october-api}.
+
+\subsection{Web Scraping}
+\label{sec:scraping}
+When a user submits a link to a news article, October needs to know three more things about each article than just its URL: 1) the title of the article, 2) any associated images, and 3) all the main keywords from the article.
+We will employ the pismo library\cite{pismo} which, given the URL to a webpage, performs extractions of all these things automatically.
+
+The pismo library is used by the frontend, which then keeps these properties in memory while allowing users to customize the image selection, keywords, and the title if necessary before the article is submitted and persisted in the database.
+
+\subsection{Backend} % Expand into multiple sections?
+The backend is a recommender black-box which provides suggestions via an API to the frontend.
+The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
+For more about the implementation of the backend, consult Section \ref{sec:backend-implementation}.
+
+\section{Application Architecture}
 \subsection{Frontend}
 The frontend is similar in function to a standard social news aggregator.
 Upon going to the homepage, new and logged-out users are presented with a splash page that describes the nature of Project October and are given a registration link.
@@ -200,6 +276,7 @@ We currently use Mixpanel is a couple ways beyond simply tracking user events, h
 We also track the direction of users' votes, so we can tell how satisfied users are, at a high level, with their article recommendations.
 
 \subsection{Backend}
+\label{sec:backend-implementation}
 The backend will contain a recommender system, which will recommend articles for users with the following technique.
 When an article is submitted from the frontend (via the API -- see Section \ref{sec:api}), we will peform TF/IDF\cite{tfidf} on the full body text returned by the scraper.
 The weighted terms returned by TF/IDF will be stored in a document database with a custom-maintained inverted index of the terms to which articles contain them.
@@ -231,86 +308,6 @@ The parameters to this API call can be of many types. For example, "User comment
 These two calls manifest themselves in Thrift with a few simple object
 definitions and an interface.  The abbreviated version \texttt{0.1.0} is
 attached as Appendix~\ref{app:thrift}.
-
-\section{Software Design}
-% This section will describe the progress towards the usual software design information, with likely components on
-% - Application Software Requirements
-% - Application Software Specifications
-% - Software Architecture (i.e., client - server architecture; three - tiered design, etc.)
-% - Design Document
-
-\subsection{Intended Audience}
-October is completely open to the public.
-Although the user base is currently somewhat technical in nature, October supports the registration of any internet user and any type of content. 
-
-\subsection{Homepage Requirements}
-The are two cases for the homepage: logged in users and logged out users.
-
-Logged out users arrive at the homepage and are presented with a splash page containing a description of October's features.
-There is a registration link so that interested users can register for their own account.
-
-Logged in users are, upon landing on the homepage, presented with a display of news articles.
-Articles are displayed with pictures (when available) along with headlines.
-Each article is accompanied with links to positively or negatively influence the article's recommendation rank, and also to comment on the article. 
-The source of the article is also provided, as is the time that it was posted. 
-
-\subsection{User Creation/Login/Display Requirements}
-New users are able to create October accounts with but three pieces of information --  their desired username, their email, and a password.
-After creating an account, an email is sent to the user welcoming them to October.
-
-When a user first logs into October, the backend recommender won't know anything about their interests.
-Thus, users should be shown various sample topics to browse through. 
-They are also able to (via their account page) manually type in relevant keywords to aid the recommender in providing them with articles. 
-
-Every mention of a user's name (i.e. the credit for who posted an article or comment) is a link to a user profile page. More detail about the user profile page is given in Section \ref{sec:profilepage}.
-
-\subsection{User Profile Page Requirements}
-\label{sec:profilepage}
-Each user has a profile page containing information related to that user.
-The profile page contains a list of comments that the user has made on posts and a list of articles the user has posted.
-All information on this page is public, as it is merely a summary of content available elsewhere on the public website.
-
-\subsection{User Profile Edit Page Requirements}
-In contrast to the profile page, which is a summary of a user's public activity, the profile edit page allows a logged in user to edit their own information.
-Settings such as their email address and password can be changed here.
-
-The other significant part of the user profile edit page is a section which shows the user their own recommendation settings.
-This shows up in the format of a list of keywords that the backend has ascribed to that user.
-The user can remove keywords that they do not wish to be associated with.
-
-Furthermore, there should be a field where a user can submit additional keywords they wish to see more news from.
-The user will be associated with the keyword when they submit the form.
-
-\subsection{Article Posting Requirements}
-Logged in users are able to click a link on the homepage to submit a story.
-The submit story page will ask for the link to the desired story, and automatically show the results of scraping that story's contents (see Section \ref{sec:scraping} for more about scraping).
-If the post looks good to the user, he or she can click a ``Post!'' button, which will persist the news story in all appropriate databases.
-
-\subsection{Article Page Requirements}
-The article display page is a page dedicated to a posted news article. Every news article has an associated article page.
-The intent of the article page is to facilitate sharing of opinions around the posted news story through comments.
-
-A user arriving on an article's page arrives at a page which contains the title of the news article along with a threaded comment list.
-Users may leave comments as children of other comments, and thus may engage in a lively discussion.
-
-\subsection{Frontend $\leftrightarrow$ Backend API Requirements}
-Since the frontend and backend are divided with a Service Oriented Architecture (with Apache Thrift bridging the gap\footnote{See Section \ref{sec:api} for more about Thrift}), there must be an API between them.
-
-The API should be as simple as possible to maintain the functionality of October. This is not a public API, so it needs to be robust to volume but we do not need to implement API endpoints for the functionality mentioned elsewhere in the requirements.
-
-The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\cite{project-october-api}.
-
-\subsection{Web Scraping Requirements}
-\label{sec:scraping}
-When a user submits a link to a news article, October needs to know three more things about each article than just its URL: 1) the title of the article, 2) any associated images, and 3) all the main keywords from the article.
-We will employ the pismo library\cite{pismo} which, given the URL to a webpage, performs extractions of all these things automatically.
-
-The pismo library is used to return all these things to the frontend, which then allows users to customize the image selection, keywords, and the title if necessary before the article is submitted.
-
-\subsection{Backend Requirements} % Expand into multiple sections?
-The backend is a recommender black-box which provides suggestions via an API to the frontend.
-The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
-For more about the implementation of the backend, consult Section \ref{sec:backend-implementation}.
 
 \section{Project Management--Administrative Details}
 % Design/update your Gantt chart to show any changes in milestones, timetable,
@@ -412,6 +409,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{tfidf} \url{http://en.wikipedia.org/wiki/Tf-idf}
   \bibitem{pismo} \url{https://github.com/peterc/pismo}
   \bibitem{mixpanel} \url{http://mixpanel.com}
+  \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
