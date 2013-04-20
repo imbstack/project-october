@@ -128,6 +128,7 @@ For the sake of releasing a minimum viable product within the semester, we have 
 \begin{itemize}
 \item We have specified the plan for the backend recommendation engine in tangible terms.
 \item We have removed the ability to upvote, downvote, and tag comments. Those abilities will be easy to add later but are not core to the application, especially until October gains critical mass and more people comment.
+\item We have added an RSS Subscription feature, specified in Section \ref{sec:rssrequirements} and described in Section \ref{sec:frontendrss}.
 \item We have made numerous copy tweaks to the report, such as
   \begin{itemize}
   \item Reordering the report to list the requirements before the details of the project's implementation
@@ -200,6 +201,14 @@ The intent of the article page is to facilitate sharing of opinions around the p
 A user arriving on an article's page arrives at a page which contains the title of the news article along with a threaded comment list.
 Users may leave comments as children of other comments, and thus may engage in a lively discussion.
 
+\subsection{RSS Subscription}
+\label{sec:rssrequirements}
+Users should be able to subscribe to RSS feeds by entering the URL to a feed in their User Profile Edit page.
+This will allow users to customize the news sources present in October without painstakingly submitting things until the community grows larger.
+
+Subscribing to an RSS feed will automatically post the articles from the feed to October in a timely manner.
+Users should be able to click the feed name on an article displayed and be taken to a list of posts from that RSS feed (much in the same way that users can see a list of another user's posts on the user profile page).
+
 \subsection{Frontend $\leftrightarrow$ Backend API}
 Since the frontend and backend are divided with a Service Oriented Architecture (with Apache Thrift bridging the gap\footnote{See Section \ref{sec:api} for more about Thrift}), there must be an API between them.
 
@@ -236,11 +245,18 @@ Therefore, voting serves two purposes: to inform other users of the quality of t
 
 Users will be able to click a link on the homepage which takes them to an article submission form.
 The submission form requests a URL and a headline for that news story.
-Upon entering the URL, the news story is scraped in the background using a web scraping tool which attempts to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text. The user is also presented with a list of tags that are garnered from the article, and they can delete or add their own tags to better represent the content of the article. A list of scraped images is also presented, and the user may select which one (if any) they want to head the article with. 
+Upon entering the URL, the news story is scraped in the background using a web scraping tool which attempts to extract properties about the page automatically -- relying upon the <meta> tags and heuristics to determine the article's body text. The user is also presented with a list of tags that are garnered from the article, and they can delete or add their own tags to better represent the content of the article. A list of scraped images is also presented, and the user may select which one (if any) they want to head the article with.
 
 \subsubsection{RSS Subscription}
 \label{sec:frontendrss}
-% we added the ability to subscribe to rss feeds. this is a cheap way to find more news articles but it also helps us get users who are longing for a replacement for google reader.
+% we added the ability to subscribe to rss feeds. this is a cheap way to find
+% more news articles but it also helps us get users who are longing for a
+% replacement for google reader.
+In order to implement the RSS Subscription feature (described in Section \ref{sec:rssrequirements}), we created a background task that scrapes each user-submitted RSS feed and posts each RSS entry as a new story.
+Since this means there are two types of entities that can post articles, and we wish to share logic between both, we use ActiveRecord's Single Table Inheritance\ref{sti} to make Users and Feeds share attributes in a single table \textbf{posters} (see the database schema in Figure \ref{fig:database}).
+The most important reason for this is because Users and Feeds must share the keyspace for their primary key (their \verb+id+ columns) so the backend can treat them the same when dealing with following relationships (a user should be able to follow both a user and a feed, under the same logic).
+
+This will also allow other types of posting entities in the future if we decide to add additional integrations.
 
 \subsubsection{Article Layout Algorithm}
 % right now the layout algorithm is pretty basic. Receiving a list of weights, pick the top two with pictures and make them "featured" articles.
@@ -410,6 +426,7 @@ We will be keeping in contact with users to build upon October, enhancing the se
   \bibitem{pismo} \url{https://github.com/peterc/pismo}
   \bibitem{mixpanel} \url{http://mixpanel.com}
   \bibitem{project-october-api} \url{https://github.com/bis12/project-october-api}
+  \bibitem{sti} \url{http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance}
 \end{thebibliography}
 
 % ============= Database Schematic ==============
