@@ -18,7 +18,7 @@
 \usepackage{pdfpages}
 \usepackage{amssymb}
 \usepackage{url}
-\usepackage{listings}
+\usepackage{array}
 
 \usepackage{listings} %Code
 \lstset{language=C, tabsize=4,framexleftmargin=5mm,breaklines=true}
@@ -270,6 +270,14 @@ Towards this end, we split the homepage into three equal-width columns and displ
 \item \verb+primary+ type articles are displayed in a white box to emphasize them from the background. The headline is large and flows with the picture to create the newspaper feel.
 \item \verb+secondary+ type articles are displayed with a grey headline and grey link text, to blend in with the background and offer the reader additional options if they desire to look harder to find them.
 \end{itemize}
+
+\begin{tabular}{ m{0.3\textwidth} m{0.3\textwidth} m{0.3\textwidth} }
+\includegraphics[width=0.3\textwidth]{img/featured-image.png} &
+\includegraphics[width=0.3\textwidth]{img/primary-image.png} &
+\includegraphics[width=0.3\textwidth]{img/secondary-image.png} \\
+\centering\verb+featured+ article & \centering\verb+primary+ article & \centering\verb+secondary+ article
+\end{tabular}
+\vspace{1.2em}
 
 \verb+primary+ and \verb+secondary+ articles may take up any amount of vertical space, but are constrained to one column in width.
 If the homepage is not wide enough to fit three columns (on clients of less than 768px), the homepage goes into single-column mode where all articles are displayed linearly.
