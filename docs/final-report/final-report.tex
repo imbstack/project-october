@@ -123,6 +123,16 @@ Both corpora are joined in a unified mathematical model, which describes the com
 We intend Project October to be open to the public.
 At launch, we expect the user base to be somewhat technical in nature, being some of the Internet's power users.
 
+\subsection{Progress}
+% Fill in with details of our progress -- how far we have come and where we
+% will go from here
+
+\subsection{This Report}
+% First we will describe the two separate components of October -- the frontend
+% and then the backend. Then we will describe the API which ties them together.
+% Then, we will discuss *how* we built October, including the requirements and
+% the project management. etc.
+
 \section{Application}
 \subsection{Frontend}
 The frontend will be a standard social news aggregator.
@@ -172,34 +182,6 @@ The parameters to this API call can be of many types. For example, "User comment
 These two calls manifest themselves in Thrift with a few simple object
 definitions and an interface.  The abbreviated version \texttt{0.1.0} is
 attached as Appendix~\ref{app:thrift}.
-
-\section{Methodology}
-% TODO: Write some more here...
-% "This section should discuss any data structure design/maintenance problems,
-% or algorithmic problems / challenges, and how they will be/are solved; time
-% and space complexity analys is (if needed) of your algorithms, etc."
-
-\subsection{Project Management}
-We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
-
-\subsubsection{Agile Development}
-In order to stay within the bounds of Agile Development while still maintaining the requisite documentation, we will be creating documentation at the end of each release.
-In order to schedule work, we have employed Pivotal Tracker, an online task management solution.
-From the queue, we will assign tasks as we finish previous tasks.
-The work naturally fits into two main categories -- frontend and backend.
-Work relating to each category will be assigned to the same people until we make enough progress to cross between teams at will.
-At least until that point, Brian will work on the backend while Tom and Mika create the frontend.
-
-\subsubsection{Scrum}
-We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeting to discuss the current progress, any stumbling blocks, and what work is coming up in the immediate future.
-
-\subsubsection{Release Schedule}
-Releases are bi-weekly and will include a team review as well as planning for the next release.
-Release dates will involve pushing the current state of the project to a continuous integration service (http://travis-ci.org), after which automated deployment will be executed.
-
-\subsubsection{Iterations}
-We plan to have weekly iterations.
-At the end of each iteration, team members will re-sync and make sure that we have a clear outline for the next iteration.
 
 \section{Software Design}
 % This section will describe the progress towards the usual software design information, with likely components on
@@ -281,6 +263,35 @@ Ultimately, this entails cleaning out junk and comments, grab the cluster of rel
 The backend is a recommender black-box which provides suggestions via an API to the frontend.
 The actual implementation of the recommendation service is arbitrary, only that it implements the services of the API effectively.
 For more about the implementation of the backend, consult Section \ref{sec:backend-implementation}.
+
+\section{Methodology}
+% TODO: Write some more here...
+% "This section should discuss any data structure design/maintenance problems,
+% or algorithmic problems / challenges, and how they will be/are solved; time
+% and space complexity analys is (if needed) of your algorithms, etc."
+
+\subsection{Project Management}
+We will manage the project using agile development methodologies with a focus on progressive elaboration and documentation for the purposes of this project.
+
+\subsubsection{Agile Development}
+In order to stay within the bounds of Agile Development while still maintaining the requisite documentation, we will be creating documentation at the end of each release.
+In order to schedule work, we have employed Pivotal Tracker, an online task management solution.
+From the queue, we will assign tasks as we finish previous tasks.
+The work naturally fits into two main categories -- frontend and backend.
+Work relating to each category will be assigned to the same people until we make enough progress to cross between teams at will.
+At least until that point, Brian will work on the backend while Tom and Mika create the frontend.
+
+\subsubsection{Scrum}
+We will meet every Monday, Wednesday, and Friday at 3:55pm to have a short meeting to discuss the current progress, any stumbling blocks, and what work is coming up in the immediate future.
+
+\subsubsection{Release Schedule}
+Releases are bi-weekly and will include a team review as well as planning for the next release.
+Release dates will involve pushing the current state of the project to a continuous integration service (http://travis-ci.org), after which automated deployment will be executed.
+
+\subsubsection{Iterations}
+We plan to have weekly iterations.
+At the end of each iteration, team members will re-sync and make sure that we have a clear outline for the next iteration.
+
 
 \section{Project Management--Administrative Details}
 % Design/update your Gantt chart to show any changes in milestones, timetable,
