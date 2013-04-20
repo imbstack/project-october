@@ -254,7 +254,7 @@ Upon entering the URL, the news story is scraped in the background using a web s
 % more news articles but it also helps us get users who are longing for a
 % replacement for google reader.
 In order to implement the RSS Subscription feature (described in Section \ref{sec:rssrequirements}), we created a background task that scrapes each user-submitted RSS feed and posts each RSS entry as a new story.
-Since this means there are two types of entities that can post articles, and we wish to share logic between both, we use ActiveRecord's Single Table Inheritance\ref{sti} to make Users and Feeds share attributes in a single table \textbf{posters} (see the database schema in Figure \ref{fig:database}).
+Since this means there are two types of entities that can post articles, and we wish to share logic between both, we use ActiveRecord's Single Table Inheritance\cite{sti} to make Users and Feeds share attributes in a single table \textbf{posters} (see the database schema in Figure \ref{fig:database}).
 The most important reason for this is because Users and Feeds must share the keyspace for their primary key (their \verb+id+ columns) so the backend can treat them the same when dealing with following relationships (a user should be able to follow both a user and a feed, under the same logic).
 
 This will also allow other types of posting entities in the future if we decide to add additional integrations.
@@ -294,7 +294,7 @@ The algorithm is, given a list of $n$ article IDs and weights for each article f
 
 The frontend will output HTML for each item and type in the order returned from the algorithm.
 The CSS for the homepage contains basic styling instructions, but not enough to create the desired homepage effect.
-For that, the user's browser will invoke the JavaScript masonry.js library\ref{masonry}.
+For that, the user's browser will invoke the JavaScript masonry.js library\cite{masonry}.
 Masonry.js takes a set of arbitrarily-sized DOM nodes and displays them in a compact way, thus giving us the desired newspaper front-page effect.
 
 Using custom responsive CSS and JavaScript event handlers on window resize, we ensure that the newspaper feel is consistent and usable on any size screen and when the screen is resized after the page originally loads.
