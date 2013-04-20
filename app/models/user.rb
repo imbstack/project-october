@@ -10,6 +10,7 @@ class User < Poster
   has_many :subscriptions
   has_many :feeds, :through => :subscriptions
   has_many :votes
+  has_many :comments
 
   after_create :backend_register
 
