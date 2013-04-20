@@ -259,7 +259,7 @@ The most important reason for this is because Users and Feeds must share the key
 
 This will also allow other types of posting entities in the future if we decide to add additional integrations.
 
-\subsubsection{Article Display Sizes}
+\subsubsection{Homepage Article Display Sizes}
 % articles can be in three sizes -- featured, primary, and secondary
 % primary and secondary can be either with image or without image
 According to the specification (in Section \ref{sec:homepagerequirements}), the homepage should display articles in a visually appealing fashion.
@@ -274,7 +274,7 @@ Towards this end, we split the homepage into three equal-width columns and displ
 \verb+primary+ and \verb+secondary+ articles may take up any amount of vertical space, but are constrained to one column in width.
 If the homepage is not wide enough to fit three columns (on clients of less than 768px), the homepage goes into single-column mode where all articles are displayed linearly.
 
-\subsubsection{Article Layout Algorithm}
+\subsubsection{Homepage Article Layout Algorithm}
 % right now the layout algorithm is pretty basic. Receiving a list of weights, pick the top two with pictures and make them "featured" articles.
 % The next highest-weighted 50% of articles are displayed at a primary size and the rest are displayed in a secondary size.
 % Then, articles are shuffled slightly and displayed to users
