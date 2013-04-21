@@ -228,7 +228,18 @@ The API should be as simple as possible to maintain the functionality of October
 The API is defined in a Thrift definitions file in the project-october-api repository on GitHub\cite{project-october-api}.
 
 \subsection{Backend} % Expand into multiple sections?
-THIS NEEDS TO BE MADE
+\subsubsection{Time Requirements}
+A website presents challenges in terms of time for a service of this sort.  It
+is necessary to return the results within 1 second of request in the 50th
+percentile case.  Currently, our results are being return in under 1 second in
+75 percent of requests. This meets this requirement.
+\subsubsection{Accuracy Requirements}
+Measuring accuracy directly is difficult.  Our metric for this case is that our
+upvote rate must be higher than our downvote rate.  This is because we assume
+that users will upvote articles they find interesting and do the opposite to the
+opposite type of article. Currently, according to our measurements, 40 percent
+of users who receive recommendations upvote, whereas only 18 percent downvote.
+We take this as a preliminary metric of our success.
 
 \section{Application Architecture}
 \subsection{Frontend}
@@ -539,7 +550,17 @@ The user interface for other pages will be in the same general content area, how
 
 \section{Testing \& Evaluation}
 \label{sec:testing}
-Testing and evaluation will be performed as we progress through the project. Currently, only very minimal testing is implemented.
+As it currently stands, over 40 total tests are implented in the combined
+frontend and backend.   Each of these tests must pass for us to merge new
+features to be added to the project.  Both the frontend and backend are tracked
+on Travis-CI\footnote{\url{https://travis-ci.org/}} so that the developers can
+be alerted when something is broken in a build.  Our coverage is excellent in
+terms of both functional and integration tests.  This was a huge boon to our
+development as it allowed us to ensure we did not break old functionality when
+we added new functions in addition to allowing us to write tests beforehand and
+write our code so that it passed the tests.  Test driven development of this
+sort was certainly not the primary way we developed, but it did come in handy
+from time to time.
 
 \section{Final Status, Conclusions, and the Future}
 \label{sec:progress}
@@ -566,12 +587,21 @@ We have enjoyed working on this, and we hope to continue refining it after the c
 We will be keeping in contact with users to build upon October, enhancing the service and hopefully increasing user retention.
 
 \subsection{Advantages \& Disadvantages of a Service Oriented Architecture}
+Overall we are pleased with our usage of a service-oriented-architecture(SOA).
+It had its issues such as increased development time and complexity, but it also
+made development in teams easier and forced us to specify an interface for
+communication between two logically separated components.  If we had not used an
+SOA, we may have ended up doing just as well, but as time progresses, we should
+be able to add features with more ease and deprecate older ones without as much
+disruption to the service.  Perhaps one mistake was working in two languages for
+each of the services and using two databases.  This increased complexity and
+prevented developers from being able to easily contribute to both  parts easily.
+However, Scala and Ruby both proved to be ideal for their usage as did Postgres
+and MongoDB -- perhaps the correct choices were made after all.
 
 \section{Appendix}
 
 % ============= References ==============
-\newpage
-\newpage
 \begin{thebibliography}{6}
   \bibitem{september} \url{http://en.wikipedia.org/wiki/Eternal\_September}
   \bibitem{thrift} \url{http://en.wikipedia.org/wiki/Apache\_Thrift}
@@ -710,7 +740,6 @@ You can also cancel your account if you are so inclined.
 
 Returning back to your account page, if you click on 'View/Modify Keywords', you will be presented with a list of the keywords currently associated with your account. Here, you can delete them, add new ones, or click the 'Clear top 20 keywords'.
 
-\section{Programmers Manual}
 % ============= FIN ==============
 
 \end{document}
