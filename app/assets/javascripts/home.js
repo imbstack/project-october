@@ -58,7 +58,7 @@ var OctoberHomepage = (function($) {
   var updateImages = function() {
     width = $articles.find(".article.square").width();
 
-    $articles.find(".article.square img").each(function(i) {
+    $articles.find(".article.square img.article-image").each(function(i) {
       $this = $(this);
       imgWidth = $this.is(".img-secondary") ? 0.45 * width : width;
 

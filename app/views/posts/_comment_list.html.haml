@@ -1,5 +1,6 @@
 - comment = comment_list[:root]
 .comment
+  = image_tag gravatar_url(comment.user, 12), :class => 'avatar-image-small'
   #{comment.user.name} - #{distance_of_time_in_words(comment.created_at, Time.now)} ago
   %p= comment.body
   = render 'new_comment', :parent_id => comment.id, :post_id => comment.post_id

@@ -5,6 +5,7 @@
   - elsif article.poster.is_a?(User)
     by
     = link_to article.poster.name, user_path(article.poster.name)
+    = image_tag gravatar_url(article.poster, 20), :class => 'avatar-image-small'
   &middot; posted
   = distance_of_time_in_words(article.created_at, Time.now)
   ago

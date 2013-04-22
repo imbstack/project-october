@@ -10,6 +10,7 @@ class Post < ActiveRecord::Base
   }
 
   has_many :comments
+  has_many :commenters, :through => :comments, :source => :user, :order => 'created_at DESC', :uniq => true
   has_many :votes
   belongs_to :poster
 

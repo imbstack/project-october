@@ -5,4 +5,12 @@
   %li
     = link_to downvote_post_path(article), :remote => 'true', :class => (@votes.detect { |v| v.post_id == article.id && v.direction == Vote.DOWN }.present? ? 'voted' : '') do
       %i.icon-minus
-  %li= link_to "#{article.comments.length} comments", post_path(article)
+  - if article.comments.length > 1
+    %li= link_to "#{article.comments.length} comments", post_path(article)
+  - elsif article.comments.length == 1
+    %li= link_to "1 comment", post_path(article)
+  - else
+    %li= link_to "comment", post_path(article)
+  .avatar-group-small
+    - article.commenters.limit(5).each do |c|
+      = image_tag gravatar_url(c, 12), :class => 'avatar-image-small'

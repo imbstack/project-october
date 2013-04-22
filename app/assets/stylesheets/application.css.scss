@@ -96,6 +96,27 @@ p {
   }
 }
 
+.avatar-group-small {
+  display: inline;
+  margin-left: 7px;
+  padding-bottom: 5px;
+}
+.avatar-image-small {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #aaa;
+}
+.avatar-group-medium {
+  display: inline;
+  margin-left: 7px;
+  padding-bottom: 5px;
+}
+.avatar-image-medium {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #aaa;
+}
+
 /*
  * ============================================================================
  * Bootstrap Overrides:

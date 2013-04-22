@@ -15,6 +15,17 @@
       });
     });
 %h2= link_to @post.title, @post.url
+.posted_by
+  - if @post.poster.is_a?(Feed)
+    Posted from
+    = link_to @post.poster.name, feed_path(@post.poster_id)
+  - elsif @post.poster.is_a?(User)
+    Posted by
+    = link_to @post.poster.name, user_path(@post.poster.name)
+    = image_tag gravatar_url(@post.poster, 20), :class => 'avatar-image-small'
+  &middot;
+  = distance_of_time_in_words(@post.created_at, Time.now)
+  ago
 %h3 Comments:
 .comments
   - @comments = recursify_array_of_comments(@post.comments)
